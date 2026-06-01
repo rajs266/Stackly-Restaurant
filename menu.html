@@ -228,9 +228,6 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Floating Emojis BG -->
-<div class="floating-emojis" id="floatingEmojis"></div>
-
 <!-- Food Toast -->
 <div class="food-toast" id="foodToast">
   <span class="food-toast-emoji">🍔</span>
@@ -279,7 +276,7 @@
 </div>
 
 <!-- ═══ MENU HERO ═══ -->
-<section class="menu-hero">
+<section class="menu-hero" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80');">
   <div>
     <h1 class="menu-hero-title reveal">Our <span>Menu</span></h1>
     <p class="menu-hero-sub reveal delay-1">From crispy starters to decadent desserts — every bite is a flavour explosion! 🔥</p>
@@ -717,19 +714,6 @@ document.querySelectorAll('a,button,.menu-full-card').forEach(el => {
   el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); cursorRing.classList.add('hovered'); });
   el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); cursorRing.classList.remove('hovered'); });
 });
-
-// ── Floating Emojis ──
-const emojis = ['🍕','🍔','🌮','🍜','🥗','🍰','🧁','🥩','🍣','🥐','🍟','🥤','🎉','⭐','🌟'];
-const fe = document.getElementById('floatingEmojis');
-for (let i = 0; i < 18; i++) {
-  const e = document.createElement('div');
-  e.className = 'emoji-particle';
-  e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-  e.style.left = Math.random() * 100 + 'vw';
-  e.style.animationDuration = (12 + Math.random() * 18) + 's';
-  e.style.animationDelay = (Math.random() * 20) + 's';
-  fe.appendChild(e);
-}
 
 // ── Hamburger ──
 const ham = document.getElementById('hamburger');
