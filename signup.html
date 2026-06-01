@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Sign Up — Stackly Restaurant</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      background: var(--dark);
+      font-family: var(--font-body);
+    }
+    
+    /* Left Side - Background Image */
+    .auth-visual {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(255,69,0,0.85), rgba(45,21,0,0.9)),
+                  url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80') center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26,10,0,0.3);
+    }
+    .auth-visual-content {
+      position: relative;
+      z-index: 1;
+    }
+    .auth-visual-emoji {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      display: block;
+      animation: heroFloat 3s ease-in-out infinite;
+    }
+    @keyframes heroFloat {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-15px) rotate(3deg); }
+    }
+    .auth-visual-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: white;
+      letter-spacing: 4px;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+      margin-bottom: 12px;
+    }
+    .auth-visual-sub {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 400px;
+    }
+    .auth-visual-stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      justify-content: center;
+    }
+    .auth-visual-stat {
+      text-align: center;
+    }
+    .auth-visual-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--secondary);
+    }
+    .auth-visual-stat-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Right Side - Form */
+    .auth-form-side {
+      width: min(480px, 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(30px, 5vw, 50px);
+      background: var(--dark2);
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .auth-logo {
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .auth-logo img {
+      height: 42px;
+      width: auto;
+    }
+    .auth-logo-text {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--primary);
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 0 var(--secondary);
+    }
+    
+    .auth-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .auth-sub {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+    
+    .auth-form-group {
+      margin-bottom: 18px;
+    }
+    .auth-form-group label {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .auth-form-group label .req {
+      color: var(--primary);
+    }
+    .auth-input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-sm);
+      padding: 13px 18px;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .auth-input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    .auth-input:focus {
+      border-color: var(--primary);
+      background: rgba(255,69,0,0.07);
+      box-shadow: 0 0 0 3px rgba(255,69,0,0.15);
+    }
+    .auth-input.error {
+      border-color: #ff4444;
+      box-shadow: 0 0 0 3px rgba(255,68,68,0.15);
+    }
+    .auth-input.success {
+      border-color: #00C9A7;
+      box-shadow: 0 0 0 3px rgba(0,201,167,0.15);
+    }
+    .auth-error-msg {
+      color: #ff4444;
+      font-size: 0.78rem;
+      margin-top: 5px;
+      display: none;
+    }
+    .auth-error-msg.show {
+      display: block;
+    }
+    
+    /* Role Selection */
+    .role-select {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .role-option {
+      flex: 1;
+      position: relative;
+    }
+    .role-option input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .role-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 15px 10px;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    .role-option label:hover {
+      border-color: rgba(255,69,0,0.4);
+    }
+    .role-option input:checked + label {
+      border-color: var(--primary);
+      background: rgba(255,69,0,0.1);
+    }
+    .role-option .role-emoji {
+      font-size: 1.8rem;
+    }
+    .role-option .role-name {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      color: white;
+      letter-spacing: 1px;
+    }
+    .role-option .role-desc {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+    }
+    
+    .auth-submit {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      margin-top: 10px;
+    }
+    
+    .auth-divider {
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.82rem;
+      margin: 16px 0;
+      position: relative;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+    .auth-divider::before { left: 0; }
+    .auth-divider::after { right: 0; }
+    
+    .auth-switch {
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.88rem;
+      margin-top: 10px;
+    }
+    .auth-switch a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .auth-switch a:hover {
+      color: var(--secondary);
+    }
+    
+    /* Success Message */
+    .signup-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .signup-success-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 15px;
+      animation: bounceIn 0.6s ease;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .signup-success h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: white;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .signup-success p {
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    /* Password Strength */
+    .password-strength {
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .password-strength-bar {
+      height: 100%;
+      width: 0;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .strength-weak { width: 33%; background: #ff4444; }
+    .strength-medium { width: 66%; background: var(--secondary); }
+    .strength-strong { width: 100%; background: #00C9A7; }
+    
+    @media (max-width: 992px) {
+      .auth-visual {
+        display: none;
+      }
+      .auth-form-side {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        justify-content: flex-start;
+        padding-top: 80px;
+      }
+    }
+    @media (max-width: 600px) {
+      .auth-form-side {
+        padding: 70px 20px 30px;
+      }
+      .auth-title {
+        font-size: 1.6rem;
+      }
+      .role-option label {
+        padding: 12px 8px;
+      }
+      .role-option .role-emoji {
+        font-size: 1.5rem;
+      }
+      .role-option .role-name {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">STACKLY</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-text">Setting up your account... 🚀</div>
+</div>
+
+<div class="auth-page">
+  
+  <!-- Left Side - Visual -->
+  <div class="auth-visual">
+    <div class="auth-visual-content">
+      <span class="auth-visual-emoji">🍔</span>
+      <h1 class="auth-visual-title">JOIN THE<br>STACKLY FAM!</h1>
+      <p class="auth-visual-sub">Create your account and unlock exclusive deals, loyalty rewards, and priority reservations!</p>
+      <div class="auth-visual-stats">
+        <div class="auth-visual-stat">
+          <div class="auth-visual-stat-num">5000+</div>
+          <div class="auth-visual-stat-label">Happy Members</div>
+        </div>
+        <div class="auth-visual-stat">
+          <div class="auth-visual-stat-num">20%</div>
+          <div class="auth-visual-stat-label">Member Discount</div>
+        </div>
+        <div class="auth-visual-stat">
+          <div class="auth-visual-stat-num">VIP</div>
+          <div class="auth-visual-stat-label">Priority Booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Right Side - Form -->
+  <div class="auth-form-side">
+    
+    <!-- Logo -->
+    <a href="index.html" class="auth-logo">
+      <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
+      <span class="auth-logo-text" style="display:none;">STACKLY</span>
+    </a>
+    
+    <!-- Form Content -->
+    <div id="signupFormContent">
+      <h2 class="auth-title">Create Account</h2>
+      <p class="auth-sub">Fill in your details to get started! 🎉</p>
+      
+      <form id="signupForm" onsubmit="handleSignup(event)">
+        
+        <!-- Full Name -->
+        <div class="auth-form-group">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" class="auth-input" id="signupName" placeholder="Your full name" required oninput="validateName(this)">
+          <span class="auth-error-msg" id="nameError">Name should contain only alphabets and spaces!</span>
+        </div>
+        
+        <!-- Email -->
+        <div class="auth-form-group">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" class="auth-input" id="signupEmail" placeholder="you@example.com" required oninput="validateEmail(this)">
+          <span class="auth-error-msg" id="emailError">Please enter a valid email address!</span>
+        </div>
+        
+        <!-- Phone -->
+        <div class="auth-form-group">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" class="auth-input" id="signupPhone" placeholder="+91 XXXXX XXXXX" required oninput="validatePhone(this)">
+          <span class="auth-error-msg" id="phoneError">Please enter a valid phone number!</span>
+        </div>
+        
+        <!-- Role Selection -->
+        <div class="auth-form-group">
+          <label>Select Role <span class="req">*</span></label>
+          <div class="role-select">
+            <div class="role-option">
+              <input type="radio" name="role" id="roleGuest" value="guest" checked>
+              <label for="roleGuest">
+                <span class="role-emoji">👤</span>
+                <span class="role-name">Guest</span>
+                <span class="role-desc">Order & Reserve</span>
+              </label>
+            </div>
+            <div class="role-option">
+              <input type="radio" name="role" id="roleAdmin" value="admin">
+              <label for="roleAdmin">
+                <span class="role-emoji">👑</span>
+                <span class="role-name">Admin</span>
+                <span class="role-desc">Manage Dashboard</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Password -->
+        <div class="auth-form-group">
+          <label>Password <span class="req">*</span></label>
+          <input type="password" class="auth-input" id="signupPassword" placeholder="Create a strong password" required oninput="checkPasswordStrength(this)">
+          <div class="password-strength">
+            <div class="password-strength-bar" id="strengthBar"></div>
+          </div>
+        </div>
+        
+        <!-- Confirm Password -->
+        <div class="auth-form-group">
+          <label>Confirm Password <span class="req">*</span></label>
+          <input type="password" class="auth-input" id="signupConfirm" placeholder="Confirm your password" required oninput="checkMatch(this)">
+          <span class="auth-error-msg" id="matchError">Passwords do not match!</span>
+        </div>
+        
+        <button type="submit" class="btn btn-primary auth-submit wobble">🚀 Create Account</button>
+        
+      </form>
+      
+      <div class="auth-divider">or</div>
+      
+      <div class="auth-switch">
+        Already have an account? <a href="signin.html">Sign In Here →</a>
+      </div>
+    </div>
+    
+    <!-- Success Message -->
+    <div class="signup-success" id="signupSuccess">
+      <span class="signup-success-emoji">🎉</span>
+      <h3>Account Created!</h3>
+      <p>Welcome to the Stackly family! Your account has been created successfully. Redirecting you to sign in...</p>
+      <a href="signin.html" class="btn btn-primary">Sign In Now →</a>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+// ── Page Loader ──
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 1500);
+});
+
+// ── Validation Functions ──
+function validateName(input) {
+  // Only allow alphabets and spaces
+  input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
+  
+  const name = input.value.trim();
+  const errorEl = document.getElementById('nameError');
+  
+  if (name.length > 0 && name.length < 2) {
+    input.classList.add('error');
+    input.classList.remove('success');
+    errorEl.classList.add('show');
+  } else if (name.length >= 2) {
+    input.classList.remove('error');
+    input.classList.add('success');
+    errorEl.classList.remove('show');
+  } else {
+    input.classList.remove('error', 'success');
+    errorEl.classList.remove('show');
+  }
+}
+
+function validateEmail(input) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const errorEl = document.getElementById('emailError');
+  
+  if (input.value && !emailRegex.test(input.value)) {
+    input.classList.add('error');
+    input.classList.remove('success');
+    errorEl.classList.add('show');
+  } else if (emailRegex.test(input.value)) {
+    input.classList.remove('error');
+    input.classList.add('success');
+    errorEl.classList.remove('show');
+  } else {
+    input.classList.remove('error', 'success');
+    errorEl.classList.remove('show');
+  }
+}
+
+function validatePhone(input) {
+  // Only allow numbers, +, -, spaces
+  input.value = input.value.replace(/[^0-9+\-\s]/g, '');
+  
+  const phone = input.value.replace(/[^0-9]/g, '');
+  const errorEl = document.getElementById('phoneError');
+  
+  if (input.value && phone.length < 10) {
+    input.classList.add('error');
+    input.classList.remove('success');
+    errorEl.classList.add('show');
+  } else if (phone.length >= 10) {
+    input.classList.remove('error');
+    input.classList.add('success');
+    errorEl.classList.remove('show');
+  } else {
+    input.classList.remove('error', 'success');
+    errorEl.classList.remove('show');
+  }
+}
+
+function checkPasswordStrength(input) {
+  const val = input.value;
+  const bar = document.getElementById('strengthBar');
+  
+  bar.className = 'password-strength-bar';
+  
+  if (val.length === 0) return;
+  
+  let strength = 0;
+  if (val.length >= 6) strength++;
+  if (val.length >= 10) strength++;
+  if (/[A-Z]/.test(val)) strength++;
+  if (/[0-9]/.test(val)) strength++;
+  if (/[^a-zA-Z0-9]/.test(val)) strength++;
+  
+  if (strength <= 2) {
+    bar.classList.add('strength-weak');
+  } else if (strength <= 4) {
+    bar.classList.add('strength-medium');
+  } else {
+    bar.classList.add('strength-strong');
+  }
+}
+
+function checkMatch(input) {
+  const pass = document.getElementById('signupPassword').value;
+  const errorEl = document.getElementById('matchError');
+  
+  if (input.value && input.value !== pass) {
+    input.classList.add('error');
+    input.classList.remove('success');
+    errorEl.classList.add('show');
+  } else if (input.value === pass && input.value !== '') {
+    input.classList.remove('error');
+    input.classList.add('success');
+    errorEl.classList.remove('show');
+  } else {
+    input.classList.remove('error', 'success');
+    errorEl.classList.remove('show');
+  }
+}
+
+// ── Handle Signup ──
+function handleSignup(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const phone = document.getElementById('signupPhone').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const confirm = document.getElementById('signupConfirm').value;
+  const role = document.querySelector('input[name="role"]:checked').value;
+  
+  // Validate all fields
+  if (!name || !email || !phone || !password || !confirm) {
+    showToast('⚠️', 'Please fill all required fields!');
+    return;
+  }
+  
+  if (name.length < 2 || /[^a-zA-Z\s]/.test(name)) {
+    showToast('⚠️', 'Please enter a valid name (alphabets only)!');
+    document.getElementById('signupName').focus();
+    return;
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showToast('⚠️', 'Please enter a valid email!');
+    document.getElementById('signupEmail').focus();
+    return;
+  }
+  
+  const phoneDigits = phone.replace(/[^0-9]/g, '');
+  if (phoneDigits.length < 10) {
+    showToast('⚠️', 'Please enter a valid phone number!');
+    document.getElementById('signupPhone').focus();
+    return;
+  }
+  
+  if (password.length < 6) {
+    showToast('⚠️', 'Password must be at least 6 characters!');
+    document.getElementById('signupPassword').focus();
+    return;
+  }
+  
+  if (password !== confirm) {
+    showToast('⚠️', 'Passwords do not match!');
+    document.getElementById('signupConfirm').focus();
+    return;
+  }
+  
+  // Save user data to localStorage (simulating account creation)
+  const userData = {
+    name: name,
+    email: email,
+    phone: phone,
+    role: role,
+    password: password, // In real app, never store plain text password!
+    createdAt: new Date().toISOString()
+  };
+  
+  // Store in localStorage (in real app, send to server)
+  let users = JSON.parse(localStorage.getItem('stacklyUsers') || '[]');
+  
+  // Check if email already exists
+  const existingUser = users.find(u => u.email === email);
+  if (existingUser) {
+    showToast('⚠️', 'An account with this email already exists!');
+    return;
+  }
+  
+  users.push(userData);
+  localStorage.setItem('stacklyUsers', JSON.stringify(users));
+  
+  // Show success and redirect
+  document.getElementById('signupFormContent').style.display = 'none';
+  document.getElementById('signupSuccess').style.display = 'block';
+  
+  showToast('🎉', 'Account created successfully!');
+  
+  // Auto redirect after 3 seconds
+  setTimeout(() => {
+    window.location.href = 'signin.html';
+  }, 3000);
+}
+
+// ── Toast ──
+function showToast(emoji, msg) {
+  // Create toast if not exists
+  let toast = document.getElementById('authToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'authToast';
+    toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark2);border:2px solid var(--primary);border-radius:12px;padding:14px 22px;color:white;font-family:var(--font-heading);font-size:0.9rem;z-index:99999;opacity:0;transition:all 0.4s ease;text-align:center;max-width:90%;';
+    document.body.appendChild(toast);
+  }
+  
+  toast.innerHTML = `<span style="font-size:1.5rem;display:block;margin-bottom:5px;">${emoji}</span>${msg}`;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 3000);
+}
+</script>
+
+</body>
+</html>

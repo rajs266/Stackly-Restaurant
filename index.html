@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Stackly — Where Every Bite Slaps | Salem's #1 Restaurant</title>
+  <meta name="description" content="Stackly Restaurant — Salem's most fun and flavorful dining experience. Fresh ingredients, bold flavors, zero boring bites. Book your table today!">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">STACKLY</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-text">Heating up the kitchen...</div>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Food Toast -->
+<div class="food-toast" id="foodToast">
+  <div class="food-toast-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+  </div>
+  <span id="toastMsg">Added to order!</span>
+</div>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none'">
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html">Reservation</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="nav-cta-group">
+    <a href="signin.html" class="nav-links btn-nav-login">Login</a>
+    <a href="signup.html" class="nav-links btn-nav-start">Get Started</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html">Reservation</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="mobile-menu-btns">
+    <a href="signin.html" class="btn btn-outline">Login</a>
+    <a href="signup.html" class="btn btn-primary">Get Started</a>
+  </div>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="./assets/315076.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <div class="hero-text-side reveal">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Salem's #1 Fun Dining Spot
+      </div>
+      <h1 class="hero-title">
+        DINE<span class="line-accent">WILD</span>
+        <span class="line-gold">EAT BIG!</span>
+      </h1>
+      <p class="hero-subtitle">
+        Life's too short for boring food! At Stackly, every plate is a party, every bite is a celebration. Stack up the flavours, stack up the laughs!
+      </p>
+      <div class="hero-btns">
+        <a href="reservation.html" class="btn btn-primary btn-lg">Book A Table</a>
+        <a href="menu.html" class="btn btn-outline btn-lg">See Our Menu</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="5000">0</div>
+          <div class="hero-stat-label">Happy Foodies</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="120">0</div>
+          <div class="hero-stat-label">Menu Items</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" data-count="12">0</div>
+          <div class="hero-stat-label">Years of Excellence</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual reveal-scale delay-2">
+      <div class="hero-plate-ring">
+        <div class="hero-orbit">
+          <span class="hero-orbit-item">🍕</span>
+          <span class="hero-orbit-item">🥗</span>
+          <span class="hero-orbit-item">🍜</span>
+          <span class="hero-orbit-item">🧁</span>
+        </div>
+        <div class="hero-emoji-main">🍔</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" onclick="document.querySelector('#ticker').scrollIntoView({behavior:'smooth'})">
+    Scroll Down
+    <span></span>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker-wrap" id="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><span class="dot"></span> Freshly Made Daily</span>
+    <span class="ticker-item"><span class="dot"></span> Zero Compromise</span>
+    <span class="ticker-item"><span class="dot"></span> Family Vibes</span>
+    <span class="ticker-item"><span class="dot"></span> Wild Flavours</span>
+    <span class="ticker-item"><span class="dot"></span> Open Daily</span>
+    <span class="ticker-item"><span class="dot"></span> Happy Hours</span>
+    <span class="ticker-item"><span class="dot"></span> Salem's Favourite</span>
+    <span class="ticker-item"><span class="dot"></span> Book Now!</span>
+    <span class="ticker-item"><span class="dot"></span> Freshly Made Daily</span>
+    <span class="ticker-item"><span class="dot"></span> Zero Compromise</span>
+    <span class="ticker-item"><span class="dot"></span> Family Vibes</span>
+    <span class="ticker-item"><span class="dot"></span> Wild Flavours</span>
+    <span class="ticker-item"><span class="dot"></span> Open Daily</span>
+    <span class="ticker-item"><span class="dot"></span> Happy Hours</span>
+    <span class="ticker-item"><span class="dot"></span> Salem's Favourite</span>
+    <span class="ticker-item"><span class="dot"></span> Book Now!</span>
+  </div>
+</div>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="section">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <div class="about-img-wrap">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Stackly Restaurant Interior">
+        </div>
+        <div class="about-inset">
+          <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&q=80" alt="Fresh ingredients">
+        </div>
+        <div class="about-badge-float">
+          <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          BEST<br>FOOD
+        </div>
+      </div>
+      <div class="about-content reveal-right">
+        <div class="section-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+          Our Story
+        </div>
+        <h2 class="section-title">It All Started With A <span>Crazy Hunger!</span></h2>
+        <p class="section-subtitle">
+          Back in 2012, our founder was wandering Salem's streets after midnight, desperately hungry, and thought: "Why can't great food be FUN?" That one grumbling stomach changed everything.
+        </p>
+        <p class="section-subtitle mt-1">
+          Today, Stackly is Salem's happiest restaurant — where bold flavours meet even bolder laughs. From crispy starters to decadent desserts, we stack greatness on every single plate!
+        </p>
+        <div class="about-features">
+          <div class="about-feature-card wobble reveal-scale delay-1">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <span class="feature-name">Farm Fresh</span>
+            <span class="feature-note">Daily sourced</span>
+          </div>
+          <div class="about-feature-card wobble reveal-scale delay-2">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <span class="feature-name">Expert Chefs</span>
+            <span class="feature-note">12+ years exp.</span>
+          </div>
+          <div class="about-feature-card wobble reveal-scale delay-3">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .98h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.9A16 16 0 0015.1 17.09l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <span class="feature-name">Fun Ambience</span>
+            <span class="feature-note">Party-ready</span>
+          </div>
+          <div class="about-feature-card wobble reveal-scale delay-4">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="feature-name">Quick Service</span>
+            <span class="feature-note">No long waits!</span>
+          </div>
+        </div>
+        <div class="mt-4">
+          <a href="about.html" class="btn btn-primary">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TODAY'S SPECIALS ═══ -->
+<section id="special" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-badge" style="color:var(--secondary);border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.1);">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Fresh Today
+      </div>
+      <h2 class="section-title" style="color:white;">Today's <span>Specials</span></h2>
+      <p class="section-subtitle" style="color:rgba(255,255,255,0.62);">Our chef's handpicked masterpieces for today — hot, fresh, and ready to wreck your diet goals!</p>
+    </div>
+    <div class="special-swiper reveal">
+      <div class="special-card">
+        <div class="special-badge-hot">HOT</div>
+        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Spicy Chicken Stack" class="special-card-img">
+        <div class="special-card-body">
+          <span class="special-tag">Signature</span>
+          <div class="special-name">SPICY STACK</div>
+          <p class="special-desc">Double-layered crispy chicken with our secret 7-spice sauce that'll make you cry happy tears!</p>
+          <div class="special-footer">
+            <span class="special-price">₹349</span>
+            <button class="special-order-btn" onclick="triggerToast('✓','Spicy Stack added!')">Order Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="BBQ Platter" class="special-card-img">
+        <div class="special-card-body">
+          <span class="special-tag">BBQ Special</span>
+          <div class="special-name">BBQ ROYALE</div>
+          <p class="special-desc">Smoky grilled platter with 4 meats, caramelised onions and our legendary house BBQ sauce!</p>
+          <div class="special-footer">
+            <span class="special-price">₹529</span>
+            <button class="special-order-btn" onclick="triggerToast('✓','BBQ Royale added!')">Order Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="special-badge-hot">FAVE</div>
+        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80" alt="Pizza Stack" class="special-card-img">
+        <div class="special-card-body">
+          <span class="special-tag">Chef's Pick</span>
+          <div class="special-name">PIZZA CHAOS</div>
+          <p class="special-desc">Wood-fired chaos on a 12-inch base — loaded with 6 toppings and an insane cheese pull!</p>
+          <div class="special-footer">
+            <span class="special-price">₹449</span>
+            <button class="special-order-btn" onclick="triggerToast('✓','Pizza Chaos added!')">Order Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" alt="Pancakes" class="special-card-img">
+        <div class="special-card-body">
+          <span class="special-tag">Sweet Break</span>
+          <div class="special-name">STACK CAKES</div>
+          <p class="special-desc">Fluffy buttermilk pancakes stacked sky-high with maple syrup, fresh berries and choco drizzle!</p>
+          <div class="special-footer">
+            <span class="special-price">₹249</span>
+            <button class="special-order-btn" onclick="triggerToast('✓','Stack Cakes added!')">Order Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="special-card">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80" alt="Salad Bowl" class="special-card-img">
+        <div class="special-card-body">
+          <span class="special-tag">Healthy</span>
+          <div class="special-name">POWER BOWL</div>
+          <p class="special-desc">For the healthy days — absolutely delicious with 20+ fresh ingredients packed with nutrition!</p>
+          <div class="special-footer">
+            <span class="special-price">₹299</span>
+            <button class="special-order-btn" onclick="triggerToast('✓','Power Bowl added!')">Order Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4 reveal">
+      <a href="menu.html" class="btn btn-secondary">View Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS STRIP ═══ -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div class="stat-num" data-count="5000">0</div>
+      <div class="stat-label">Smiling Customers</div>
+    </div>
+    <div class="stat-item reveal delay-1">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="stat-num" data-count="120">0</div>
+      <div class="stat-label">Menu Dishes</div>
+    </div>
+    <div class="stat-item reveal delay-2">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div class="stat-num" data-count="15">0</div>
+      <div class="stat-label">Pro Chefs</div>
+    </div>
+    <div class="stat-item reveal delay-3">
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      </div>
+      <div class="stat-num" data-count="25">0</div>
+      <div class="stat-label">Awards Won</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MENU PREVIEW ═══ -->
+<section id="menu-page" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2H2l3 9H2l3 11h14l3-11h-3L22 2z"/></svg>
+        Our Menu
+      </div>
+      <h2 class="section-title">Pick Your <span>Flavour Mood</span></h2>
+      <p class="section-subtitle">From crispy starters to soul-warming mains — we've got every craving covered. No boring food allowed!</p>
+    </div>
+    <div class="menu-tabs reveal">
+      <button class="menu-tab active" data-tab="starters">Starters</button>
+      <button class="menu-tab" data-tab="mains">Mains</button>
+      <button class="menu-tab" data-tab="desserts">Desserts</button>
+      <button class="menu-tab" data-tab="drinks">Drinks</button>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+      <!-- JS fills this -->
+    </div>
+    <div class="text-center mt-4 reveal">
+      <a href="menu.html" class="btn btn-primary btn-lg">Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TEAM ═══ -->
+<section id="team" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Our Crew
+      </div>
+      <h2 class="section-title">The <span>Dream Team</span></h2>
+      <p class="section-subtitle">The legends behind every legendary plate. They cook with love, a dash of madness, and zero chill!</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal delay-1">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&q=80" alt="Chef Arjun">
+          <div class="team-overlay">
+            <a href="404.html" class="team-social-icon" title="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="404.html" class="team-social-icon" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="404.html" class="team-social-icon" title="Twitter">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">CHEF ARJUN</div>
+          <div class="team-role">Head Chef &amp; Flavour Wizard</div>
+          <p class="team-bio">15 years of turning ordinary ingredients into extraordinary masterpieces. His BBQ sauce recipe is literally a state secret.</p>
+        </div>
+      </div>
+      <div class="team-card reveal delay-2">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1581349485608-9469926a8e5e?w=400&q=80" alt="Chef Priya">
+          <div class="team-overlay">
+            <a href="404.html" class="team-social-icon" title="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="404.html" class="team-social-icon" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="404.html" class="team-social-icon" title="Twitter">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">CHEF PRIYA</div>
+          <div class="team-role">Pastry Artist &amp; Dessert Queen</div>
+          <p class="team-bio">She speaks fluent "chocolate" and her desserts have literally made grown men cry. The good kind of crying!</p>
+        </div>
+      </div>
+      <div class="team-card reveal delay-3">
+        <div class="team-img-wrap">
+          <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=400&q=80" alt="Chef Ravi">
+          <div class="team-overlay">
+            <a href="404.html" class="team-social-icon" title="Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+            <a href="404.html" class="team-social-icon" title="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="404.html" class="team-social-icon" title="Twitter">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="team-body">
+          <div class="team-name">CHEF RAVI</div>
+          <div class="team-role">Grill Master &amp; Spice Sorcerer</div>
+          <p class="team-bio">Born with a spatula in hand! Ravi's marinades are so good that customers have tried to bribe him for the recipes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RESERVATION CTA ═══ -->
+<section id="reservation" class="section">
+  <div class="section-inner">
+    <div class="reservation-grid">
+      <div class="reservation-info reveal-left">
+        <div class="section-badge" style="color:var(--secondary);border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.1);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Reserve
+        </div>
+        <h2 class="section-title" style="color:white;">Grab Your <span style="color:var(--primary)">Table</span> Before It's Gone!</h2>
+        <p class="section-subtitle" style="color:rgba(255,255,255,0.62);">Peak hours fill up FAST. Reserve your spot now and skip the queue. Walk-ins are welcome but smart people book ahead!</p>
+        <div class="res-perks">
+          <div class="res-perk">
+            <div class="res-perk-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+            </div>
+            Special occasion surprises included
+          </div>
+          <div class="res-perk">
+            <div class="res-perk-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </div>
+            Live music every Friday &amp; Saturday
+          </div>
+          <div class="res-perk">
+            <div class="res-perk-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </div>
+            Customise your menu in advance
+          </div>
+          <div class="res-perk">
+            <div class="res-perk-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            VIP table for loyalty members
+          </div>
+        </div>
+      </div>
+      <div class="reservation-form-wrap reveal-right">
+        <div class="res-form-title">Book My Table</div>
+        <div class="res-form-sub">Fill in &amp; we'll confirm in 30 min!</div>
+        <form onsubmit="handleReservation(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name <span class="required">*</span></label>
+              <input type="text" class="form-input" placeholder="Full name" required>
+            </div>
+            <div class="form-group">
+              <label>Phone <span class="required">*</span></label>
+              <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date <span class="required">*</span></label>
+              <input type="date" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label>Time <span class="required">*</span></label>
+              <input type="time" class="form-input" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Guests <span class="required">*</span></label>
+              <select class="form-input" required>
+                <option value="">Select</option>
+                <option>1</option><option>2</option><option>3</option><option>4</option><option>5-8</option><option>9+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Occasion</label>
+              <select class="form-input">
+                <option value="">Select</option>
+                <option>Birthday</option>
+                <option>Anniversary</option>
+                <option>Wedding</option>
+                <option>Business</option>
+                <option>Casual Dining</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Preferred Cuisine</label>
+            <select class="form-input">
+              <option>Indian</option>
+              <option>Continental</option>
+              <option>Mexican</option>
+              <option>Surprise Me!</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary res-submit wobble">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ BLOG PREVIEW ═══ -->
+<section id="blog-section" class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Food Blog
+      </div>
+      <h2 class="section-title">Tasty <span>Stories</span></h2>
+      <p class="section-subtitle">Recipes, tips, behind-the-scenes drama, and tales from our glorious kitchen adventures!</p>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal delay-1">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600&q=80" alt="Blog 1">
+          <span class="blog-category">Recipes</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-date">12 May 2025</span>
+            <span>•</span>
+            <span class="blog-author">Chef Arjun</span>
+          </div>
+          <h3 class="blog-title">THE SECRET SPICE THAT CHANGED EVERYTHING</h3>
+          <p class="blog-excerpt">We accidentally discovered a spice combo that made our signature sauce 10x better. Here's the full story and (almost) the recipe!</p>
+          <a href="blog.html" class="blog-read-more">Read Story →</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-2">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80" alt="Blog 2">
+          <span class="blog-category">Tips</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-date">28 Apr 2025</span>
+            <span>•</span>
+            <span class="blog-author">Chef Priya</span>
+          </div>
+          <h3 class="blog-title">5 BAKING TIPS THAT'LL MAKE YOU A LEGEND</h3>
+          <p class="blog-excerpt">Forget everything you learned about baking. These pro tricks from our pastry queen will revolutionise your dessert game!</p>
+          <a href="blog.html" class="blog-read-more">Read Story →</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-3">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Blog 3">
+          <span class="blog-category">Behind Scenes</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-date">10 Apr 2025</span>
+            <span>•</span>
+            <span class="blog-author">Chef Ravi</span>
+          </div>
+          <h3 class="blog-title">A TYPICAL FRIDAY NIGHT AT STACKLY (IT'S CHAOS!)</h3>
+          <p class="blog-excerpt">400 covers, 3 birthday cakes, one escaped chicken (long story), and the most epic Saturday night Salem has ever seen.</p>
+          <a href="blog.html" class="blog-read-more">Read Story →</a>
+        </div>
+      </div>
+      <div class="blog-card reveal delay-4">
+        <div class="blog-img-wrap">
+          <img src="https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80" alt="Blog 4">
+          <span class="blog-category">News</span>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-date">2 Mar 2025</span>
+            <span>•</span>
+            <span class="blog-author">Team Stackly</span>
+          </div>
+          <h3 class="blog-title">WE WON BEST RESTAURANT IN SALEM (AGAIN!)</h3>
+          <p class="blog-excerpt">Three years running! We couldn't have done it without every customer who walked through our doors and every chef who sweat in our kitchen!</p>
+          <a href="blog.html" class="blog-read-more">Read Story →</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4 reveal">
+      <a href="blog.html" class="btn btn-primary">View All Posts</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BANNER ═══ -->
+<div class="cta-banner">
+  <div class="section-inner">
+    <h2 class="cta-title reveal">Hungry Yet?<br>Come Feed The Beast!</h2>
+    <p class="cta-sub reveal delay-1">Walk in, sit down, and let us absolutely wreck your calorie counter. You deserve it!</p>
+    <div class="cta-btns reveal delay-2">
+      <a href="reservation.html" class="btn btn-dark btn-lg">Book A Table</a>
+      <a href="menu.html" class="btn btn-outline btn-lg">Explore Menu</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NEWSLETTER ═══ -->
+<div class="newsletter-strip">
+  <div class="newsletter-inner">
+    <div class="newsletter-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </div>
+    <h3 class="newsletter-title">Stay In The Loop!</h3>
+    <p class="newsletter-sub">Get exclusive deals, new dishes, and kitchen gossip straight to your inbox. No spam, only tasty updates!</p>
+    <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+      <input type="email" placeholder="Drop your email here..." required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="section-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <img src="assets/logo.webp" alt="Stackly" height="42" onerror="this.style.display='none'">
+        </a>
+        <p>Salem's most fun restaurant since 2012. We don't just serve food — we serve memories, laughter, and seriously good vibes.</p>
+        <div class="footer-socials">
+          <a href="404.html" class="footer-social" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="Twitter/X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.253 2 2 6.253 2 11.5c0 1.891.549 3.658 1.5 5.158L2 22l5.5-1.5A9.455 9.455 0 0011.5 21C16.747 21 21 16.747 21 11.5S16.747 2 11.5 2z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">→ Home</a></li>
+          <li><a href="about.html">→ About Us</a></li>
+          <li><a href="menu.html">→ Our Menu</a></li>
+          <li><a href="reservation.html">→ Reservations</a></li>
+          <li><a href="blog.html">→ Blog</a></li>
+          <li><a href="contact.html">→ Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">New Menu</h4>
+        <ul class="footer-links">
+          <li><a href="menu.html">→ Stackly BBQ Platter</a></li>
+          <li><a href="menu.html">→ Spicy Chaos Burger</a></li>
+          <li><a href="menu.html">→ Mango Lassi Supreme</a></li>
+          <li><a href="menu.html">→ Triple Choco Lava</a></li>
+          <li><a href="menu.html">→ Power Grain Bowl</a></li>
+          <li><a href="menu.html">→ Chef's Secret Biriyani</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Find Us</h4>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="footer-contact-text">
+            <strong>Address</strong>
+            MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .98h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9A16 16 0 0015.1 17.09l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="footer-contact-text"><strong>Call Us</strong>+91 98765 43210</div>
+        </div>
+        <div class="footer-contact-item">
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="footer-contact-text"><strong>Email</strong>hello@stackly.in</div>
+        </div>
+        <div class="footer-hours mt-2">
+          <div class="footer-hours-item"><span>Mon – Thu</span><span>11AM – 10PM</span></div>
+          <div class="footer-hours-item"><span>Fri – Sat</span><span>11AM – 11PM</span></div>
+          <div class="footer-hours-item"><span>Sunday</span><span>12PM – 9PM</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 <span>Stackly Restaurant</span>. Made with ♥ in Salem, Tamil Nadu.</p>
+      <div class="footer-bottom-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms</a>
+        <a href="404.html">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+<script>
+/* ── Menu Data & Render ── */
+const menuData = {
+  starters: [
+    { img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80', name: 'Masala Garlic Bread', desc: 'Toasted bread loaded with garlic butter & secret masala blend.', price: '₹149', badge: 'Fave' },
+    { img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80', name: 'BBQ Chicken Wings', desc: '6 crispy wings smothered in our legendary BBQ sauce.', price: '₹249', badge: 'Hot' },
+    { img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80', name: 'Power Mixed Salad', desc: 'Fresh veggies, seeds, feta, and a zesty lemon dressing.', price: '₹199', badge: 'Healthy' },
+    { img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80', name: 'Crispy Calamari', desc: 'Golden fried squid rings with spiced mayo dip.', price: '₹299', badge: 'New' },
+  ],
+  mains: [
+    { img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80', name: 'Stackly Spicy Burger', desc: 'Double patty, jalapeños, cheddar, and our secret sauce.', price: '₹349', badge: 'Spicy' },
+    { img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80', name: 'Chaos Pizza', desc: '6-topping wood-fired pizza on a hand-stretched base.', price: '₹449', badge: 'Famous' },
+    { img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80', name: 'BBQ Royale Platter', desc: 'Grilled meats, cornbread, coleslaw and smoky BBQ.', price: '₹529', badge: 'Best' },
+    { img: 'https://images.unsplash.com/photo-1503764654157-72d979d9af2f?w=400&q=80', name: "Chef's Biriyani", desc: 'Slow-cooked dum biriyani with raita and salan.', price: '₹299', badge: 'Chef' },
+  ],
+  desserts: [
+    { img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80', name: 'Stack Pancakes', desc: 'Tower of fluffy pancakes with maple syrup and berries.', price: '₹249', badge: 'Sweet' },
+    { img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80', name: 'Choco Lava Cake', desc: 'Warm chocolate cake with molten centre and ice cream.', price: '₹199', badge: 'Must Try' },
+    { img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80', name: 'Mango Sundae', desc: 'Alphonso mango sorbet with caramel crunch and cream.', price: '₹179', badge: 'Summer' },
+    { img: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=400&q=80', name: 'NY Cheesecake', desc: 'Classic New York style with mixed berry compote.', price: '₹229', badge: 'Classic' },
+  ],
+  drinks: [
+    { img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80', name: 'Mango Lassi Supreme', desc: 'Thick Alphonso mango blended with chilled yoghurt.', price: '₹129', badge: 'Thick' },
+    { img: 'https://images.unsplash.com/photo-1543332164-6e82f355badc?w=400&q=80', name: 'Watermelon Slush', desc: 'Fresh watermelon slush with mint and a pinch of salt.', price: '₹99', badge: 'Refresh' },
+    { img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80', name: 'Stackly Special Cola', desc: 'Our signature cola float with vanilla ice cream.', price: '₹149', badge: 'Signature' },
+    { img: 'https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&q=80', name: 'Iced Masala Chai', desc: 'Traditional chai brewed strong, poured over ice with cream.', price: '₹89', badge: 'Chai' },
+  ]
+};
+
+function renderMenu(tab) {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = menuData[tab].map(item => `
+    <div class="menu-card">
+      <div class="menu-card-img-wrap">
+        <img src="${item.img}" alt="${item.name}" loading="lazy">
+        <span class="menu-card-badge">${item.badge}</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">${item.name}</div>
+        <p class="menu-card-desc">${item.desc}</p>
+        <div class="menu-card-footer">
+          <span class="menu-price">${item.price}</span>
+          <button class="menu-add-btn" onclick="triggerToast('✓','${item.name} added!')">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+renderMenu('starters');
+document.querySelectorAll('.menu-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.menu-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMenu(btn.dataset.tab);
+  });
+});
+</script>
+</body>
+</html>

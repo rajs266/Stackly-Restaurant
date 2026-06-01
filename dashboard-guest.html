@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>My Account — Stackly Restaurant</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    :root {
+      --sidebar-w: 260px;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: var(--font-body);
+      background: #f5f0eb;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+    
+    .dashboard-wrap {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--dark);
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+    
+    .sidebar-brand {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-brand img {
+      height: 40px;
+      width: auto;
+      flex-shrink: 0;
+    }
+    .sidebar-brand-text {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--primary);
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+    
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 0;
+    }
+    .sidebar-section {
+      margin-bottom: 20px;
+    }
+    .sidebar-section-title {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      padding: 0 20px 10px;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+    }
+    .sidebar-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--primary);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(255,69,0,0.1);
+      color: white;
+    }
+    .sidebar-link:hover::before, .sidebar-link.active::before {
+      transform: scaleY(1);
+    }
+    .sidebar-link-icon {
+      font-size: 1.3rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .sidebar-link-badge {
+      margin-left: auto;
+      background: var(--primary);
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-family: var(--font-heading);
+    }
+    
+    .sidebar-footer {
+      padding: 15px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .sidebar-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .sidebar-user:hover {
+      background: rgba(255,69,0,0.15);
+    }
+    .sidebar-user-avatar {
+      width: 40px;
+      height: 40px;
+      background: var(--accent2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .sidebar-user-info {
+      overflow: hidden;
+    }
+    .sidebar-user-name {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      color: white;
+      white-space: nowrap;
+    }
+    .sidebar-user-role {
+      font-size: 0.75rem;
+      color: var(--accent2);
+    }
+    
+    /* ── Main Content ── */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      transition: var(--transition);
+    }
+    
+    /* ── Top Header ── */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      background: rgba(245,240,235,0.95);
+      backdrop-filter: blur(10px);
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,69,0,0.1);
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--dark);
+      padding: 5px;
+      position: relative;
+      width: 36px;
+      height: 36px;
+    }
+    .menu-toggle span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      transition: var(--transition);
+    }
+    .menu-toggle .close-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg); }
+    .menu-toggle.open .menu-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg); }
+    .menu-toggle.open .close-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg); }
+    
+    .header-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--dark);
+      letter-spacing: 2px;
+    }
+    .header-breadcrumb {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .header-icon-btn {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      text-decoration: none;
+    }
+    .header-icon-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      transform: scale(1.1);
+    }
+    .header-notif-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      color: white;
+      font-size: 0.65rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+    }
+    
+    /* ── Dashboard Content ── */
+    .dashboard-content {
+      padding: 25px 30px;
+    }
+    
+    /* ── Welcome Banner ── */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      color: white;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .welcome-banner::before {
+      content: '🍕🍔🍜🍰';
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 6rem;
+      opacity: 0.1;
+    }
+    .welcome-banner h2 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .welcome-banner p {
+      opacity: 0.9;
+      font-size: 0.95rem;
+      position: relative;
+      max-width: 500px;
+    }
+    .welcome-banner-btns {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    .welcome-banner .btn-dark {
+      background: var(--dark);
+      color: white;
+    }
+    .welcome-banner .btn-dark:hover {
+      background: white;
+      color: var(--dark);
+    }
+    
+    /* ── Profile Card ── */
+    .profile-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      border: 2px solid var(--border);
+      text-align: center;
+      margin-bottom: 30px;
+      transition: var(--transition);
+    }
+    .profile-card:hover {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 15px;
+      border: 4px solid white;
+      box-shadow: 0 8px 25px rgba(255,69,0,0.3);
+      animation: floatAvatar 3s ease-in-out infinite;
+    }
+    @keyframes floatAvatar {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--dark);
+      letter-spacing: 2px;
+      margin-bottom: 5px;
+    }
+    .profile-email {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    .profile-meta {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+    .profile-meta-item {
+      text-align: center;
+    }
+    .profile-meta-value {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+    .profile-meta-label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .profile-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,215,0,0.15);
+      border: 1px solid rgba(255,215,0,0.3);
+      color: #b8860b;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-top: 15px;
+    }
+    
+    /* ── Stats Cards ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 22px;
+      border: 2px solid var(--border);
+      transition: var(--transition);
+      text-align: center;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+    }
+    .stat-card-icon {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 12px;
+      transition: var(--transition);
+    }
+    .stat-card-icon.orange { background: rgba(255,69,0,0.1); }
+    .stat-card-icon.gold { background: rgba(255,215,0,0.15); }
+    .stat-card-icon.green { background: rgba(0,201,167,0.1); }
+    .stat-card-icon.purple { background: rgba(138,43,226,0.1); }
+    .stat-card:hover .stat-card-icon {
+      transform: scale(1.15) rotate(10deg);
+    }
+    .stat-card-value {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      color: var(--dark);
+    }
+    .stat-card-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+    
+    /* ── Order Cards ── */
+    .order-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 2px solid var(--border);
+      transition: var(--transition);
+      margin-bottom: 15px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .order-card:hover {
+      transform: translateX(5px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
+    .order-img {
+      width: 70px;
+      height: 70px;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .order-details {
+      flex: 1;
+    }
+    .order-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .order-meta {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .order-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-family: var(--font-heading);
+    }
+    .order-price {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+    
+    /* ── Favorite Items ── */
+    .fav-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    .fav-item {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 2px solid var(--border);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .fav-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+    }
+    .fav-item img {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .fav-item:hover img {
+      transform: scale(1.08);
+    }
+    .fav-item-body {
+      padding: 12px;
+    }
+    .fav-item-name {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+    .fav-item-price {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+    
+    /* ── Reward Card ── */
+    .reward-card {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    .reward-card::before {
+      content: '⭐';
+      position: absolute;
+      right: -10px;
+      top: -10px;
+      font-size: 8rem;
+      opacity: 0.05;
+    }
+    .reward-card-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .reward-card-text {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+    }
+    .reward-progress {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      height: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .reward-progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 10px;
+      width: 65%;
+      transition: width 1s ease;
+    }
+    .reward-progress-text {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+    }
+    
+    /* ── Two Column ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .section-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 25px;
+      border: 2px solid var(--border);
+    }
+    .section-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .section-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      color: var(--dark);
+    }
+    
+    /* ── Reservation Item ── */
+    .res-item {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background: var(--light);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      transition: var(--transition);
+      border-left: 3px solid transparent;
+    }
+    .res-item:hover {
+      border-left-color: var(--primary);
+      transform: translateX(5px);
+    }
+    .res-date {
+      width: 55px;
+      height: 55px;
+      background: var(--primary);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .res-date-day {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+    .res-date-month {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+    .res-details h4 {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .res-details p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    
+    /* ── Sidebar Overlay ── */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .sidebar-overlay.show {
+      display: block;
+    }
+    
+    /* ── Animations ── */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in {
+      animation: slideIn 0.5s ease forwards;
+    }
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1200px) {
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .fav-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 992px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .top-header {
+        padding: 12px 20px;
+      }
+      .dashboard-content {
+        padding: 20px;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .fav-grid { grid-template-columns: 1fr; }
+      .welcome-banner h2 { font-size: 1.3rem; }
+      .welcome-banner::before { font-size: 3rem; }
+      .profile-avatar { width: 70px; height: 70px; font-size: 2rem; }
+      .profile-name { font-size: 1.2rem; }
+      .order-card { flex-direction: column; text-align: center; }
+      .order-img { width: 100%; height: 150px; }
+      .header-title { font-size: 1.1rem; }
+    }
+    
+    @media (max-width: 380px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .header-right { gap: 8px; }
+      .header-icon-btn { width: 36px; height: 36px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar Overlay (Mobile) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<div class="dashboard-wrap">
+  
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+        <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
+        
+      </a>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">My Account</div>
+        <a href="dashboard-guest.html" class="sidebar-link active">
+          <span class="sidebar-link-icon">🏠</span>
+          <span class="sidebar-link-text">Dashboard</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">🍽️</span>
+          <span class="sidebar-link-text">My Orders</span>
+          <span class="sidebar-link-badge">3</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">📅</span>
+          <span class="sidebar-link-text">Reservations</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">❤️</span>
+          <span class="sidebar-link-text">Favorites</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Rewards</div>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">⭐</span>
+          <span class="sidebar-link-text">Loyalty Points</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">🎁</span>
+          <span class="sidebar-link-text">Offers & Deals</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">🎟️</span>
+          <span class="sidebar-link-text">My Coupons</span>
+        </a>
+      </div>
+      
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Settings</div>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">👤</span>
+          <span class="sidebar-link-text">Edit Profile</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">🔔</span>
+          <span class="sidebar-link-text">Notifications</span>
+        </a>
+        <a href="404.html" class="sidebar-link">
+          <span class="sidebar-link-icon">⚙️</span>
+          <span class="sidebar-link-text">Settings</span>
+        </a>
+        <a href="#" class="sidebar-link" onclick="handleLogout()">
+          <span class="sidebar-link-icon">🚪</span>
+          <span class="sidebar-link-text">Logout</span>
+        </a>
+      </div>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="sidebar-user-avatar" id="userAvatar">👤</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="userName">Guest User</div>
+          <div class="sidebar-user-role" id="userRole">Member</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="main-content">
+    
+    <!-- Top Header -->
+    <header class="top-header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
+          <span class="menu-icon">☰</span>
+          <span class="close-icon">✕</span>
+        </button>
+        <div>
+          <div class="header-title">My Dashboard</div>
+          <div class="header-breadcrumb">Home / My Account / Dashboard</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <a href="404.html" class="header-icon-btn" title="Search">🔍</a>
+        <a href="404.html" class="header-icon-btn" title="Cart">
+          🛒
+          <span class="header-notif-badge">2</span>
+        </a>
+        <a href="404.html" class="header-icon-btn" title="Notifications">
+          🔔
+          <span class="header-notif-badge">3</span>
+        </a>
+        <a href="index.html" class="header-icon-btn" title="View Site">🌐</a>
+      </div>
+    </header>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+      
+      <!-- Welcome Banner -->
+      <div class="welcome-banner animate-in">
+        <h2 id="welcomeText">Welcome Back! 👋</h2>
+        <p>Ready to stack up some deliciousness? Your favorites are waiting, and we've got new dishes you need to try!</p>
+        <div class="welcome-banner-btns">
+          <a href="menu.html" class="btn btn-dark">🍔 Order Now</a>
+          <a href="reservation.html" class="btn btn-outline">📅 Book Table</a>
+        </div>
+      </div>
+      
+      <!-- Profile Card -->
+      <div class="profile-card animate-in delay-1">
+        <div class="profile-avatar" id="profileAvatar">👤</div>
+        <div class="profile-name" id="profileName">Guest User</div>
+        <div class="profile-email" id="profileEmail">guest@example.com</div>
+        <div class="profile-meta">
+          <div class="profile-meta-item">
+            <div class="profile-meta-value" id="profileOrders">12</div>
+            <div class="profile-meta-label">Orders</div>
+          </div>
+          <div class="profile-meta-item">
+            <div class="profile-meta-value" id="profileReservations">3</div>
+            <div class="profile-meta-label">Reservations</div>
+          </div>
+          <div class="profile-meta-item">
+            <div class="profile-meta-value" id="profilePoints">450</div>
+            <div class="profile-meta-label">Points</div>
+          </div>
+        </div>
+        <div class="profile-badge">⭐ Silver Member</div>
+      </div>
+      
+      <!-- Reward Card -->
+      <div class="reward-card animate-in delay-2">
+        <div class="reward-card-title">🎯 Rewards Progress</div>
+        <div class="reward-card-text">You're 65% away from Gold status! Keep ordering to unlock exclusive perks.</div>
+        <div class="reward-progress">
+          <div class="reward-progress-bar"></div>
+        </div>
+        <div class="reward-progress-text">350 / 500 points to Gold</div>
+      </div>
+      
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card animate-in delay-1">
+          <div class="stat-card-icon orange">🍽️</div>
+          <div class="stat-card-value">12</div>
+          <div class="stat-card-label">Total Orders</div>
+        </div>
+        <div class="stat-card animate-in delay-2">
+          <div class="stat-card-icon gold">⭐</div>
+          <div class="stat-card-value">450</div>
+          <div class="stat-card-label">Loyalty Points</div>
+        </div>
+        <div class="stat-card animate-in delay-3">
+          <div class="stat-card-icon green">💰</div>
+          <div class="stat-card-value">₹8,450</div>
+          <div class="stat-card-label">Total Spent</div>
+        </div>
+        <div class="stat-card animate-in delay-4">
+          <div class="stat-card-icon purple">🎁</div>
+          <div class="stat-card-value">3</div>
+          <div class="stat-card-label">Coupons</div>
+        </div>
+      </div>
+      
+      <!-- Two Column: Recent Orders + Upcoming Reservations -->
+      <div class="two-col">
+        <!-- Recent Orders -->
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">🍽️ Recent Orders</div>
+            <a href="404.html" class="btn btn-primary btn-sm">View All</a>
+          </div>
+          
+          <div class="order-card">
+            <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=80" alt="Burger" class="order-img">
+            <div class="order-details">
+              <div class="order-name">Stackly Spicy Burger</div>
+              <div class="order-meta">2 items • 28 May 2025</div>
+              <span class="order-status status-confirmed"><span class="status-dot"></span>Delivered</span>
+            </div>
+            <div class="order-price">₹498</div>
+          </div>
+          
+          <div class="order-card">
+            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=200&q=80" alt="Pizza" class="order-img">
+            <div class="order-details">
+              <div class="order-name">Chaos Pizza</div>
+              <div class="order-meta">1 item • 22 May 2025</div>
+              <span class="order-status status-confirmed"><span class="status-dot"></span>Delivered</span>
+            </div>
+            <div class="order-price">₹449</div>
+          </div>
+          
+          <div class="order-card">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=200&q=80" alt="BBQ" class="order-img">
+            <div class="order-details">
+              <div class="order-name">BBQ Royale Platter</div>
+              <div class="order-meta">3 items • 15 May 2025</div>
+              <span class="order-status status-pending"><span class="status-dot"></span>Preparing</span>
+            </div>
+            <div class="order-price">₹1,058</div>
+          </div>
+        </div>
+        
+        <!-- Upcoming Reservations -->
+        <div class="section-card animate-in delay-1">
+          <div class="section-card-header">
+            <div class="section-card-title">📅 Upcoming Reservations</div>
+            <a href="reservation.html" class="btn btn-primary btn-sm">Book New</a>
+          </div>
+          
+          <div class="res-item">
+            <div class="res-date">
+              <div class="res-date-day">15</div>
+              <div class="res-date-month">JUN</div>
+            </div>
+            <div class="res-details">
+              <h4>Anniversary Dinner 🎉</h4>
+              <p>8:00 PM • Table for 2 • Window Seat</p>
+            </div>
+          </div>
+          
+          <div class="res-item">
+            <div class="res-date">
+              <div class="res-date-day">22</div>
+              <div class="res-date-month">JUN</div>
+            </div>
+            <div class="res-details">
+              <h4>Family Lunch 👨‍👩‍👧‍👦</h4>
+              <p>1:00 PM • Table for 6 • Private Booth</p>
+            </div>
+          </div>
+          
+          <div class="res-item">
+            <div class="res-date">
+              <div class="res-date-day">05</div>
+              <div class="res-date-month">JUL</div>
+            </div>
+            <div class="res-details">
+              <h4>Birthday Bash 🎂</h4>
+              <p>7:30 PM • Table for 8 • Party Section</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Favorite Items -->
+      <div class="section-card animate-in">
+        <div class="section-card-header">
+          <div class="section-card-title">❤️ Your Favorites</div>
+          <a href="menu.html" class="btn btn-primary btn-sm">Browse Menu</a>
+        </div>
+        <div class="fav-grid">
+          <div class="fav-item">
+            <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80" alt="Burger">
+            <div class="fav-item-body">
+              <div class="fav-item-name">Spicy Burger</div>
+              <div class="fav-item-price">₹349</div>
+            </div>
+          </div>
+          <div class="fav-item">
+            <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="Pizza">
+            <div class="fav-item-body">
+              <div class="fav-item-name">Chaos Pizza</div>
+              <div class="fav-item-price">₹449</div>
+            </div>
+          </div>
+          <div class="fav-item">
+            <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80" alt="Pancakes">
+            <div class="fav-item-body">
+              <div class="fav-item-name">Stack Pancakes</div>
+              <div class="fav-item-price">₹249</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Special Offers -->
+      <div class="section-card animate-in">
+        <div class="section-card-header">
+          <div class="section-card-title">🎁 Special Offers For You</div>
+          <a href="404.html" class="btn btn-primary btn-sm">View All</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:15px;">
+          <div style="background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:var(--radius);padding:20px;color:white;position:relative;overflow:hidden;">
+            <div style="font-family:var(--font-display);font-size:1.3rem;letter-spacing:2px;margin-bottom:8px;">20% OFF</div>
+            <div style="font-size:0.9rem;opacity:0.9;margin-bottom:12px;">On your next order above ₹500!</div>
+            <div style="background:rgba(255,255,255,0.2);padding:8px 15px;border-radius:20px;font-family:var(--font-heading);font-size:0.8rem;display:inline-block;">Code: STACK20</div>
+            <span style="position:absolute;right:-10px;top:-10px;font-size:5rem;opacity:0.1;">🎉</span>
+          </div>
+          <div style="background:linear-gradient(135deg,var(--dark),var(--dark2));border-radius:var(--radius);padding:20px;color:white;position:relative;overflow:hidden;">
+            <div style="font-family:var(--font-display);font-size:1.3rem;letter-spacing:2px;margin-bottom:8px;">FREE DESSERT</div>
+            <div style="font-size:0.9rem;opacity:0.9;margin-bottom:12px;">With every family pack order!</div>
+            <div style="background:rgba(255,255,255,0.2);padding:8px 15px;border-radius:20px;font-family:var(--font-heading);font-size:0.8rem;display:inline-block;">Code: SWEET</div>
+            <span style="position:absolute;right:-10px;top:-10px;font-size:5rem;opacity:0.1;">🍰</span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+</div>
+
+<script>
+// ── Check Auth & Load User Data ──
+window.addEventListener('DOMContentLoaded', () => {
+  const session = localStorage.getItem('stacklySession') || sessionStorage.getItem('stacklySession');
+  
+  if (!session) {
+    window.location.href = 'signin.html';
+    return;
+  }
+  
+  const user = JSON.parse(session);
+  
+  // Verify guest role (or redirect admin)
+  if (user.role === 'admin') {
+    window.location.href = 'dashboard-admin.html';
+    return;
+  }
+  
+  // Load user info
+  document.getElementById('userName').textContent = user.name || 'Guest User';
+  document.getElementById('userRole').textContent = 'Member';
+  document.getElementById('profileName').textContent = user.name || 'Guest User';
+  document.getElementById('profileEmail').textContent = user.email || 'guest@example.com';
+  document.getElementById('welcomeText').textContent = `Welcome Back, ${user.name || 'Friend'}! 👋`;
+  
+  // Set avatar based on name
+  const initial = (user.name || 'G').charAt(0).toUpperCase();
+  document.getElementById('profileAvatar').textContent = initial;
+  document.getElementById('userAvatar').textContent = initial;
+});
+
+// ── Sidebar Toggle ──
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const toggle = document.getElementById('menuToggle');
+  
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+  toggle.classList.toggle('open');
+}
+
+// ── Handle Logout ──
+function handleLogout() {
+  localStorage.removeItem('stacklySession');
+  sessionStorage.removeItem('stacklySession');
+  window.location.href = 'signin.html';
+}
+
+// ── Back Button Logout ──
+history.pushState(null, null, location.href);
+window.addEventListener('popstate', function() {
+  handleLogout();
+});
+</script>
+
+</body>
+</html>

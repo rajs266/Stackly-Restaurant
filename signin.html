@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Sign In — Stackly Restaurant</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      background: var(--dark);
+      font-family: var(--font-body);
+    }
+    
+    /* Left Side - Background Image */
+    .auth-visual {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(255,69,0,0.85), rgba(45,21,0,0.9)),
+                  url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80') center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26,10,0,0.3);
+    }
+    .auth-visual-content {
+      position: relative;
+      z-index: 1;
+    }
+    .auth-visual-emoji {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      display: block;
+      animation: heroFloat 3s ease-in-out infinite;
+    }
+    @keyframes heroFloat {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50% { transform: translateY(-15px) rotate(3deg); }
+    }
+    .auth-visual-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: white;
+      letter-spacing: 4px;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+      margin-bottom: 12px;
+    }
+    .auth-visual-sub {
+      color: rgba(255,255,255,0.8);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 400px;
+    }
+    .auth-visual-stats {
+      display: flex;
+      gap: 30px;
+      margin-top: 40px;
+      justify-content: center;
+    }
+    .auth-visual-stat {
+      text-align: center;
+    }
+    .auth-visual-stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--secondary);
+    }
+    .auth-visual-stat-label {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    /* Right Side - Form */
+    .auth-form-side {
+      width: min(480px, 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(30px, 5vw, 50px);
+      background: var(--dark2);
+      overflow-y: auto;
+      position: relative;
+    }
+    
+    .auth-logo {
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .auth-logo img {
+      height: 42px;
+      width: auto;
+    }
+    .auth-logo-text {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--primary);
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 0 var(--secondary);
+    }
+    
+    .auth-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: white;
+      letter-spacing: 3px;
+      margin-bottom: 6px;
+    }
+    .auth-sub {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+    
+    .auth-form-group {
+      margin-bottom: 18px;
+    }
+    .auth-form-group label {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .auth-form-group label .req {
+      color: var(--primary);
+    }
+    .auth-input {
+      width: 100%;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius-sm);
+      padding: 13px 18px;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .auth-input::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+    .auth-input:focus {
+      border-color: var(--primary);
+      background: rgba(255,69,0,0.07);
+      box-shadow: 0 0 0 3px rgba(255,69,0,0.15);
+    }
+    .auth-input.error {
+      border-color: #ff4444;
+      box-shadow: 0 0 0 3px rgba(255,68,68,0.15);
+    }
+    
+    .auth-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 0.83rem;
+    }
+    .auth-remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+    }
+    .auth-remember input {
+      accent-color: var(--primary);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+    .auth-forgot {
+      color: var(--primary);
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .auth-forgot:hover {
+      color: var(--secondary);
+    }
+    
+    /* Role Selection */
+    .role-select {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .role-option {
+      flex: 1;
+      position: relative;
+    }
+    .role-option input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .role-option label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 15px 10px;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    .role-option label:hover { border-color: rgba(255,69,0,0.4); }
+    .role-option input:checked + label {
+      border-color: var(--primary);
+      background: rgba(255,69,0,0.1);
+    }
+    .role-option .role-emoji { font-size: 1.8rem; }
+    .role-option .role-name { font-family: var(--font-heading); font-size: 0.85rem; color: white; letter-spacing: 1px; }
+    .role-option .role-desc { font-size: 0.7rem; color: rgba(255,255,255,0.5); }
+    
+    .auth-submit {
+      width: 100%;
+      padding: 15px;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    
+    .auth-divider {
+      text-align: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.82rem;
+      margin: 16px 0;
+      position: relative;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+    .auth-divider::before { left: 0; }
+    .auth-divider::after { right: 0; }
+    
+    .auth-switch {
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.88rem;
+      margin-top: 10px;
+    }
+    .auth-switch a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .auth-switch a:hover {
+      color: var(--secondary);
+    }
+    
+    /* Role Badge */
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,69,0,0.15);
+      border: 1px solid rgba(255,69,0,0.3);
+      color: var(--primary);
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .auth-visual {
+        display: none;
+      }
+      .auth-form-side {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        min-height: 100vh;
+        justify-content: flex-start;
+        padding-top: 80px;
+      }
+    }
+    @media (max-width: 600px) {
+      .auth-form-side {
+        padding: 70px 20px 30px;
+      }
+      .auth-title {
+        font-size: 1.6rem;
+      }
+      .auth-options {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">STACKLY</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-text">Welcome back... 🔥</div>
+</div>
+
+<div class="auth-page">
+  
+  <!-- Left Side - Visual -->
+  <div class="auth-visual">
+    <div class="auth-visual-content">
+      <span class="auth-visual-emoji">🍽️</span>
+      <h1 class="auth-visual-title">WELCOME<br>BACK!</h1>
+      <p class="auth-visual-sub">Sign in to access your dashboard, view orders, manage reservations, and unlock member-exclusive perks!</p>
+      <div class="auth-visual-stats">
+        <div class="auth-visual-stat">
+          <div class="auth-visual-stat-num">5000+</div>
+          <div class="auth-visual-stat-label">Happy Members</div>
+        </div>
+        <div class="auth-visual-stat">
+          <div class="auth-visual-stat-num">20%</div>
+          <div class="auth-visual-stat-label">Member Discount</div>
+        </div>
+        <div class="auth-visual-stat">
+          <div class="auth-visual-stat-num">VIP</div>
+          <div class="auth-visual-stat-label">Priority Booking</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Right Side - Form -->
+  <div class="auth-form-side">
+    
+    <!-- Logo -->
+    <a href="index.html" class="auth-logo">
+      <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
+      <span class="auth-logo-text" style="display:none;">STACKLY</span>
+    </a>
+    
+    <h2 class="auth-title">Sign In</h2>
+    <p class="auth-sub">Enter your credentials to access your account! 🔑</p>
+    
+    <form id="signinForm" onsubmit="handleSignin(event)">
+      
+      <!-- Email -->
+      <div class="auth-form-group">
+        <label>Email Address <span class="req">*</span></label>
+        <input type="email" class="auth-input" id="signinEmail" placeholder="you@example.com" required>
+      </div>
+      
+      <!-- Password -->
+      <div class="auth-form-group">
+        <label>Password <span class="req">*</span></label>
+        <input type="password" class="auth-input" id="signinPassword" placeholder="Your password" required>
+      </div>
+      
+      <!-- Role Selection -->
+      <div class="auth-form-group">
+        <label>Select Role <span class="req">*</span></label>
+        <div class="role-select">
+          <div class="role-option">
+            <input type="radio" name="role" id="roleGuest" value="guest" checked>
+            <label for="roleGuest">
+              <span class="role-emoji">👤</span>
+              <span class="role-name">Guest</span>
+              <span class="role-desc">Access Account</span>
+            </label>
+          </div>
+          <div class="role-option">
+            <input type="radio" name="role" id="roleAdmin" value="admin">
+            <label for="roleAdmin">
+              <span class="role-emoji">👑</span>
+              <span class="role-name">Admin</span>
+              <span class="role-desc">Manage Site</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="auth-options">
+        <label class="auth-remember">
+          <input type="checkbox" id="rememberMe">
+          Remember me
+        </label>
+        <a href="404.html" class="auth-forgot">Forgot Password?</a>
+      </div>
+      
+      <button type="submit" class="btn btn-primary auth-submit wobble">🔥 Sign In</button>
+      
+    </form>
+    
+    <div class="auth-divider">or</div>
+    
+    <div class="auth-switch">
+      Don't have an account? <a href="signup.html">Create One →</a>
+    </div>
+    
+  </div>
+</div>
+
+<script>
+// ── Page Loader ──
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 1500);
+});
+
+// ── Handle Sign In ──
+function handleSignin(e) {
+  e.preventDefault();
+  
+  const email = document.getElementById('signinEmail').value.trim();
+  const password = document.getElementById('signinPassword').value;
+  const role = document.querySelector('input[name="role"]:checked').value;
+  const rememberMe = document.getElementById('rememberMe').checked;
+  
+  // Basic validation
+  if (!email || !password) {
+    showToast('⚠️', 'Please enter both email and password!');
+    return;
+  }
+  
+  // ANY valid email format + ANY password length >= 1 will sign in
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    showToast('⚠️', 'Please enter a valid email format!');
+    document.getElementById('signinEmail').classList.add('error');
+    return;
+  }
+  
+  document.getElementById('signinEmail').classList.remove('error');
+  
+  // Check if user exists in localStorage (from signup)
+  let users = JSON.parse(localStorage.getItem('stacklyUsers') || '[]');
+  let user = users.find(u => u.email === email);
+  
+  // If user not found in localStorage, create a default session
+  // This allows ANY valid email to sign in
+  if (!user) {
+    user = {
+      name: email.split('@')[0],
+      email: email,
+      role: role,
+      password: password
+    };
+  } else {
+    // Check if the selected role matches the registered role
+    if (user.role !== role) {
+      showToast('⚠️', `Account exists, but not as an ${role}!`);
+      return;
+    }
+  }
+  
+  // Store session
+  const session = {
+    email: email,
+    name: user.name,
+    role: user.role,
+    loginTime: new Date().toISOString(),
+    rememberMe: rememberMe
+  };
+  
+  if (rememberMe) {
+    localStorage.setItem('stacklySession', JSON.stringify(session));
+  } else {
+    sessionStorage.setItem('stacklySession', JSON.stringify(session));
+  }
+  
+  showToast('🎉', `Welcome back, ${user.name}! (${user.role === 'admin' ? 'Admin' : 'Guest'})`);
+  
+  // Redirect based on role
+  setTimeout(() => {
+    if (user.role === 'admin') {
+      window.location.href = 'dashboard-admin.html';
+    } else {
+      window.location.href = 'dashboard-guest.html';
+    }
+  }, 1500);
+}
+
+// ── Toast ──
+function showToast(emoji, msg) {
+  let toast = document.getElementById('authToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'authToast';
+    toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark2);border:2px solid var(--primary);border-radius:12px;padding:14px 22px;color:white;font-family:var(--font-heading);font-size:0.9rem;z-index:99999;opacity:0;transition:all 0.4s ease;text-align:center;max-width:90%;';
+    document.body.appendChild(toast);
+  }
+  
+  toast.innerHTML = `<span style="font-size:1.5rem;display:block;margin-bottom:5px;">${emoji}</span>${msg}`;
+  toast.style.opacity = '1';
+  toast.style.transform = 'translateX(-50%) translateY(0)';
+  
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateX(-50%) translateY(20px)';
+  }, 3000);
+}
+
+// ── Check if already logged in ──
+window.addEventListener('DOMContentLoaded', () => {
+  const session = localStorage.getItem('stacklySession') || sessionStorage.getItem('stacklySession');
+  if (session) {
+    const user = JSON.parse(session);
+    showToast('👋', `Already signed in as ${user.name}!`);
+    setTimeout(() => {
+      if (user.role === 'admin') {
+        window.location.href = 'dashboard-admin.html';
+      } else {
+        window.location.href = 'dashboard-guest.html';
+      }
+    }, 1500);
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Food Blog — Stackly Restaurant</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .blog-hero {
+      min-height: 45vh;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 40px) 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,69,0,0.15) 0%, transparent 70%);
+    }
+    .blog-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: white;
+      letter-spacing: 4px;
+      position: relative;
+      text-shadow: 3px 3px 0 rgba(255,69,0,0.3);
+    }
+    .blog-hero-title span { color: var(--primary); }
+    .blog-hero-sub {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      margin-top: 12px;
+      max-width: 500px;
+      position: relative;
+    }
+    
+    .blog-cat-filter {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+    .blog-cat-btn {
+      background: white;
+      border: 2px solid var(--border);
+      color: var(--text-light);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      padding: 8px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .blog-cat-btn:hover, .blog-cat-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255,69,0,0.3);
+    }
+    
+    .blog-full-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .blog-full-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 2px solid var(--border);
+      transition: var(--transition);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-full-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .blog-full-img-wrap {
+      position: relative;
+      height: 180px;
+      overflow: hidden;
+    }
+    .blog-full-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .blog-full-card:hover .blog-full-img-wrap img {
+      transform: scale(1.07);
+    }
+    .blog-full-cat {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: var(--primary);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 15px;
+    }
+    .blog-full-body {
+      padding: 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-full-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 0.78rem;
+      color: var(--text-light);
+      font-family: var(--font-heading);
+    }
+    .blog-full-meta .dot {
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    .blog-full-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--dark);
+      letter-spacing: 1px;
+      line-height: 1.25;
+      margin-bottom: 8px;
+      transition: var(--transition);
+    }
+    .blog-full-card:hover .blog-full-title {
+      color: var(--primary);
+    }
+    .blog-full-excerpt {
+      font-size: 0.83rem;
+      color: var(--text-light);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 14px;
+    }
+    .blog-full-read {
+      color: var(--primary);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      align-self: flex-start;
+    }
+    .blog-full-read:hover {
+      gap: 12px;
+      color: var(--accent);
+    }
+    
+    .featured-post {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 35px;
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 2px solid var(--border);
+      margin-bottom: 45px;
+    }
+    .featured-img {
+      height: 100%;
+      min-height: 300px;
+    }
+    .featured-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .featured-body {
+      padding: 35px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-cat {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 15px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    .featured-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--dark);
+      letter-spacing: 2px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .featured-excerpt {
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+    }
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      font-family: var(--font-heading);
+      margin-bottom: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .featured-post {
+        grid-template-columns: 1fr;
+      }
+      .featured-img {
+        min-height: 220px;
+      }
+      .featured-body {
+        padding: 25px;
+      }
+    }
+    @media (max-width: 600px) {
+      .blog-full-grid {
+        grid-template-columns: 1fr;
+      }
+      .blog-full-img-wrap {
+        height: 160px;
+      }
+      .featured-title {
+        font-size: 1.4rem;
+      }
+      .featured-body {
+        padding: 20px;
+      }
+      .blog-cat-btn {
+        padding: 6px 14px;
+        font-size: 0.78rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">STACKLY</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-text">Cooking up stories... 📝</div>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Floating Emojis BG -->
+<div class="floating-emojis" id="floatingEmojis"></div>
+
+<!-- Food Toast -->
+<div class="food-toast" id="foodToast">
+  <span class="food-toast-emoji">🍔</span>
+  <span id="toastMsg">Yum! Great choice!</span>
+</div>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none'">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html">Reservation</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="nav-cta-group">
+    <a href="signin.html" class="nav-links btn-nav-login">Login</a>
+    <a href="signup.html" class="nav-links btn-nav-start">Get Started</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html">Reservation</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="mobile-menu-btns">
+    <a href="signin.html" class="btn btn-outline">Login</a>
+    <a href="signup.html" class="btn btn-primary">Get Started 🚀</a>
+  </div>
+</div>
+
+<!-- ═══ BLOG HERO ═══ -->
+<section class="blog-hero">
+  <div>
+    <h1 class="blog-hero-title reveal">Food <span>Blog</span></h1>
+    <p class="blog-hero-sub reveal delay-1">Recipes, kitchen chaos, and stories from behind the stove! 🔥</p>
+  </div>
+</section>
+
+<!-- ═══ BLOG CONTENT ═══ -->
+<section class="section" style="background:var(--light);">
+  <div class="section-inner">
+    
+    <!-- Featured Post -->
+    <div class="featured-post reveal">
+      <div class="featured-img">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=700&q=80" alt="Featured Post">
+      </div>
+      <div class="featured-body">
+        <span class="featured-cat">🔥 Featured</span>
+        <h2 class="featured-title">THE SECRET SPICE THAT CHANGED EVERYTHING</h2>
+        <p class="featured-excerpt">We accidentally discovered a spice combo that made our signature sauce 10x better. Here's the full story and (almost) the recipe! From a midnight experiment to our bestselling dish — this is how kitchen magic happens.</p>
+        <div class="featured-meta">
+          <span>👨‍🍳 Chef Arjun</span>
+          <span class="dot"></span>
+          <span>12 May 2025</span>
+          <span class="dot"></span>
+          <span>5 min read</span>
+        </div>
+        <a href="404.html" class="btn btn-primary">Read Full Story →</a>
+      </div>
+    </div>
+    
+    <!-- Category Filter -->
+    <div class="blog-cat-filter reveal">
+      <button class="blog-cat-btn active" onclick="filterBlog('all', this)">All Posts</button>
+      <button class="blog-cat-btn" onclick="filterBlog('recipes', this)">🍳 Recipes</button>
+      <button class="blog-cat-btn" onclick="filterBlog('tips', this)">💡 Tips</button>
+      <button class="blog-cat-btn" onclick="filterBlog('behind', this)">🎬 Behind Scenes</button>
+      <button class="blog-cat-btn" onclick="filterBlog('news', this)">📰 News</button>
+    </div>
+    
+    <!-- Blog Grid -->
+    <div class="blog-full-grid" id="blogGrid">
+      
+      <div class="blog-full-card reveal delay-1" data-cat="recipes">
+        <div class="blog-full-img-wrap">
+          <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600&q=80" alt="Blog 1" loading="lazy">
+          <span class="blog-full-cat">Recipes</span>
+        </div>
+        <div class="blog-full-body">
+          <div class="blog-full-meta">
+            <span>12 May 2025</span>
+            <span class="dot"></span>
+            <span>Chef Arjun</span>
+          </div>
+          <h3 class="blog-full-title">THE SECRET SPICE THAT CHANGED EVERYTHING</h3>
+          <p class="blog-full-excerpt">We accidentally discovered a spice combo that made our signature sauce 10x better. Here's the full story!</p>
+          <a href="404.html" class="blog-full-read">Read Story →</a>
+        </div>
+      </div>
+      
+      <div class="blog-full-card reveal delay-2" data-cat="tips">
+        <div class="blog-full-img-wrap">
+          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80" alt="Blog 2" loading="lazy">
+          <span class="blog-full-cat">Tips</span>
+        </div>
+        <div class="blog-full-body">
+          <div class="blog-full-meta">
+            <span>28 Apr 2025</span>
+            <span class="dot"></span>
+            <span>Chef Priya</span>
+          </div>
+          <h3 class="blog-full-title">5 BAKING TIPS THAT'LL MAKE YOU A LEGEND</h3>
+          <p class="blog-full-excerpt">Forget everything you learned about baking. These pro tricks will revolutionise your dessert game!</p>
+          <a href="404.html" class="blog-full-read">Read Story →</a>
+        </div>
+      </div>
+      
+      <div class="blog-full-card reveal delay-3" data-cat="behind">
+        <div class="blog-full-img-wrap">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Blog 3" loading="lazy">
+          <span class="blog-full-cat">Behind Scenes</span>
+        </div>
+        <div class="blog-full-body">
+          <div class="blog-full-meta">
+            <span>10 Apr 2025</span>
+            <span class="dot"></span>
+            <span>Chef Ravi</span>
+          </div>
+          <h3 class="blog-full-title">A TYPICAL FRIDAY NIGHT AT STACKLY</h3>
+          <p class="blog-full-excerpt">400 covers, 3 birthday cakes, one escaped chicken, and the most epic night Salem has ever seen!</p>
+          <a href="404.html" class="blog-full-read">Read Story →</a>
+        </div>
+      </div>
+      
+      <div class="blog-full-card reveal delay-1" data-cat="news">
+        <div class="blog-full-img-wrap">
+          <img src="https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80" alt="Blog 4" loading="lazy">
+          <span class="blog-full-cat">News</span>
+        </div>
+        <div class="blog-full-body">
+          <div class="blog-full-meta">
+            <span>2 Mar 2025</span>
+            <span class="dot"></span>
+            <span>Team Stackly</span>
+          </div>
+          <h3 class="blog-full-title">WE WON BEST RESTAURANT IN SALEM (AGAIN!)</h3>
+          <p class="blog-full-excerpt">Three years running! We couldn't have done it without every customer who walked through our doors!</p>
+          <a href="404.html" class="blog-full-read">Read Story →</a>
+        </div>
+      </div>
+      
+      <div class="blog-full-card reveal delay-2" data-cat="recipes">
+        <div class="blog-full-img-wrap">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Blog 5" loading="lazy">
+          <span class="blog-full-cat">Recipes</span>
+        </div>
+        <div class="blog-full-body">
+          <div class="blog-full-meta">
+            <span>15 Feb 2025</span>
+            <span class="dot"></span>
+            <span>Chef Arjun</span>
+          </div>
+          <h3 class="blog-full-title">HOW TO MAKE THE PERFECT BIRIYANI AT HOME</h3>
+          <p class="blog-full-excerpt">Our chef's step-by-step guide to recreating our famous dum biriyani in your own kitchen!</p>
+          <a href="404.html" class="blog-full-read">Read Story →</a>
+        </div>
+      </div>
+      
+      <div class="blog-full-card reveal delay-3" data-cat="tips">
+        <div class="blog-full-img-wrap">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=600&q=80" alt="Blog 6" loading="lazy">
+          <span class="blog-full-cat">Tips</span>
+        </div>
+        <div class="blog-full-body">
+          <div class="blog-full-meta">
+            <span>5 Jan 2025</span>
+            <span class="dot"></span>
+            <span>Chef Priya</span>
+          </div>
+          <h3 class="blog-full-title">PLATING LIKE A PRO: SIMPLE TRICKS</h3>
+          <p class="blog-full-excerpt">Make your home-cooked meals look restaurant-worthy with these easy plating techniques!</p>
+          <a href="404.html" class="blog-full-read">Read Story →</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEWSLETTER ═══ -->
+<div class="newsletter-strip">
+  <div class="newsletter-inner">
+    <span class="newsletter-emoji">💌</span>
+    <h3 class="newsletter-title">Never Miss A Story!</h3>
+    <p class="newsletter-sub">Get recipes, tips, and kitchen gossip straight to your inbox. No spam, only tasty updates!</p>
+    <form class="newsletter-form" onsubmit="handleBlogNewsletter(event)">
+      <input type="email" placeholder="Drop your email here..." required>
+      <button type="submit">Subscribe 🎉</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ CTA BANNER ═══ -->
+<div class="cta-banner">
+  <div class="section-inner">
+    <h2 class="cta-title reveal">Hungry After Reading? <br>Come Taste The Real Thing! 😋</h2>
+    <p class="cta-sub reveal delay-1">Our kitchen is always open — and the stories taste even better in person!</p>
+    <div class="cta-btns reveal delay-2">
+      <a href="reservation.html" class="btn btn-dark btn-lg">📅 Book A Table</a>
+      <a href="menu.html" class="btn btn-outline btn-lg">🍔 Explore Menu</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="section-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <img src="assets/logo.webp" alt="Stackly" height="42" onerror="this.style.display='none'">
+        </a>
+        <p>Salem's most fun restaurant since 2012. We don't just serve food — we serve memories, laughter, and seriously good vibes.</p>
+        <div class="footer-socials">
+          <a href="404.html" class="footer-social">📘</a>
+          <a href="404.html" class="footer-social">📸</a>
+          <a href="404.html" class="footer-social">🐦</a>
+          <a href="404.html" class="footer-social">▶️</a>
+          <a href="404.html" class="footer-social">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">→ Home</a></li>
+          <li><a href="about.html">→ About Us</a></li>
+          <li><a href="menu.html">→ Our Menu</a></li>
+          <li><a href="reservation.html">→ Reservations</a></li>
+          <li><a href="blog.html">→ Blog</a></li>
+          <li><a href="contact.html">→ Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">New Menu</h4>
+        <ul class="footer-links">
+          <li><a href="menu.html">→ Stackly BBQ Platter</a></li>
+          <li><a href="menu.html">→ Spicy Chaos Burger</a></li>
+          <li><a href="menu.html">→ Mango Lassi Supreme</a></li>
+          <li><a href="menu.html">→ Triple Choco Lava</a></li>
+          <li><a href="menu.html">→ Power Grain Bowl</a></li>
+          <li><a href="menu.html">→ Chef's Secret Biriyani</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Find Us</h4>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">📍</span>
+          <div class="footer-contact-text">
+            <strong>Address</strong>
+            MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">📞</span>
+          <div class="footer-contact-text"><strong>Call Us</strong>+91 98765 43210</div>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">✉️</span>
+          <div class="footer-contact-text"><strong>Email</strong>hello@stackly.in</div>
+        </div>
+        <div class="footer-hours mt-2">
+          <div class="footer-hours-item"><span>Mon – Thu</span><span>11AM – 10PM</span></div>
+          <div class="footer-hours-item"><span>Fri – Sat</span><span>11AM – 11PM</span></div>
+          <div class="footer-hours-item"><span>Sunday</span><span>12PM – 9PM</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>Stackly Restaurant</span>. Made with ❤️ in Salem, Tamil Nadu.</p>
+      <div class="footer-bottom-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms</a>
+        <a href="404.html">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Page Loader ──
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 2000);
+});
+
+// ── Custom Cursor ──
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX - 6 + 'px';
+  cursor.style.top = mouseY - 6 + 'px';
+});
+function animRing() {
+  ringX += (mouseX - ringX - 18) * 0.12;
+  ringY += (mouseY - ringY - 18) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.blog-full-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); cursorRing.classList.add('hovered'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); cursorRing.classList.remove('hovered'); });
+});
+
+// ── Floating Emojis ──
+const emojis = ['🍕','🍔','🌮','🍜','🥗','🍰','🧁','🥩','🍣','🥐','🍟','🥤','🎉','⭐','🌟'];
+const fe = document.getElementById('floatingEmojis');
+for (let i = 0; i < 18; i++) {
+  const e = document.createElement('div');
+  e.className = 'emoji-particle';
+  e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  e.style.left = Math.random() * 100 + 'vw';
+  e.style.animationDuration = (12 + Math.random() * 18) + 's';
+  e.style.animationDelay = (Math.random() * 20) + 's';
+  fe.appendChild(e);
+}
+
+// ── Hamburger ──
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+});
+mob.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    ham.classList.remove('open');
+    mob.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// ── Navbar Scroll ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('back-top').classList.toggle('show', window.scrollY > 400);
+});
+
+// ── Reveal on Scroll ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revealEls.forEach(el => io.observe(el));
+
+// ── Blog Filter ──
+function filterBlog(cat, btn) {
+  document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  const cards = document.querySelectorAll('.blog-full-card');
+  cards.forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'flex';
+      setTimeout(() => card.style.opacity = '1', 50);
+    } else {
+      card.style.opacity = '0';
+      setTimeout(() => card.style.display = 'none', 300);
+    }
+  });
+}
+
+// ── Toast ──
+function triggerToast(emoji, msg) {
+  const toast = document.getElementById('foodToast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.querySelector('.food-toast-emoji').textContent = emoji;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ── Newsletter ──
+function handleBlogNewsletter(e) {
+  e.preventDefault();
+  triggerToast('💌', 'Subscribed! Tasty emails incoming!');
+  e.target.reset();
+}
+</script>
+</body>
+</html>

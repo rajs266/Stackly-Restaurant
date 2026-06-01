@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>Book A Table — Stackly Restaurant</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .res-hero {
+      min-height: 45vh;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 40px) 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .res-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,69,0,0.15) 0%, transparent 70%);
+    }
+    .res-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      color: white;
+      letter-spacing: 4px;
+      position: relative;
+      text-shadow: 3px 3px 0 rgba(255,69,0,0.3);
+    }
+    .res-hero-title span { color: var(--primary); }
+    .res-hero-sub {
+      color: rgba(255,255,255,0.65);
+      font-size: 1rem;
+      margin-top: 12px;
+      max-width: 500px;
+      position: relative;
+    }
+    
+    .res-page-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 50px;
+      align-items: start;
+    }
+    .res-info-box {
+      background: var(--dark);
+      border-radius: var(--radius-lg);
+      padding: 35px;
+      color: white;
+      position: sticky;
+      top: calc(var(--nav-h) + 20px);
+    }
+    .res-info-box .section-title {
+      color: white;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+    .res-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .res-info-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,69,0,0.2);
+      border: 1px solid rgba(255,69,0,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .res-info-text strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .res-info-text span {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    .res-hours {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .res-hours-title {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: 12px;
+    }
+    .res-hour-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .res-hour-row span:last-child {
+      color: var(--secondary);
+      font-family: var(--font-heading);
+    }
+    
+    .res-form-box {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 35px;
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .res-form-box .res-form-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--dark);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .res-form-box .res-form-sub {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 25px;
+    }
+    .res-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .res-form-group {
+      margin-bottom: 18px;
+    }
+    .res-form-group label {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 7px;
+    }
+    .res-form-group label .req {
+      color: var(--primary);
+    }
+    .res-input {
+      width: 100%;
+      background: var(--light);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+    .res-input:focus {
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(255,69,0,0.1);
+    }
+    .res-input::placeholder {
+      color: #aaa;
+    }
+    .res-input option {
+      color: var(--text);
+    }
+    .res-submit-btn {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.05rem;
+      letter-spacing: 2px;
+    }
+    .res-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .res-success-emoji {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 15px;
+      animation: bounceIn 0.6s ease;
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    .res-success h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--dark);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .res-success p {
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    
+    @media (max-width: 992px) {
+      .res-page-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .res-info-box {
+        position: static;
+        order: -1;
+      }
+    }
+    @media (max-width: 600px) {
+      .res-form-box {
+        padding: 22px 18px;
+      }
+      .res-form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .res-info-box {
+        padding: 25px 20px;
+      }
+      .res-form-box .res-form-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Page Loader -->
+<div id="page-loader">
+  <div class="loader-logo">STACKLY</div>
+  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-text">Reserving your spot... 📅</div>
+</div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Floating Emojis BG -->
+<div class="floating-emojis" id="floatingEmojis"></div>
+
+<!-- Food Toast -->
+<div class="food-toast" id="foodToast">
+  <span class="food-toast-emoji">🍔</span>
+  <span id="toastMsg">Yum! Great choice!</span>
+</div>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none'">
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html" class="active">Reservation</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="nav-cta-group">
+    <a href="signin.html" class="nav-links btn-nav-login">Login</a>
+    <a href="signup.html" class="nav-links btn-nav-start">Get Started</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="menu.html">Menu</a>
+    <a href="reservation.html">Reservation</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+  <div class="mobile-menu-btns">
+    <a href="signin.html" class="btn btn-outline">Login</a>
+    <a href="signup.html" class="btn btn-primary">Get Started 🚀</a>
+  </div>
+</div>
+
+<!-- ═══ RESERVATION HERO ═══ -->
+<section class="res-hero">
+  <div>
+    <h1 class="res-hero-title reveal">Book A <span>Table</span></h1>
+    <p class="res-hero-sub reveal delay-1">Peak hours fill up FAST! Reserve now and skip the queue! 🔥</p>
+  </div>
+</section>
+
+<!-- ═══ RESERVATION CONTENT ═══ -->
+<section class="section" style="background:var(--light);">
+  <div class="section-inner">
+    <div class="res-page-grid">
+      
+      <!-- Info Side -->
+      <div class="res-info-box reveal-left">
+        <h2 class="section-title">Why Book With Us?</h2>
+        
+        <div class="res-info-item">
+          <div class="res-info-icon">🎂</div>
+          <div class="res-info-text">
+            <strong>Special Surprises</strong>
+            <span>Birthday cakes, anniversary decorations, and more — on the house!</span>
+          </div>
+        </div>
+        
+        <div class="res-info-item">
+          <div class="res-info-icon">🎶</div>
+          <div class="res-info-text">
+            <strong>Live Music</strong>
+            <span>Every Friday & Saturday night — book early for front-row seats!</span>
+          </div>
+        </div>
+        
+        <div class="res-info-item">
+          <div class="res-info-icon">🍽️</div>
+          <div class="res-info-text">
+            <strong>Custom Menu</strong>
+            <span>Pre-order your favourites and we'll have them ready when you arrive!</span>
+          </div>
+        </div>
+        
+        <div class="res-info-item">
+          <div class="res-info-icon">🏆</div>
+          <div class="res-info-text">
+            <strong>VIP Tables</strong>
+            <span>Loyalty members get priority seating and exclusive deals!</span>
+          </div>
+        </div>
+        
+        <div class="res-hours">
+          <div class="res-hours-title">🕐 Opening Hours</div>
+          <div class="res-hour-row"><span>Monday – Thursday</span><span>11AM – 10PM</span></div>
+          <div class="res-hour-row"><span>Friday – Saturday</span><span>11AM – 11PM</span></div>
+          <div class="res-hour-row"><span>Sunday</span><span>12PM – 9PM</span></div>
+        </div>
+      </div>
+      
+      <!-- Form Side -->
+      <div class="res-form-box reveal-right">
+        <div id="resFormContent">
+          <div class="res-form-title">Reserve Your Spot</div>
+          <div class="res-form-sub">📝 Fill in & we'll confirm in 30 min!</div>
+          
+          <form id="bookingForm" onsubmit="handleBooking(event)">
+            <div class="res-form-row">
+              <div class="res-form-group">
+                <label>Your Name <span class="req">*</span></label>
+                <input type="text" class="res-input" id="resName" placeholder="Full name" required oninput="validateName(this)">
+              </div>
+              <div class="res-form-group">
+                <label>Phone <span class="req">*</span></label>
+                <input type="tel" class="res-input" id="resPhone" placeholder="+91 XXXXX XXXXX" required oninput="validatePhone(this)">
+              </div>
+            </div>
+            
+            <div class="res-form-row">
+              <div class="res-form-group">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" class="res-input" id="resEmail" placeholder="your@email.com" required oninput="validateEmail(this)">
+              </div>
+              <div class="res-form-group">
+                <label>Guests <span class="req">*</span></label>
+                <select class="res-input" id="resGuests" required>
+                  <option value="">Select</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5-8</option>
+                  <option>9+</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="res-form-row">
+              <div class="res-form-group">
+                <label>Date <span class="req">*</span></label>
+                <input type="date" class="res-input" id="resDate" required>
+              </div>
+              <div class="res-form-group">
+                <label>Time <span class="req">*</span></label>
+                <input type="time" class="res-input" id="resTime" required>
+              </div>
+            </div>
+            
+            <div class="res-form-group">
+              <label>Occasion</label>
+              <select class="res-input" id="resOccasion">
+                <option value="">Select occasion</option>
+                <option>Birthday 🎂</option>
+                <option>Anniversary 💍</option>
+                <option>Wedding 👰</option>
+                <option>Business 💼</option>
+                <option>Date Night 💕</option>
+                <option>Just Hungry 😂</option>
+              </select>
+            </div>
+            
+            <div class="res-form-group">
+              <label>Special Requests</label>
+              <textarea class="res-input" id="resNotes" rows="3" placeholder="Any dietary restrictions, seating preferences, etc..."></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary res-submit-btn wobble">🎉 Confirm Booking!</button>
+          </form>
+        </div>
+        
+        <!-- Success Message -->
+        <div class="res-success" id="resSuccess">
+          <span class="res-success-emoji">🎉</span>
+          <h3>Booking Confirmed!</h3>
+          <p>We've received your reservation. You'll get a confirmation call within 30 minutes. See you soon! 🍽️</p>
+          <a href="menu.html" class="btn btn-primary">Explore Menu 🍔</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BANNER ═══ -->
+<div class="cta-banner">
+  <div class="section-inner">
+    <h2 class="cta-title reveal">Walk-Ins Welcome Too! <br>But Smart People Book Ahead 😎</h2>
+    <p class="cta-sub reveal delay-1">Don't risk the wait — secure your table now!</p>
+    <div class="cta-btns reveal delay-2">
+      <a href="menu.html" class="btn btn-dark btn-lg">🍽️ View Menu</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">📞 Call Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="footer">
+  <div class="section-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="margin-bottom:14px;display:inline-flex;">
+          <img src="assets/logo.webp" alt="Stackly" height="42" onerror="this.style.display='none'">
+        </a>
+        <p>Salem's most fun restaurant since 2012. We don't just serve food — we serve memories, laughter, and seriously good vibes.</p>
+        <div class="footer-socials">
+          <a href="404.html" class="footer-social">📘</a>
+          <a href="404.html" class="footer-social">📸</a>
+          <a href="404.html" class="footer-social">🐦</a>
+          <a href="404.html" class="footer-social">▶️</a>
+          <a href="404.html" class="footer-social">💬</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">→ Home</a></li>
+          <li><a href="about.html">→ About Us</a></li>
+          <li><a href="menu.html">→ Our Menu</a></li>
+          <li><a href="reservation.html">→ Reservations</a></li>
+          <li><a href="blog.html">→ Blog</a></li>
+          <li><a href="contact.html">→ Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">New Menu</h4>
+        <ul class="footer-links">
+          <li><a href="menu.html">→ Stackly BBQ Platter</a></li>
+          <li><a href="menu.html">→ Spicy Chaos Burger</a></li>
+          <li><a href="menu.html">→ Mango Lassi Supreme</a></li>
+          <li><a href="menu.html">→ Triple Choco Lava</a></li>
+          <li><a href="menu.html">→ Power Grain Bowl</a></li>
+          <li><a href="menu.html">→ Chef's Secret Biriyani</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Find Us</h4>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">📍</span>
+          <div class="footer-contact-text">
+            <strong>Address</strong>
+            MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008
+          </div>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">📞</span>
+          <div class="footer-contact-text"><strong>Call Us</strong>+91 98765 43210</div>
+        </div>
+        <div class="footer-contact-item">
+          <span class="footer-contact-icon">✉️</span>
+          <div class="footer-contact-text"><strong>Email</strong>hello@stackly.in</div>
+        </div>
+        <div class="footer-hours mt-2">
+          <div class="footer-hours-item"><span>Mon – Thu</span><span>11AM – 10PM</span></div>
+          <div class="footer-hours-item"><span>Fri – Sat</span><span>11AM – 11PM</span></div>
+          <div class="footer-hours-item"><span>Sunday</span><span>12PM – 9PM</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>Stackly Restaurant</span>. Made with ❤️ in Salem, Tamil Nadu.</p>
+      <div class="footer-bottom-links">
+        <a href="404.html">Privacy Policy</a>
+        <a href="404.html">Terms</a>
+        <a href="404.html">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Page Loader ──
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 2000);
+});
+
+// ── Custom Cursor ──
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.left = mouseX - 6 + 'px';
+  cursor.style.top = mouseY - 6 + 'px';
+});
+function animRing() {
+  ringX += (mouseX - ringX - 18) * 0.12;
+  ringY += (mouseY - ringY - 18) * 0.12;
+  cursorRing.style.left = ringX + 'px';
+  cursorRing.style.top = ringY + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+document.querySelectorAll('a,button,.res-input').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); cursorRing.classList.add('hovered'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); cursorRing.classList.remove('hovered'); });
+});
+
+// ── Floating Emojis ──
+const emojis = ['🍕','🍔','🌮','🍜','🥗','🍰','🧁','🥩','🍣','🥐','🍟','🥤','🎉','⭐','🌟'];
+const fe = document.getElementById('floatingEmojis');
+for (let i = 0; i < 18; i++) {
+  const e = document.createElement('div');
+  e.className = 'emoji-particle';
+  e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  e.style.left = Math.random() * 100 + 'vw';
+  e.style.animationDuration = (12 + Math.random() * 18) + 's';
+  e.style.animationDelay = (Math.random() * 20) + 's';
+  fe.appendChild(e);
+}
+
+// ── Hamburger ──
+const ham = document.getElementById('hamburger');
+const mob = document.getElementById('mobileMenu');
+ham.addEventListener('click', () => {
+  ham.classList.toggle('open');
+  mob.classList.toggle('open');
+  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+});
+mob.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    ham.classList.remove('open');
+    mob.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+// ── Navbar Scroll ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  document.getElementById('back-top').classList.toggle('show', window.scrollY > 400);
+});
+
+// ── Reveal on Scroll ──
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.1 });
+revealEls.forEach(el => io.observe(el));
+
+// ── Set Min Date to Today ──
+document.getElementById('resDate').min = new Date().toISOString().split('T')[0];
+
+// ── Validation Functions ──
+function validateName(input) {
+  input.value = input.value.replace(/[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/g, '');
+}
+function validatePhone(input) {
+  input.value = input.value.replace(/[^0-9+\-\s]/g, '');
+}
+function validateEmail(input) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (input.value && !emailRegex.test(input.value)) {
+    input.style.borderColor = '#ff4444';
+  } else {
+    input.style.borderColor = '';
+  }
+}
+
+// ── Confetti ──
+function confettiBurst() {
+  const colors = ['#FF4500','#FFD700','#FF6B35','#00C9A7','#fff'];
+  for (let i = 0; i < 25; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti-piece';
+    c.style.cssText = `left:${Math.random()*100}vw;top:0;background:${colors[i%colors.length]};animation-delay:${Math.random()*1.5}s;animation-duration:${2+Math.random()*2}s;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+
+// ── Handle Booking ──
+function handleBooking(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById('resName').value.trim();
+  const phone = document.getElementById('resPhone').value.trim();
+  const email = document.getElementById('resEmail').value.trim();
+  const guests = document.getElementById('resGuests').value;
+  const date = document.getElementById('resDate').value;
+  const time = document.getElementById('resTime').value;
+  
+  if (!name || !phone || !email || !guests || !date || !time) {
+    triggerToast('⚠️', 'Please fill all required fields!');
+    return;
+  }
+  
+  if (name.length < 2) {
+    triggerToast('⚠️', 'Please enter a valid name!');
+    return;
+  }
+  
+  if (phone.length < 10) {
+    triggerToast('⚠️', 'Please enter a valid phone number!');
+    return;
+  }
+  
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    triggerToast('⚠️', 'Please enter a valid email!');
+    return;
+  }
+  
+  confettiBurst();
+  document.getElementById('resFormContent').style.display = 'none';
+  document.getElementById('resSuccess').style.display = 'block';
+  triggerToast('🎉', 'Table booked successfully!');
+}
+
+// ── Toast ──
+function triggerToast(emoji, msg) {
+  const toast = document.getElementById('foodToast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.querySelector('.food-toast-emoji').textContent = emoji;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
