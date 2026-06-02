@@ -303,6 +303,8 @@
     .insight-stat span { display: block; color: var(--text-light); font-size: 0.72rem; margin-top: 2px; }
     .insight-panel.dark .insight-stat span { color: rgba(255,255,255,0.58); }
     .mini-list { display: flex; flex-direction: column; gap: 10px; }
+    .offers-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .coupons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
     .mini-list-item {
       display: flex; justify-content: space-between; gap: 12px; align-items: center;
       padding: 10px 0; border-top: 1px solid var(--border-light); font-size: 0.82rem;
@@ -430,6 +432,12 @@
       .order-card { flex-direction: column; text-align: center; }
       .order-card:hover { transform: none; }
       .res-item:hover { transform: none; }
+      .offers-grid { grid-template-columns: 1fr; }
+      .offers-grid > div { padding: 15px !important; }
+      .coupons-grid { display: flex; overflow-x: auto; gap: 12px; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
+      .coupons-grid::-webkit-scrollbar { height: 12px; }
+      .coupons-grid::-webkit-scrollbar-track { background: rgb(238, 235, 235); }
+      .coupons-grid > div { min-width: 220px; flex: 0 0 auto; }
       .order-img { width: 100%; height: 150px; }
       .order-price { font-size: 1.1rem; }
       .insight-stat-row, .settings-fields { grid-template-columns: 1fr; }
@@ -442,6 +450,14 @@
       .menu-toggle { width: 36px; height: 36px; }
       .header-logo img { height: 32px; }
     }
+
+    .btn.btn-primary.btn-sm {
+      justify-content: center; display: inline-flex; align-items: center; gap: 6px; transition: var(--transition);
+    }
+    .btn.btn-outline {
+      justify-content: center; display: inline-flex; align-items: center; gap: 6px; transition: var(--transition);
+    }
+
   </style>
 </head>
 <body>
@@ -660,7 +676,7 @@
 
           <div class="section-card dashboard-side-panel animate-in delay-1" id="ordersInsightSection" style="display:none;">
             <div class="section-card-header">
-              <div class="section-card-title">Order Snapshot</div>
+              <div class="section-card-title">🛍️ Order Snapshot</div>
               <a href="404.html" class="btn btn-primary btn-sm">Reorder</a>
             </div>
             <div class="insight-panel dark">
@@ -817,7 +833,7 @@
             <div class="section-card-title">🎁 Special Offers For You</div>
             <a href="404.html" class="btn btn-primary btn-sm">View All</a>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:15px;">
+          <div class="offers-grid">
             <div style="background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:var(--radius);padding:20px;color:white;position:relative;overflow:hidden;">
               <div style="font-family:var(--font-display);font-size:1.3rem;letter-spacing:2px;margin-bottom:8px;">20% OFF</div>
               <div style="font-size:0.9rem;opacity:0.9;margin-bottom:12px;">On your next order above ₹500!</div>
@@ -838,7 +854,7 @@
           <div class="section-card-header">
             <div class="section-card-title">🎟️ My Coupons</div>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;">
+          <div class="coupons-grid">
             <div style="background:white;border:2px dashed var(--primary);border-radius:var(--radius);padding:20px;text-align:center;">
               <div style="font-family:var(--font-display);font-size:1.5rem;color:var(--primary);">₹100 OFF</div>
               <div style="font-size:0.8rem;color:var(--text-light);margin:8px 0;">Min. order ₹999</div>
@@ -958,8 +974,8 @@
             </div>
           </div>
           <div style="margin-top:20px;display:flex;gap:12px;">
-            <a href="404.html" class="btn btn-primary btn-sm">💾 Save Changes</a>
-            <a href="404.html" class="btn btn-outline" style="color:var(--dark);border-color:var(--border);">❌ Cancel</a>
+            <a href="404.html" class="btn btn-primary btn-sm">Save Changes</a>
+            <a href="404.html" class="btn btn-outline" style="color:var(--dark);border-color:var(--border);">Cancel</a>
           </div>
         </div>
 
