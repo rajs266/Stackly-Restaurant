@@ -22,7 +22,7 @@
       padding: 20px;
     }
 
-    /* Animated background particles */
+    
     .error-particles {
       position: absolute;
       inset: 0;
@@ -43,7 +43,7 @@
       100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
     }
 
-    /* Glitch effect background lines */
+    
     .glitch-lines {
       position: absolute;
       inset: 0;
@@ -61,7 +61,7 @@
       50% { transform: translateX(100vw); opacity: 1; }
     }
 
-    /* Main content */
+    
     .error-content {
       text-align: center;
       position: relative;
@@ -74,7 +74,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 404 Number with glitch effect */
+    
     .error-num-wrap {
       position: relative;
       display: inline-block;
@@ -116,7 +116,7 @@
       }
     }
 
-    /* Error title */
+    
     .error-title {
       font-family: var(--font-display);
       font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -127,7 +127,7 @@
       opacity: 0;
     }
 
-    /* Error message */
+    
     .error-text {
       color: rgba(255,255,255,0.7);
       font-size: 1rem;
@@ -140,7 +140,7 @@
       opacity: 0;
     }
 
-    /* Fun message */
+    
     .error-fun-msg {
       background: rgba(255,69,0,0.15);
       border: 1px solid rgba(255,69,0,0.3);
@@ -159,7 +159,7 @@
       50% { box-shadow: 0 0 20px 5px rgba(255,69,0,0); }
     }
 
-    /* Buttons - ONLY 2 */
+    
     .error-btns {
       display: flex;
       gap: 15px;
@@ -181,7 +181,7 @@
       50% { box-shadow: 0 6px 30px rgba(255,69,0,0.6), 0 0 40px rgba(255,69,0,0.2); }
     }
 
-    /* Confetti */
+    
     .confetti-piece {
       position: fixed;
       width: 10px;
@@ -196,7 +196,7 @@
       100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
 
-    /* Responsive */
+    
     @media (max-width: 600px) {
       .error-num {
         letter-spacing: 8px;
@@ -221,19 +221,19 @@
 </head>
 <body class="error-page">
 
-<!-- Animated Particles -->
+
 <div class="error-particles" id="errorParticles"></div>
 
-<!-- Glitch Lines -->
+
 <div class="glitch-lines" id="glitchLines"></div>
 
-<!-- Confetti Container -->
+
 <div id="confettiContainer"></div>
 
-<!-- Main Content -->
+
 <div class="error-content">
 
-  <!-- 404 Number with orbit and emoji inside 0 -->
+  
   <div class="error-num-wrap">
     <div class="error-num">
       <span>4</span>
@@ -242,18 +242,18 @@
     </div>
   </div>
 
-  <!-- Title -->
+  
   <h1 class="error-title">Oops! Page Not Found</h1>
 
-  <!-- Fun Message -->
+  
   <div class="error-fun-msg" id="funMsg">🍕 Looks like this page got eaten!</div>
 
-  <!-- Description -->
+  
   <p class="error-text">
     The page you're looking for seems to have vanished into thin air... or maybe one of our hungry chefs mistook it for a recipe!
   </p>
 
-  <!-- ONLY 2 BUTTONS -->
+  
   <div class="error-btns">
     <a href="index.html" class="btn btn-primary btn-lg">🏠 Back To Home</a>
     <button onclick="history.back()" class="btn btn-outline btn-lg">← Go Back</button>
@@ -262,7 +262,7 @@
 </div>
 
 <script>
-// ── Generate Floating Particles ──
+
 const foodEmojis = ['🍕','🍔','🌮','🍜','🥗','🍰','🧁','🥩','🍣','🥐','🍟','🥤','🍩','🍪','🍫','🍿','🥞','🍖'];
 const particlesContainer = document.getElementById('errorParticles');
 
@@ -277,7 +277,7 @@ for (let i = 0; i < 20; i++) {
   particlesContainer.appendChild(p);
 }
 
-// ── Generate Glitch Lines ──
+
 const glitchContainer = document.getElementById('glitchLines');
 for (let i = 0; i < 5; i++) {
   const line = document.createElement('div');
@@ -289,7 +289,7 @@ for (let i = 0; i < 5; i++) {
   glitchContainer.appendChild(line);
 }
 
-// ── Confetti Burst on Load ──
+
 function confettiBurst() {
   const colors = ['#FF4500','#FFD700','#FF6B35','#00C9A7','#fff','#ff4444','#8A2BE2'];
   const container = document.getElementById('confettiContainer');
@@ -315,7 +315,7 @@ function confettiBurst() {
 }
 setTimeout(confettiBurst, 500);
 
-// ── Rotating Fun Messages ──
+
 const funMessages = [
   "🍕 Looks like this page got eaten!",
   "🍔 Our chef couldn't find this recipe!",

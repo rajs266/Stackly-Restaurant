@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- Page Loader -->
+
 <div id="page-loader">
   <div class="loader-visual-wrap">
     <div class="loader-circles">
@@ -22,11 +22,11 @@
   <div class="loader-text">Heating up the kitchen...</div>
 </div>
 
-<!-- Custom Cursor -->
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Food Toast -->
+
 <div class="food-toast" id="foodToast">
   <div class="food-toast-icon">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
@@ -34,7 +34,7 @@
   <span id="toastMsg">Added to order!</span>
 </div>
 
-<!-- Back to Top -->
+
 <button id="back-top" type="button" title="Back to top" aria-label="Back to top">
   <span class="backtop-bot" aria-hidden="true">
     <video class="eat-boy-video" src="./assets/eat boy.webm" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
@@ -42,7 +42,7 @@
   </span>
 </button>
 
-<!-- ═══ NAVBAR ═══ -->
+
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
     <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none'">
@@ -64,7 +64,7 @@
   </button>
 </nav>
 
-<!-- Mobile Menu -->
+
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-links">
     <a href="index.html">Home</a>
@@ -80,7 +80,7 @@
   </div>
 </div>
 
-<!-- ═══ HERO ═══ -->
+
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
@@ -111,7 +111,7 @@
   </div>
 </section>
 
-<!-- ═══ TICKER ═══ -->
+
 <div class="ticker-wrap" id="ticker">
   <div class="ticker-inner">
     <span class="ticker-item"><span class="dot"></span> Freshly Made Daily</span>
@@ -133,7 +133,7 @@
   </div>
 </div>
 
-<!-- ═══ ABOUT ═══ -->
+
 <section id="about" class="section">
   <div class="section-inner">
     <div class="about-grid">
@@ -199,7 +199,7 @@
   </div>
 </section>
 
-<!-- ═══ TODAY'S SPECIALS ═══ -->
+
 <section id="special" class="section">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -280,7 +280,7 @@
   </div>
 </section>
 
-<!-- ═══ STATS STRIP ═══ -->
+
 <div class="stats-strip">
   <div class="stats-grid">
     <div class="stat-item reveal">
@@ -314,7 +314,7 @@
   </div>
 </div>
 
-<!-- ═══ MENU PREVIEW ═══ -->
+
 <section id="menu-page" class="section">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -332,7 +332,7 @@
       <button class="menu-tab" data-tab="drinks">Drinks</button>
     </div>
     <div class="menu-grid" id="menuGrid">
-      <!-- JS fills this -->
+      
     </div>
     <div class="text-center mt-4 reveal">
       <a href="menu.html" class="btn btn-primary btn-lg">Full Menu</a>
@@ -340,7 +340,7 @@
   </div>
 </section>
 
-<!-- ═══ TEAM ═══ -->
+
 <section id="team" class="section">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -419,7 +419,7 @@
   </div>
 </section>
 
-<!-- ═══ RESERVATION CTA ═══ -->
+
 <section id="reservation" class="section">
   <div class="section-inner">
     <div class="reservation-grid">
@@ -517,7 +517,7 @@
   </div>
 </section>
 
-<!-- ═══ BLOG PREVIEW ═══ -->
+
 <section id="blog-section" class="section">
   <div class="section-inner">
     <div class="section-header reveal">
@@ -600,7 +600,7 @@
   </div>
 </section>
 
-<!-- ═══ CTA BANNER ═══ -->
+
 <div class="cta-banner">
   <div class="section-inner">
     <h2 class="cta-title reveal">Hungry Yet?<br>Come Feed The Beast!</h2>
@@ -612,7 +612,7 @@
   </div>
 </div>
 
-<!-- ═══ NEWSLETTER ═══ -->
+
 <div class="newsletter-strip">
   <div class="newsletter-inner">
     <div class="newsletter-icon">
@@ -627,7 +627,7 @@
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+
 <footer id="footer">
   <div class="section-inner">
     <div class="footer-grid">
@@ -719,7 +719,7 @@
 
 <script src="./script.js"></script>
 <script>
-/* ── Menu Data & Render ── */
+
 const menuData = {
   starters: [
     { img: 'assets/images/photo-1568901346375-23c9450c58cd.webp', name: 'Masala Garlic Bread', desc: 'Toasted bread loaded with garlic butter & secret masala blend.', price: '₹149', badge: 'Fave' },
@@ -777,7 +777,7 @@ document.querySelectorAll('.menu-tab').forEach(btn => {
 </script>
 
 <script>
-/* ── Typewriter Effect ── */
+
 const words = ["FAMILY", "OFFICEMATES", "FRIENDS", "EVERYONE"];
 let wordIndex = 0;
 let charIndex = 0;
@@ -788,11 +788,11 @@ function type() {
   const currentWord = words[wordIndex];
   
   if (isDeleting) {
-    // Remove character
+    
     typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
     charIndex--;
   } else {
-    // Add character
+    
     typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
     charIndex++;
   }
@@ -800,12 +800,12 @@ function type() {
   let typeSpeed = isDeleting ? 100 : 200;
 
   if (!isDeleting && charIndex === currentWord.length) {
-    // Pause at end of word
+    
     typeSpeed = 2000;
     isDeleting = true;
   } else if (isDeleting && charIndex === 0) {
     isDeleting = false;
-    // Move to next word
+    
     wordIndex = (wordIndex + 1) % words.length;
     typeSpeed = 500;
   }
@@ -817,7 +817,7 @@ document.addEventListener('DOMContentLoaded', type);
 </script>
 
 <script>
-/* ── Specials Auto-slide (Continuous Smooth) ── */
+
 document.addEventListener('DOMContentLoaded', () => {
   const swiper = document.querySelector('.special-swiper');
   if (!swiper) return;
@@ -829,19 +829,19 @@ document.addEventListener('DOMContentLoaded', () => {
   swiper.addEventListener('touchend', () => isHovered = false);
 
   let scrollPos = swiper.scrollLeft;
-  const speed = 0.6; // வேகத்தை குறைக்க/அதிகரிக்க இந்த மதிப்பை மாற்றவும் (எ.கா: 0.4 மெதுவானது)
+  const speed = 0.6; 
 
   function animate() {
     if (!isHovered) {
       scrollPos += speed;
       
-      // முடிவை எட்டினால் மீண்டும் ஆரம்பத்திற்கு செல்லும்
+    
       if (scrollPos >= swiper.scrollWidth - swiper.offsetWidth) {
         scrollPos = 0;
       }
       swiper.scrollLeft = scrollPos;
     } else {
-      // பயனர் கைமுறையாக நகர்த்தினால் பொசிஷனை சின்க் செய்யும்
+      
       scrollPos = swiper.scrollLeft;
     }
     requestAnimationFrame(animate);

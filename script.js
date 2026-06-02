@@ -3,7 +3,7 @@
    Loaded by every page. Page-specific code stays inline.
    ============================================================ */
 
-/* ── Page Loader ── */
+
 window.addEventListener('load', () => {
   setTimeout(() => {
     const loader = document.getElementById('page-loader');
@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
   }, 700);
 });
 
-/* ── Custom Cursor (desktop only) ── */
+
 (function () {
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
   });
 })();
 
-/* ── Hamburger Menu ── */
+
 (function () {
   const ham = document.getElementById('hamburger');
   const mob = document.getElementById('mobileMenu');
@@ -73,7 +73,7 @@ window.addEventListener('load', () => {
     a.addEventListener('click', closeMobileMenu);
   });
 
-  // Screen resize ஆகும்போது மெனுவை ரீசெட் செய்ய
+
   window.addEventListener('resize', syncMenuToViewport);
   window.addEventListener('orientationchange', syncMenuToViewport);
   window.addEventListener('pageshow', syncMenuToViewport);
@@ -87,7 +87,7 @@ window.addEventListener('load', () => {
   syncMenuToViewport();
 })();
 
-/* ── Navbar Scroll + Back-to-Top ── */
+
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('navbar');
   const btn = document.getElementById('back-top');
@@ -118,7 +118,7 @@ window.addEventListener('scroll', () => {
   btn.addEventListener('click', launchBackTop);
 })();
 
-/* ── Reveal on Scroll ── */
+
 (function () {
   const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
   if (!els.length) return;
@@ -130,7 +130,7 @@ window.addEventListener('scroll', () => {
   els.forEach(el => io.observe(el));
 })();
 
-/* ── Counter Animation ── */
+
 (function () {
   const countEls = document.querySelectorAll('[data-count]');
   if (!countEls.length) return;
@@ -161,7 +161,7 @@ window.addEventListener('scroll', () => {
   }
 })();
 
-/* ── Toast Notification ── */
+
 function triggerToast(emoji, msg) {
   const toast = document.getElementById('foodToast');
   const msgEl  = document.getElementById('toastMsg');
@@ -174,7 +174,7 @@ function triggerToast(emoji, msg) {
   toast._timer = setTimeout(() => toast.classList.remove('show'), 2800);
 }
 
-/* ── Confetti Burst ── */
+
 function confettiBurst() {
   const colors = ['#FF4500', '#FFD700', '#FF6B35', '#00C9A7', '#fff'];
   for (let i = 0; i < 22; i++) {
@@ -186,26 +186,25 @@ function confettiBurst() {
   }
 }
 
-/* ── Button click ripple ── */
+
 document.addEventListener('click', e => {
   const btn = e.target.closest('.btn');
   if (!btn) return;
   btn.classList.remove('wiggle-click');
-  void btn.offsetWidth; /* reflow */
+  void btn.offsetWidth; 
   btn.classList.add('wiggle-click');
   setTimeout(() => btn.classList.remove('wiggle-click'), 420);
 });
 
-/* ── Reservation Form ── */
+
 function handleReservation(e) {
   e.preventDefault();
   confettiBurst();
   triggerToast('🎉', 'Table booked! See you soon!');
-  // Optionally reset after short delay
   setTimeout(() => e.target.reset(), 3000);
 }
 
-/* ── Newsletter Form ── */
+
 function handleNewsletter(e) {
   e.preventDefault();
   triggerToast('✉', 'Subscribed! Tasty updates incoming!');

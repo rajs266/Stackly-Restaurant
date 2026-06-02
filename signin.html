@@ -18,7 +18,7 @@
       font-family: var(--font-body);
     }
     
-    /* Left Side - Background Image */
+    
     .auth-visual {
       flex: 1;
       background: linear-gradient(135deg, rgba(107, 79, 68, 0.85), rgba(45,21,0,0.9)),
@@ -87,7 +87,7 @@
       letter-spacing: 1px;
     }
     
-    /* Right Side - Form */
+    
     .auth-form-side {
       width: min(480px, 100%);
       display: flex;
@@ -199,7 +199,7 @@
       color: var(--secondary);
     }
     
-    /* Role Selection */
+    
     .role-select {
       display: flex;
       gap: 12px;
@@ -278,7 +278,7 @@
       color: var(--secondary);
     }
     
-    /* Role Badge */
+    
     .role-badge {
       display: inline-flex;
       align-items: center;
@@ -323,7 +323,7 @@
 </head>
 <body>
 
-<!-- Page Loader -->
+
 <div id="page-loader">
   <div class="loader-visual-wrap">
     <div class="loader-circles">
@@ -336,7 +336,7 @@
 
 <div class="auth-page">
   
-  <!-- Left Side - Visual -->
+  
   <div class="auth-visual">
     <div class="auth-visual-content">
       <span class="auth-visual-emoji">🍽️</span>
@@ -359,10 +359,10 @@
     </div>
   </div>
   
-  <!-- Right Side - Form -->
+  
   <div class="auth-form-side">
     
-    <!-- Logo -->
+    
     <a href="index.html" class="auth-logo">
       <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
       <span class="auth-logo-text" style="display:none;">STACKLY</span>
@@ -373,19 +373,19 @@
     
     <form id="signinForm" onsubmit="handleSignin(event)">
       
-      <!-- Email -->
+      
       <div class="auth-form-group">
         <label>Email Address <span class="req">*</span></label>
         <input type="email" class="auth-input" id="signinEmail" placeholder="you@example.com" required>
       </div>
       
-      <!-- Password -->
+      
       <div class="auth-form-group">
         <label>Password <span class="req">*</span></label>
         <input type="password" class="auth-input" id="signinPassword" placeholder="Your password" required>
       </div>
       
-      <!-- Role Selection -->
+      
       <div class="auth-form-group">
         <label>Select Role <span class="req">*</span></label>
         <div class="role-select">
@@ -430,12 +430,12 @@
 </div>
 
 <script>
-// ── Page Loader ──
+
 window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 1500);
 });
 
-// ── Handle Sign In ──
+
 function handleSignin(e) {
   e.preventDefault();
   
@@ -444,13 +444,13 @@ function handleSignin(e) {
   const role = document.querySelector('input[name="role"]:checked').value;
   const rememberMe = document.getElementById('rememberMe').checked;
   
-  // Basic validation
+  
   if (!email || !password) {
     showToast('⚠️', 'Please enter both email and password!');
     return;
   }
   
-  // ANY valid email format + ANY password length >= 1 will sign in
+  
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     showToast('⚠️', 'Please enter a valid email format!');
@@ -460,12 +460,11 @@ function handleSignin(e) {
   
   document.getElementById('signinEmail').classList.remove('error');
   
-  // Check if user exists in localStorage (from signup)
+  
   let users = JSON.parse(localStorage.getItem('stacklyUsers') || '[]');
   let user = users.find(u => u.email === email);
   
-  // If user not found in localStorage, create a default session
-  // This allows ANY valid email to sign in
+  
   if (!user) {
     user = {
       name: email.split('@')[0],
@@ -474,14 +473,14 @@ function handleSignin(e) {
       password: password
     };
   } else {
-    // Check if the selected role matches the registered role
+    
     if (user.role !== role) {
       showToast('⚠️', `Account exists, but not as an ${role}!`);
       return;
     }
   }
   
-  // Store session
+  
   const session = {
     email: email,
     name: user.name,
@@ -498,7 +497,7 @@ function handleSignin(e) {
   
   showToast('🎉', `Welcome back, ${user.name}! (${user.role === 'admin' ? 'Admin' : 'Guest'})`);
   
-  // Redirect based on role
+  
   setTimeout(() => {
     if (user.role === 'admin') {
       window.location.href = 'dashboard-admin.html';
@@ -508,7 +507,7 @@ function handleSignin(e) {
   }, 1500);
 }
 
-// ── Toast ──
+
 function showToast(emoji, msg) {
   let toast = document.getElementById('authToast');
   if (!toast) {
@@ -528,7 +527,7 @@ function showToast(emoji, msg) {
   }, 3000);
 }
 
-// Keep the login button on the sign-in page. Dashboard pages clear sessions when users exit them.
+
 window.addEventListener('DOMContentLoaded', () => {
   const cameFromDashboard = /dashboard-(guest|admin)\.html$/i.test(new URL(document.referrer || window.location.href).pathname);
   if (cameFromDashboard) {

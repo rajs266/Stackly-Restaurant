@@ -10,7 +10,7 @@
   <style>
     .blog-hero {
      min-height: 68vh;
-      background: var(--dark); /* This min-height will be inherited from style.css after removal */
+      background: var(--dark); 
       display: flex;
       background-size: cover;
       background-position: center;
@@ -271,7 +271,7 @@
 </head>
 <body>
 
-<!-- Page Loader -->
+
 <div id="page-loader">
   <div class="loader-visual-wrap">
     <div class="loader-circles">
@@ -282,17 +282,17 @@
   <div class="loader-text">Cooking up stories... 📝</div>
 </div>
 
-<!-- Custom Cursor -->
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Food Toast -->
+
 <div class="food-toast" id="foodToast">
   <span class="food-toast-emoji">🍔</span>
   <span id="toastMsg">Yum! Great choice!</span>
 </div>
 
-<!-- Back to Top -->
+
 <button id="back-top" type="button" title="Back to top" aria-label="Back to top">
   <span class="backtop-bot" aria-hidden="true">
     <video class="eat-boy-video" src="./assets/eat boy.webm" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
@@ -300,7 +300,7 @@
   </span>
 </button>
 
-<!-- ═══ NAVBAR ═══ -->
+
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
     <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none'">
@@ -322,7 +322,7 @@
   </button>
 </nav>
 
-<!-- Mobile Menu -->
+
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-links">
     <a href="index.html">Home</a>
@@ -338,7 +338,7 @@
   </div>
 </div>
 
-<!-- ═══ BLOG HERO ═══ -->
+
 <section class="blog-hero" style="background-image: url('assets/images/photo-1490645935967-10de6ba17061.webp');">
   <div>
     <h1 class="blog-hero-title reveal">Food <span>Blog</span></h1>
@@ -346,11 +346,11 @@
   </div>
 </section>
 
-<!-- ═══ BLOG CONTENT ═══ -->
+
 <section class="section" style="background:var(--light);">
   <div class="section-inner">
     
-    <!-- Featured Post -->
+    
     <div class="featured-post reveal">
       <div class="featured-img">
         <img src="assets/images/photo-1504674900247-0877df9cc836.webp" alt="Featured Post">
@@ -370,7 +370,7 @@
       </div>
     </div>
     
-    <!-- Category Filter -->
+    
     <div class="blog-cat-filter reveal">
       <button class="blog-cat-btn active" onclick="filterBlog('all', this)">All Posts</button>
       <button class="blog-cat-btn" onclick="filterBlog('recipes', this)">🍳 Recipes</button>
@@ -379,7 +379,7 @@
       <button class="blog-cat-btn" onclick="filterBlog('news', this)">📰 News</button>
     </div>
     
-    <!-- Blog Grid -->
+    
     <div class="blog-full-grid" id="blogGrid">
       
       <div class="blog-full-card reveal delay-1" data-cat="recipes">
@@ -488,7 +488,7 @@
   </div>
 </section>
 
-<!-- ═══ NEWSLETTER ═══ -->
+
 <div class="newsletter-strip">
   <div class="newsletter-inner">
     <span class="newsletter-emoji">💌</span>
@@ -501,7 +501,7 @@
   </div>
 </div>
 
-<!-- ═══ CTA BANNER ═══ -->
+
 <div class="cta-banner">
   <div class="section-inner">
     <h2 class="cta-title reveal">Hungry After Reading? <br>Come Taste The Real Thing! 😋</h2>
@@ -513,7 +513,7 @@
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+
 <footer id="footer">
   <div class="section-inner">
     <div class="footer-grid">
@@ -598,12 +598,12 @@
 </footer>
 
 <script>
-// ── Page Loader ──
+
 window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 2000);
 });
 
-// ── Custom Cursor ──
+
 const cursor = document.getElementById('cursor');
 const cursorRing = document.getElementById('cursorRing');
 let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
@@ -625,7 +625,7 @@ document.querySelectorAll('a,button,.blog-full-card').forEach(el => {
   el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); cursorRing.classList.remove('hovered'); });
 });
 
-// ── Hamburger ──
+
 const ham = document.getElementById('hamburger');
 const mob = document.getElementById('mobileMenu');
 if (ham && mob) {
@@ -651,13 +651,13 @@ if (ham && mob) {
   });
 }
 
-// ── Navbar Scroll ──
+
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
   document.getElementById('back-top').classList.toggle('show', window.scrollY > 400);
 });
 
-// ── Back to Top (video touch → page scroll) ──
+
 (function () {
   const btn = document.getElementById('back-top');
   if (!btn || btn.dataset.backTopBound) return;
@@ -678,14 +678,14 @@ window.addEventListener('scroll', () => {
   btn.addEventListener('click', launchBackTop);
 })();
 
-// ── Reveal on Scroll ──
+
 const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
 }, { threshold: 0.1 });
 revealEls.forEach(el => io.observe(el));
 
-// ── Blog Filter ──
+
 function filterBlog(cat, btn) {
   document.querySelectorAll('.blog-cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -702,7 +702,7 @@ function filterBlog(cat, btn) {
   });
 }
 
-// ── Toast ──
+
 function triggerToast(emoji, msg) {
   const toast = document.getElementById('foodToast');
   const msgEl = document.getElementById('toastMsg');
@@ -714,7 +714,7 @@ function triggerToast(emoji, msg) {
   setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// ── Newsletter ──
+
 function handleBlogNewsletter(e) {
   e.preventDefault();
   triggerToast('💌', 'Subscribed! Tasty emails incoming!');

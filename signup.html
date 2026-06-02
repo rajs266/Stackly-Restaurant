@@ -18,7 +18,7 @@
       font-family: var(--font-body);
     }
     
-    /* Left Side - Background Image */
+    
     .auth-visual {
       flex: 1;
       background: linear-gradient(135deg, rgba(107, 79, 68, 0.85), rgba(45,21,0,0.9)),
@@ -87,7 +87,7 @@
       letter-spacing: 1px;
     }
     
-    /* Right Side - Form */
+    
     .auth-form-side {
       width: min(480px, 100%);
       display: flex;
@@ -182,7 +182,7 @@
       display: block;
     }
     
-    /* Role Selection */
+    
     .role-select {
       display: flex;
       gap: 12px;
@@ -274,7 +274,7 @@
       color: var(--secondary);
     }
     
-    /* Success Message */
+    
     .signup-success {
       display: none;
       text-align: center;
@@ -304,7 +304,7 @@
       line-height: 1.6;
     }
     
-    /* Password Strength */
+    
     .password-strength {
       height: 4px;
       background: rgba(255,255,255,0.1);
@@ -356,7 +356,7 @@
 </head>
 <body>
 
-<!-- Page Loader -->
+
 <div id="page-loader">
   <div class="loader-visual-wrap">
     <div class="loader-circles">
@@ -369,7 +369,7 @@
 
 <div class="auth-page">
   
-  <!-- Left Side - Visual -->
+  
   <div class="auth-visual">
     <div class="auth-visual-content">
       <span class="auth-visual-emoji">🍔</span>
@@ -392,44 +392,44 @@
     </div>
   </div>
   
-  <!-- Right Side - Form -->
+  
   <div class="auth-form-side">
     
-    <!-- Logo -->
+    
     <a href="index.html" class="auth-logo">
       <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
       <span class="auth-logo-text" style="display:none;">STACKLY</span>
     </a>
     
-    <!-- Form Content -->
+    
     <div id="signupFormContent">
       <h2 class="auth-title">Create Account</h2>
       <p class="auth-sub">Fill in your details to get started! 🎉</p>
       
       <form id="signupForm" onsubmit="handleSignup(event)">
         
-        <!-- Full Name -->
+        
         <div class="auth-form-group">
           <label>Full Name <span class="req">*</span></label>
           <input type="text" class="auth-input" id="signupName" placeholder="Your full name" required oninput="validateName(this)">
           <span class="auth-error-msg" id="nameError">Name should contain only alphabets and spaces!</span>
         </div>
         
-        <!-- Email -->
+        
         <div class="auth-form-group">
           <label>Email Address <span class="req">*</span></label>
           <input type="email" class="auth-input" id="signupEmail" placeholder="you@example.com" required oninput="validateEmail(this)">
           <span class="auth-error-msg" id="emailError">Please enter a valid email address!</span>
         </div>
         
-        <!-- Phone -->
+        
         <div class="auth-form-group">
           <label>Phone Number <span class="req">*</span></label>
           <input type="tel" class="auth-input" id="signupPhone" placeholder="+91 XXXXX XXXXX" required oninput="validatePhone(this)">
           <span class="auth-error-msg" id="phoneError">Please enter a valid phone number!</span>
         </div>
         
-        <!-- Role Selection -->
+        
         <div class="auth-form-group">
           <label>Select Role <span class="req">*</span></label>
           <div class="role-select">
@@ -452,7 +452,7 @@
           </div>
         </div>
         
-        <!-- Password -->
+        
         <div class="auth-form-group">
           <label>Password <span class="req">*</span></label>
           <input type="password" class="auth-input" id="signupPassword" placeholder="Create a strong password" required oninput="checkPasswordStrength(this)">
@@ -461,7 +461,7 @@
           </div>
         </div>
         
-        <!-- Confirm Password -->
+        
         <div class="auth-form-group">
           <label>Confirm Password <span class="req">*</span></label>
           <input type="password" class="auth-input" id="signupConfirm" placeholder="Confirm your password" required oninput="checkMatch(this)">
@@ -479,7 +479,7 @@
       </div>
     </div>
     
-    <!-- Success Message -->
+    
     <div class="signup-success" id="signupSuccess">
       <span class="signup-success-emoji">🎉</span>
       <h3>Account Created!</h3>
@@ -491,14 +491,14 @@
 </div>
 
 <script>
-// ── Page Loader ──
+
 window.addEventListener('load', () => {
   setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 1500);
 });
 
-// ── Validation Functions ──
+
 function validateName(input) {
-  // Only allow alphabets and spaces
+  
   input.value = input.value.replace(/[^a-zA-Z\s]/g, '');
   
   const name = input.value.trim();
@@ -537,7 +537,7 @@ function validateEmail(input) {
 }
 
 function validatePhone(input) {
-  // Only allow numbers, +, -, spaces
+  
   input.value = input.value.replace(/[^0-9+\-\s]/g, '');
   
   const phone = input.value.replace(/[^0-9]/g, '');
@@ -599,7 +599,7 @@ function checkMatch(input) {
   }
 }
 
-// ── Handle Signup ──
+
 function handleSignup(e) {
   e.preventDefault();
   
@@ -610,7 +610,7 @@ function handleSignup(e) {
   const confirm = document.getElementById('signupConfirm').value;
   const role = document.querySelector('input[name="role"]:checked').value;
   
-  // Validate all fields
+  
   if (!name || !email || !phone || !password || !confirm) {
     showToast('⚠️', 'Please fill all required fields!');
     return;
@@ -648,20 +648,20 @@ function handleSignup(e) {
     return;
   }
   
-  // Save user data to localStorage (simulating account creation)
+  
   const userData = {
     name: name,
     email: email,
     phone: phone,
     role: role,
-    password: password, // In real app, never store plain text password!
+    password: password, 
     createdAt: new Date().toISOString()
   };
   
-  // Store in localStorage (in real app, send to server)
+  
   let users = JSON.parse(localStorage.getItem('stacklyUsers') || '[]');
   
-  // Check if email already exists
+  
   const existingUser = users.find(u => u.email === email);
   if (existingUser) {
     showToast('⚠️', 'An account with this email already exists!');
@@ -671,21 +671,21 @@ function handleSignup(e) {
   users.push(userData);
   localStorage.setItem('stacklyUsers', JSON.stringify(users));
   
-  // Show success and redirect
+  
   document.getElementById('signupFormContent').style.display = 'none';
   document.getElementById('signupSuccess').style.display = 'block';
   
   showToast('🎉', 'Account created successfully!');
   
-  // Auto redirect after 3 seconds
+  
   setTimeout(() => {
     window.location.href = 'signin.html';
   }, 3000);
 }
 
-// ── Toast ──
+
 function showToast(emoji, msg) {
-  // Create toast if not exists
+  
   let toast = document.getElementById('authToast');
   if (!toast) {
     toast = document.createElement('div');

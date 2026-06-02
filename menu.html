@@ -11,7 +11,7 @@
   <style>
     .menu-hero {
       min-height: 68vh;
-      background: var(--dark); /* This min-height will be inherited from style.css after removal */
+      background: var(--dark); 
       display: flex;
       background-size: cover;
       background-position: center;
@@ -223,7 +223,7 @@
 </head>
 <body>
 
-<!-- Page Loader -->
+
 <div id="page-loader">
   <div class="loader-visual-wrap">
     <div class="loader-circles">
@@ -234,11 +234,11 @@
   <div class="loader-text">Loading the feast...</div>
 </div>
 
-<!-- Custom Cursor -->
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- Food Toast -->
+
 <div class="food-toast" id="foodToast">
   <div class="food-toast-icon">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
@@ -246,7 +246,7 @@
   <span id="toastMsg">Added to order!</span>
 </div>
 
-<!-- Back to Top -->
+
 <button id="back-top" type="button" title="Back to top" aria-label="Back to top">
   <span class="backtop-bot" aria-hidden="true">
     <video class="eat-boy-video" src="./assets/eat boy.webm" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
@@ -254,7 +254,7 @@
   </span>
 </button>
 
-<!-- ═══ NAVBAR ═══ -->
+
 <nav id="navbar">
   <a href="index.html" class="nav-logo">
     <img src="assets/logo.webp" alt="Stackly Logo" onerror="this.style.display='none'">
@@ -276,7 +276,7 @@
   </button>
 </nav>
 
-<!-- Mobile Menu -->
+
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-links">
     <a href="index.html">Home</a>
@@ -292,7 +292,7 @@
   </div>
 </div>
 
-<!-- ═══ MENU HERO ═══ -->
+
 <section class="menu-hero" style="background-image: url('assets/images/photo-1504674900247-0877df9cc836.webp');">
   <div>
     <h1 class="menu-hero-title reveal">Our <span>Menu</span></h1>
@@ -300,11 +300,11 @@
   </div>
 </section>
 
-<!-- ═══ MENU CONTENT ═══ -->
+
 <section class="section" style="background:var(--light);">
   <div class="section-inner">
     
-    <!-- Category Tabs -->
+    
     <div class="menu-cat-tabs reveal">
       <button class="menu-cat-tab active" onclick="scrollToCat('starters')">Starters</button>
       <button class="menu-cat-tab" onclick="scrollToCat('mains')">Mains</button>
@@ -312,7 +312,7 @@
       <button class="menu-cat-tab" onclick="scrollToCat('drinks')">Drinks</button>
     </div>
     
-    <!-- Starters -->
+    
     <h2 class="menu-cat-title reveal" id="starters"><span>Starters</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
@@ -401,7 +401,7 @@
       </div>
     </div>
     
-    <!-- Mains -->
+    
     <h2 class="menu-cat-title reveal" id="mains"><span>Mains</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
@@ -490,7 +490,7 @@
       </div>
     </div>
     
-    <!-- Desserts -->
+    
     <h2 class="menu-cat-title reveal" id="desserts"><span>Desserts</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
@@ -551,7 +551,7 @@
       </div>
     </div>
     
-    <!-- Drinks -->
+    
     <h2 class="menu-cat-title reveal" id="drinks"><span>Drinks</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
@@ -618,7 +618,7 @@
   </div>
 </section>
 
-<!-- ═══ CTA BANNER ═══ -->
+
 <div class="cta-banner">
   <div class="section-inner">
     <h2 class="cta-title reveal">Still Deciding? <br>Order Everything!</h2>
@@ -630,7 +630,7 @@
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+
 <footer id="footer">
   <div class="section-inner">
     <div class="footer-grid">
@@ -722,12 +722,12 @@
 
 <script src="./script.js"></script>
 <script>
-// ── Scroll to Category ──
+
 function scrollToCat(id) {
   document.querySelectorAll('.menu-cat-tab').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
   const targetEl = document.getElementById(id);
-  const offset = 140; // Accounting for sticky tabs + navbar
+  const offset = 140; 
   const bodyRect = document.body.getBoundingClientRect().top;
   const elementRect = targetEl.getBoundingClientRect().top;
   const elementPosition = elementRect - bodyRect;
