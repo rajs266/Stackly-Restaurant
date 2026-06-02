@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="assets/top-logo.webp">
   <title>Book A Table — Stackly Restaurant</title>
   <link rel="stylesheet" href="./style.css">
   <style>
     .res-hero {
-      min-height: 45vh;
-      background: var(--dark);
+      min-height: 68vh;
+      background: var(--dark); /* This min-height will be inherited from style.css after removal */
       display: flex;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -245,8 +250,12 @@
 
 <!-- Page Loader -->
 <div id="page-loader">
-  <div class="loader-logo">STACKLY</div>
-  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-visual-wrap">
+    <div class="loader-circles">
+      <span></span><span></span><span></span>
+    </div>
+    <img src="assets/logo.webp" alt="Stackly" class="loader-logo-img">
+  </div>
   <div class="loader-text">Reserving your spot... 📅</div>
 </div>
 
@@ -261,7 +270,12 @@
 </div>
 
 <!-- Back to Top -->
-<button id="back-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+<button id="back-top" type="button" title="Back to top" aria-label="Back to top">
+  <span class="backtop-bot" aria-hidden="true">
+    <video class="eat-boy-video" src="./assets/eat boy.webm" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
+    <img class="fly-boy-img" src="./assets/fly boy.webp" alt="">
+  </span>
+</button>
 
 <!-- ═══ NAVBAR ═══ -->
 <nav id="navbar">
@@ -302,7 +316,7 @@
 </div>
 
 <!-- ═══ RESERVATION HERO ═══ -->
-<section class="res-hero" style="background-image: url('https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1600&q=80');">
+<section class="res-hero" style="background-image: url('assets/images/photo-1559339352-11d035aa65de.webp');">
   <div>
     <h1 class="res-hero-title reveal">Book A <span>Table</span></h1>
     <p class="res-hero-sub reveal delay-1">Peak hours fill up FAST! Reserve now and skip the queue! 🔥</p>
@@ -463,11 +477,21 @@
         </a>
         <p>Salem's most fun restaurant since 2012. We don't just serve food — we serve memories, laughter, and seriously good vibes.</p>
         <div class="footer-socials">
-          <a href="404.html" class="footer-social">📘</a>
-          <a href="404.html" class="footer-social">📸</a>
-          <a href="404.html" class="footer-social">🐦</a>
-          <a href="404.html" class="footer-social">▶️</a>
-          <a href="404.html" class="footer-social">💬</a>
+          <a href="404.html" class="footer-social" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="Twitter/X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.253 2 2 6.253 2 11.5c0 1.891.549 3.658 1.5 5.158L2 22l5.5-1.5A9.455 9.455 0 0011.5 21C16.747 21 21 16.747 21 11.5S16.747 2 11.5 2z"/></svg>
+          </a>
         </div>
       </div>
       <div>
@@ -558,24 +582,55 @@ document.querySelectorAll('a,button,.res-input').forEach(el => {
 // ── Hamburger ──
 const ham = document.getElementById('hamburger');
 const mob = document.getElementById('mobileMenu');
-ham.addEventListener('click', () => {
-  ham.classList.toggle('open');
-  mob.classList.toggle('open');
-  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
-});
-mob.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    ham.classList.remove('open');
-    mob.classList.remove('open');
-    document.body.style.overflow = '';
+if (ham && mob) {
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    mob.classList.toggle('open');
+    document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
   });
-});
+  mob.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      ham.classList.remove('open');
+      mob.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 992) {
+      ham.classList.remove('open');
+      mob.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  });
+}
 
 // ── Navbar Scroll ──
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
   document.getElementById('back-top').classList.toggle('show', window.scrollY > 400);
 });
+
+// ── Back to Top (video touch → page scroll) ──
+(function () {
+  const btn = document.getElementById('back-top');
+  if (!btn || btn.dataset.backTopBound) return;
+  btn.dataset.backTopBound = '1';
+  function scrollPageTop() {
+    const root = document.scrollingElement || document.documentElement;
+    root.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }
+  function launchBackTop() {
+    if (btn.classList.contains('launching')) return;
+    btn.classList.remove('launching');
+    void btn.offsetWidth;
+    btn.classList.add('launching');
+    scrollPageTop();
+    setTimeout(() => btn.classList.remove('launching'), 1100);
+  }
+  btn.addEventListener('click', launchBackTop);
+})();
 
 // ── Reveal on Scroll ──
 const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
@@ -656,8 +711,11 @@ function handleBooking(e) {
 // ── Toast ──
 function triggerToast(emoji, msg) {
   const toast = document.getElementById('foodToast');
-  document.getElementById('toastMsg').textContent = msg;
-  toast.querySelector('.food-toast-emoji').textContent = emoji;
+  const msgEl = document.getElementById('toastMsg');
+  const emoEl = toast ? toast.querySelector('.food-toast-emoji') : null;
+  if (!toast || !msgEl) return;
+  if (emoEl) emoEl.textContent = emoji || '✓';
+  msgEl.textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
 }

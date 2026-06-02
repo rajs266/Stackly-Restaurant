@@ -3,705 +3,299 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="assets/top-logo.webp">
   <title>Admin Dashboard — Stackly Restaurant</title>
   <link rel="stylesheet" href="./style.css">
   <style>
-    :root {
-      --sidebar-w: 260px;
-      --sidebar-collapsed: 70px;
-    }
-    
+    :root { --sidebar-w: 260px; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: var(--font-body);
-      background: #f5f0eb;
-      color: var(--text);
-      overflow-x: hidden;
-    }
-    
-    /* ── Dashboard Layout ── */
-    .dashboard-wrap {
-      display: flex;
-      min-height: 100vh;
-    }
-    
-    /* ── Sidebar ── */
+    body { font-family: var(--font-body); background: #f5f0eb; color: var(--text); overflow-x: hidden; }
+    .dashboard-wrap { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
     .sidebar {
-      width: var(--sidebar-w);
-      background: var(--dark);
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      transition: var(--transition);
-      overflow-y: auto;
-      overflow-x: hidden;
+      width: var(--sidebar-w); background: var(--dark); position: fixed; left: 0; top: 0; bottom: 0; z-index: 1000;
+      display: flex; flex-direction: column; transition: var(--transition); overflow-y: auto; overflow-x: hidden;
+      overscroll-behavior: contain;
     }
     .sidebar::-webkit-scrollbar { width: 4px; }
     .sidebar::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
-    
-    .sidebar-brand {
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .sidebar-brand img {
-      height: 40px;
-      width: auto;
-      flex-shrink: 0;
-    }
-    .sidebar-brand-text {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: var(--primary);
-      letter-spacing: 2px;
-      white-space: nowrap;
-      transition: var(--transition);
-    }
-    
-    .sidebar-nav {
-      flex: 1;
-      padding: 20px 0;
-    }
-    .sidebar-section {
-      margin-bottom: 20px;
-    }
+    .sidebar-brand { padding: 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-brand img { height: 40px; width: auto; flex-shrink: 0; }
+    .sidebar-brand-text { font-family: var(--font-display); font-size: 1.4rem; color: var(--primary); letter-spacing: 2px; white-space: nowrap; }
+    .sidebar-nav { flex: 1; padding: 20px 0; }
+    .sidebar-section { margin-bottom: 20px; }
     .sidebar-section-title {
-      font-family: var(--font-heading);
-      font-size: 0.7rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      padding: 0 20px 10px;
-      white-space: nowrap;
+      font-family: var(--font-heading); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); padding: 0 20px 10px; white-space: nowrap;
     }
     .sidebar-link {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 20px;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.9rem;
-      transition: var(--transition);
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-      position: relative;
+      display: flex; align-items: center; gap: 14px; padding: 12px 20px;
+      color: rgba(255,255,255,0.6); font-size: 0.9rem; transition: var(--transition); cursor: pointer;
+      text-decoration: none; white-space: nowrap; position: relative;
     }
     .sidebar-link::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: var(--primary);
-      transform: scaleY(0);
-      transition: transform 0.3s ease;
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: var(--primary); transform: scaleY(0); transition: transform 0.3s ease;
     }
-    .sidebar-link:hover, .sidebar-link.active {
-      background: rgba(255,69,0,0.1);
-      color: white;
-    }
-    .sidebar-link:hover::before, .sidebar-link.active::before {
-      transform: scaleY(1);
-    }
-    .sidebar-link-icon {
-      font-size: 1.3rem;
-      width: 24px;
-      text-align: center;
-      flex-shrink: 0;
-    }
-    .sidebar-link-text {
-      transition: var(--transition);
-    }
+    .sidebar-link:hover, .sidebar-link.active { background: rgba(255,69,0,0.1); color: white; }
+    .sidebar-link:hover::before, .sidebar-link.active::before { transform: scaleY(1); }
+    .sidebar-link-icon { font-size: 1.3rem; width: 24px; text-align: center; flex-shrink: 0; }
     .sidebar-link-badge {
-      margin-left: auto;
-      background: var(--primary);
-      color: white;
-      font-size: 0.7rem;
-      padding: 2px 8px;
-      border-radius: 10px;
-      font-family: var(--font-heading);
+      margin-left: auto; background: var(--primary); color: white; font-size: 0.7rem;
+      padding: 2px 8px; border-radius: 10px; font-family: var(--font-heading);
     }
-    
-    .sidebar-footer {
-      padding: 15px 20px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-    }
+    .sidebar-footer { padding: 15px 20px; border-top: 1px solid rgba(255,255,255,0.08); }
     .sidebar-user {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 10px;
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: var(--transition);
+      display: flex; align-items: center; gap: 12px; padding: 10px;
+      background: rgba(255,255,255,0.05); border-radius: var(--radius-sm);
+      cursor: pointer; transition: var(--transition);
     }
-    .sidebar-user:hover {
-      background: rgba(255,69,0,0.15);
-    }
+    .sidebar-user:hover { background: rgba(255,69,0,0.15); }
     .sidebar-user-avatar {
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
+      width: 40px; height: 40px; background: var(--primary); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
     }
-    .sidebar-user-info {
-      overflow: hidden;
-    }
-    .sidebar-user-name {
-      font-family: var(--font-heading);
-      font-size: 0.85rem;
-      color: white;
-      white-space: nowrap;
-    }
-    .sidebar-user-role {
-      font-size: 0.75rem;
-      color: var(--primary);
-    }
-    
-    /* ── Main Content ── */
+    .sidebar-user-info { overflow: hidden; }
+    .sidebar-user-name { font-family: var(--font-heading); font-size: 0.85rem; color: white; white-space: nowrap; }
+    .sidebar-user-role { font-size: 0.75rem; color: var(--primary); }
+
+    /* Main Content */
     .main-content {
-      flex: 1;
-      margin-left: var(--sidebar-w);
-      transition: var(--transition);
+      flex: 1; margin-left: var(--sidebar-w); transition: var(--transition);
+      min-width: 0; max-width: 100%; width: calc(100% - var(--sidebar-w));
     }
-    
-    /* ── Top Header ── */
+
+    /* Top Header — sticky navbar: toggle + logo + icons */
     .top-header {
-      position: sticky;
-      top: 0;
-      z-index: 900;
-      background: rgba(245,240,235,0.95);
-      backdrop-filter: blur(10px);
-      padding: 15px 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(255,69,0,0.1);
+      position: sticky; top: 0; z-index: 1100; background: var(--dark);
+      backdrop-filter: blur(12px); padding: 12px 24px;
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 18px rgba(0,0,0,0.22);
     }
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
+    .header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
     .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--dark);
-      padding: 5px;
-      position: relative;
-      width: 36px;
-      height: 36px;
+      display: none; flex-shrink: 0; background: white; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 1.25rem; cursor: pointer; color: var(--dark);
+      width: 40px; height: 40px; position: relative;
     }
-    .menu-toggle span {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      transition: var(--transition);
-    }
+    .menu-toggle span { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); transition: var(--transition); line-height: 1; }
     .menu-toggle .close-icon { opacity: 0; transform: translate(-50%, -50%) rotate(-90deg); }
     .menu-toggle.open .menu-icon { opacity: 0; transform: translate(-50%, -50%) rotate(90deg); }
     .menu-toggle.open .close-icon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg); }
-    
+    .header-logo {
+      display: flex; align-items: center; flex-shrink: 0; text-decoration: none; height: 38px;
+    }
+    .header-logo img { height: 34px; width: auto; max-width: 120px; object-fit: contain; }
+    .header-meta { min-width: 0; overflow: hidden; }
     .header-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: var(--dark);
-      letter-spacing: 2px;
+      font-family: var(--font-display); font-size: 1.35rem; color: #fff;
+      letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .header-breadcrumb {
-      font-size: 0.8rem;
-      color: var(--text-light);
+      font-size: 0.8rem; color: rgba(255,255,255,0.66);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
+    .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+    .sidebar-welcome {
+      padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,69,0,0.14) 0%, transparent 100%);
+    }
+    .sidebar-welcome-label {
+      font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-bottom: 8px;
+    }
+    .sidebar-welcome-name {
+      font-family: var(--font-heading); font-size: 1.05rem; color: white;
+      margin-bottom: 4px; word-break: break-word; line-height: 1.3;
+    }
+    .sidebar-welcome-email {
+      font-size: 0.8rem; color: var(--primary); word-break: break-all; line-height: 1.35;
     }
     .header-icon-btn {
-      width: 40px;
-      height: 40px;
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      text-decoration: none;
+      width: 40px; height: 40px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer; transition: var(--transition); position: relative; text-decoration: none; color: #fff;
     }
-    .header-icon-btn:hover {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: white;
-      transform: scale(1.1);
-    }
+    .header-icon-btn:hover { background: var(--primary); border-color: var(--primary); color: white; transform: scale(1.1); }
     .header-notif-badge {
-      position: absolute;
-      top: -2px;
-      right: -2px;
-      width: 18px;
-      height: 18px;
-      background: var(--primary);
-      color: white;
-      font-size: 0.65rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-heading);
+      position: absolute; top: -2px; right: -2px; width: 18px; height: 18px;
+      background: var(--primary); color: white; font-size: 0.65rem; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-family: var(--font-heading);
     }
-    
-    /* ── Dashboard Content ── */
-    .dashboard-content {
-      padding: 25px 30px;
-    }
-    
-    /* ── Stats Cards ── */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      margin-bottom: 30px;
-    }
+
+    /* Dashboard Content */
+    .dashboard-content { padding: 25px 30px; max-width: 100%; box-sizing: border-box; overflow-x: hidden; }
+    body.no-scroll { overflow: hidden; }
+
+    /* Stats Cards */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
     .stat-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 22px;
-      border: 2px solid var(--border);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
+      background: white; border-radius: var(--radius); padding: 22px;
+      border: 2px solid var(--border); transition: var(--transition); position: relative; overflow: hidden;
     }
     .stat-card::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 80px;
-      height: 80px;
-      background: radial-gradient(circle, rgba(255,69,0,0.08) 0%, transparent 70%);
-      border-radius: 50%;
+      content: ''; position: absolute; top: 0; right: 0; width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(255,69,0,0.08) 0%, transparent 70%); border-radius: 50%;
     }
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-      border-color: var(--primary);
-    }
-    .stat-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
+    .stat-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--primary); }
+    .stat-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
     .stat-card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
     }
     .stat-card-icon.orange { background: rgba(255,69,0,0.1); }
     .stat-card-icon.gold { background: rgba(255,215,0,0.15); }
     .stat-card-icon.green { background: rgba(0,201,167,0.1); }
     .stat-card-icon.red { background: rgba(255,68,68,0.1); }
     .stat-card-trend {
-      font-size: 0.75rem;
-      font-family: var(--font-heading);
-      padding: 3px 8px;
-      border-radius: 10px;
+      font-size: 0.75rem; font-family: var(--font-heading); padding: 3px 8px; border-radius: 10px;
     }
     .trend-up { background: rgba(0,201,167,0.15); color: #00C9A7; }
     .trend-down { background: rgba(255,68,68,0.15); color: #ff4444; }
-    .stat-card-value {
-      font-family: var(--font-display);
-      font-size: 1.8rem;
-      color: var(--dark);
-      letter-spacing: 1px;
-    }
-    .stat-card-label {
-      font-size: 0.8rem;
-      color: var(--text-light);
-      margin-top: 4px;
-    }
-    
-    /* ── Charts Section ── */
-    .charts-row {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
+    .stat-card-value { font-family: var(--font-display); font-size: 1.8rem; color: var(--dark); letter-spacing: 1px; }
+    .stat-card-label { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
+
+    /* Charts Section */
+    .charts-row { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 30px; }
     .chart-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 25px;
-      border: 2px solid var(--border);
+      background: white; border-radius: var(--radius); padding: 25px; border: 2px solid var(--border);
     }
-    .chart-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .chart-card-title {
-      font-family: var(--font-heading);
-      font-size: 1.1rem;
-      color: var(--dark);
-    }
-    .chart-card-filter {
-      display: flex;
-      gap: 8px;
-    }
+    .chart-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .chart-card-title { font-family: var(--font-heading); font-size: 1.1rem; color: var(--dark); }
+    .chart-card-filter { display: flex; gap: 8px; }
     .chart-filter-btn {
-      padding: 5px 12px;
-      border: 1px solid var(--border);
-      background: white;
-      border-radius: 15px;
-      font-size: 0.75rem;
-      font-family: var(--font-heading);
-      cursor: pointer;
-      transition: var(--transition);
+      padding: 5px 12px; border: 1px solid var(--border); background: white;
+      border-radius: 15px; font-size: 0.75rem; font-family: var(--font-heading);
+      cursor: pointer; transition: var(--transition);
     }
-    .chart-filter-btn.active, .chart-filter-btn:hover {
-      background: var(--primary);
-      color: white;
-      border-color: var(--primary);
-    }
-    
-    /* Simple bar chart */
+    .chart-filter-btn.active, .chart-filter-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* Bar chart */
     .bar-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 12px;
-      height: 200px;
-      padding-top: 20px;
+      display: flex; align-items: flex-end; gap: 12px; height: 230px; padding: 34px 10px 0;
+      border-left: 1px solid var(--border-light); border-bottom: 1px solid var(--border);
+      background:
+        linear-gradient(to top, rgba(232,67,26,0.08) 1px, transparent 1px) 0 0 / 100% 25%,
+        linear-gradient(180deg, #fff 0%, var(--light) 100%);
+      border-radius: var(--radius-sm);
     }
-    .bar-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
+    .bar-item { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
     .bar-fill {
-      width: 100%;
-      background: linear-gradient(to top, var(--primary), var(--accent));
-      border-radius: 6px 6px 0 0;
-      transition: height 1s ease;
-      position: relative;
-      min-height: 20px;
+      width: min(100%, 46px); background: linear-gradient(to top, var(--primary), var(--accent));
+      border-radius: 8px 8px 0 0; transition: height 1s ease; position: relative; min-height: 24px;
+      box-shadow: 0 8px 20px rgba(232,67,26,0.18);
     }
     .bar-fill::after {
-      content: attr(data-value);
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.7rem;
-      font-family: var(--font-heading);
-      color: var(--primary);
-      opacity: 0;
-      transition: opacity 0.3s;
+      content: attr(data-value); position: absolute; top: -24px; left: 50%;
+      transform: translateX(-50%); font-size: 0.7rem; font-family: var(--font-heading);
+      color: var(--dark); opacity: 1; transition: opacity 0.3s; white-space: nowrap;
     }
-    .bar-item:hover .bar-fill::after {
-      opacity: 1;
-    }
-    .bar-label {
-      font-size: 0.75rem;
-      color: var(--text-light);
-      font-family: var(--font-heading);
-    }
-    
-    /* Pie chart placeholder */
+    .bar-item:hover .bar-fill { filter: brightness(1.05); }
+    .bar-label { font-size: 0.75rem; color: var(--text-light); font-family: var(--font-heading); }
+
+    /* Pie chart */
     .pie-chart {
-      width: 160px;
-      height: 160px;
-      margin: 0 auto;
-      border-radius: 50%;
-      background: conic-gradient(
-        var(--primary) 0deg 126deg,
-        var(--secondary) 126deg 216deg,
-        var(--accent2) 216deg 288deg,
-        var(--accent) 288deg 360deg
-      );
-      position: relative;
-      animation: pieSpin 20s linear infinite;
+      width: 160px; height: 160px; margin: 0 auto; border-radius: 50%;
+      background: conic-gradient(var(--primary) 0deg 126deg, var(--secondary) 126deg 216deg, var(--accent2) 216deg 288deg, var(--accent) 288deg 360deg);
+      position: relative; animation: pieSpin 20s linear infinite;
     }
-    @keyframes pieSpin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .pie-chart::after {
-      content: '';
-      position: absolute;
-      inset: 30px;
-      background: white;
-      border-radius: 50%;
-    }
-    .pie-legend {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .pie-legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-    }
-    .pie-legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-    }
-    
-    /* ── Tables ── */
+    @keyframes pieSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .pie-chart::after { content: ''; position: absolute; inset: 30px; background: white; border-radius: 50%; }
+    .pie-legend { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .pie-legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; }
+    .pie-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+    /* Tables */
     .table-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 25px;
-      border: 2px solid var(--border);
-      margin-bottom: 20px;
+      background: white; border-radius: var(--radius); padding: 25px;
+      border: 2px solid var(--border); margin-bottom: 20px;
+      max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; box-sizing: border-box;
     }
-    .table-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .table-card-title {
-      font-family: var(--font-heading);
-      font-size: 1.1rem;
-      color: var(--dark);
-    }
-    .table-card-action {
-      padding: 8px 18px;
-      font-size: 0.8rem;
-    }
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    .table-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    .table-card-title { font-family: var(--font-heading); font-size: 1.1rem; color: var(--dark); }
+    .table-card-action { padding: 8px 18px; font-size: 0.8rem; }
+    .data-table { width: 100%; min-width: 520px; border-collapse: collapse; }
     .data-table th {
-      text-align: left;
-      padding: 12px 15px;
-      font-family: var(--font-heading);
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--text-light);
-      border-bottom: 2px solid var(--border);
+      text-align: left; padding: 12px 15px; font-family: var(--font-heading); font-size: 0.8rem;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--text-light); border-bottom: 2px solid var(--border);
     }
-    .data-table td {
-      padding: 14px 15px;
-      font-size: 0.88rem;
-      border-bottom: 1px solid rgba(255,69,0,0.08);
-    }
-    .data-table tr {
-      transition: var(--transition);
-    }
-    .data-table tr:hover {
-      background: rgba(255,69,0,0.03);
-    }
+    .data-table td { padding: 14px 15px; font-size: 0.88rem; border-bottom: 1px solid rgba(255,69,0,0.08); }
+    .data-table tr { transition: var(--transition); }
+    .data-table tr:hover { background: rgba(255,69,0,0.03); }
     .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 12px;
-      border-radius: 15px;
-      font-size: 0.75rem;
-      font-family: var(--font-heading);
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; font-family: var(--font-heading);
     }
     .status-confirmed { background: rgba(0,201,167,0.15); color: #00a884; }
     .status-pending { background: rgba(255,215,0,0.2); color: #b8860b; }
     .status-cancelled { background: rgba(255,68,68,0.1); color: #ff4444; }
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
     .status-confirmed .status-dot { background: #00a884; }
     .status-pending .status-dot { background: #b8860b; }
     .status-cancelled .status-dot { background: #ff4444; }
-    
-    .user-cell {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .user-cell { display: flex; align-items: center; gap: 10px; }
     .user-avatar-sm {
-      width: 32px;
-      height: 32px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: white;
+      width: 32px; height: 32px; background: var(--primary); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: white;
     }
-    
-    /* ── Activity Feed ── */
-    .activity-list {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .activity-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px;
-      border-radius: var(--radius-sm);
-      transition: var(--transition);
-    }
-    .activity-item:hover {
-      background: rgba(255,69,0,0.05);
-    }
+
+    /* Activity Feed */
+    .activity-list { display: flex; flex-direction: column; gap: 15px; }
+    .activity-item { display: flex; gap: 12px; padding: 12px; border-radius: var(--radius-sm); transition: var(--transition); }
+    .activity-item:hover { background: rgba(255,69,0,0.05); }
     .activity-icon {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0;
     }
     .activity-icon.order { background: rgba(255,69,0,0.1); }
     .activity-icon.user { background: rgba(0,201,167,0.1); }
     .activity-icon.reservation { background: rgba(255,215,0,0.15); }
     .activity-icon.review { background: rgba(255,68,68,0.1); }
-    .activity-content {
-      flex: 1;
-    }
-    .activity-text {
-      font-size: 0.85rem;
-      color: var(--text);
-      line-height: 1.5;
-    }
+    .activity-content { flex: 1; }
+    .activity-text { font-size: 0.85rem; color: var(--text); line-height: 1.5; }
     .activity-text strong { color: var(--dark); }
-    .activity-time {
-      font-size: 0.75rem;
-      color: var(--text-light);
-      margin-top: 3px;
-    }
-    
-    /* ── Quick Actions ── */
-    .quick-actions {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 30px;
-    }
+    .activity-time { font-size: 0.75rem; color: var(--text-light); margin-top: 3px; }
+
+    /* Quick Actions */
+    .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
     .quick-action {
-      background: white;
-      border: 2px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-      text-decoration: none;
-      color: inherit;
+      background: white; border: 2px solid var(--border); border-radius: var(--radius);
+      padding: 20px; text-align: center; cursor: pointer; transition: var(--transition);
+      text-decoration: none; color: inherit;
     }
-    .quick-action:hover {
-      border-color: var(--primary);
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: var(--shadow);
-    }
+    .quick-action:hover { border-color: var(--primary); transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow); }
     .quick-action-icon {
-      width: 50px;
-      height: 50px;
-      background: rgba(255,69,0,0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin: 0 auto 10px;
-      transition: var(--transition);
+      width: 50px; height: 50px; background: rgba(255,69,0,0.1); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+      margin: 0 auto 10px; transition: var(--transition);
     }
-    .quick-action:hover .quick-action-icon {
-      background: var(--primary);
-      transform: scale(1.1) rotate(10deg);
-    }
-    .quick-action-title {
-      font-family: var(--font-heading);
-      font-size: 0.9rem;
-      color: var(--dark);
-    }
-    .quick-action-desc {
-      font-size: 0.75rem;
-      color: var(--text-light);
-      margin-top: 4px;
-    }
-    
-    /* ── Two Column Layout ── */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-    
-    /* ── Mobile Sidebar Overlay ── */
-    .sidebar-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 999;
-    }
-    .sidebar-overlay.show {
-      display: block;
-    }
-    
-    /* ── Animations ── */
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-in {
-      animation: slideIn 0.5s ease forwards;
-    }
+    .quick-action:hover .quick-action-icon { background: var(--primary); transform: scale(1.1) rotate(10deg); }
+    .quick-action-title { font-family: var(--font-heading); font-size: 0.9rem; color: var(--dark); }
+    .quick-action-desc { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
+
+    /* Two Column */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+
+    /* Sidebar Overlay */
+    .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; }
+    .sidebar-overlay.show { display: block; }
+
+    /* Animations */
+    @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-in { animation: slideIn 0.5s ease forwards; }
     .delay-1 { animation-delay: 0.1s; opacity: 0; }
     .delay-2 { animation-delay: 0.2s; opacity: 0; }
     .delay-3 { animation-delay: 0.3s; opacity: 0; }
     .delay-4 { animation-delay: 0.4s; opacity: 0; }
-    
-    /* ── Scrollbar ── */
+
+    /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #f5f0eb; }
     ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
-    
+
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 1200px) {
       .stats-row { grid-template-columns: repeat(2, 1fr); }
@@ -709,113 +303,200 @@
       .charts-row { grid-template-columns: 1fr; }
       .two-col { grid-template-columns: 1fr; }
     }
-    
     @media (max-width: 992px) {
+      :root { --dash-header-h: 58px; }
       .sidebar {
-        transform: translateX(-100%);
+        transform: translateX(-100%); width: min(280px, 88vw);
+        top: var(--dash-header-h); height: calc(100dvh - var(--dash-header-h)); bottom: auto;
+        z-index: 1050;
       }
-      .sidebar.open {
-        transform: translateX(0);
-      }
-      .main-content {
-        margin-left: 0;
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-overlay { top: var(--dash-header-h); height: calc(100dvh - var(--dash-header-h)); }
+      .main-content { margin-left: 0; width: 100%; max-width: 100vw; padding-top: var(--dash-header-h); }
+      .menu-toggle { display: flex; align-items: center; justify-content: center; }
+      .header-meta { display: none; }
+      .top-header {
+        position: fixed; left: 0; right: 0; top: 0; width: 100%;
+        padding: 10px 12px; gap: 8px; grid-template-columns: auto 1fr;
+        background: var(--dark); border-bottom: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 4px 18px rgba(0,0,0,0.25);
       }
       .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.22); color: #fff;
       }
-      .top-header {
-        padding: 12px 20px;
+      .header-icon-btn {
+        background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.18); color: #fff;
       }
-      .dashboard-content {
-        padding: 20px;
-      }
+      .header-left { flex: 1; min-width: 0; }
+      .header-right { justify-content: flex-end; }
+      .dashboard-content { padding: 18px 14px; }
     }
-    
     @media (max-width: 600px) {
+      .stats-row, .charts-row, .two-col, .quick-actions, .menu-admin-grid { min-width: 0; max-width: 100%; }
       .stats-row { grid-template-columns: 1fr; }
       .quick-actions { grid-template-columns: 1fr 1fr; }
-      .header-title { font-size: 1.1rem; }
-      .data-table { font-size: 0.8rem; }
+      .quick-action:hover { transform: none; }
+      .stat-card:hover { transform: none; }
+      .data-table { font-size: 0.8rem; min-width: 480px; }
       .data-table th, .data-table td { padding: 10px 8px; }
-      .chart-card { padding: 18px; }
-      .bar-chart { height: 150px; gap: 8px; }
+      .chart-card { padding: 18px; max-width: 100%; overflow-x: auto; }
+      .bar-chart { height: 150px; gap: 8px; min-width: 420px; }
+      .table-card { padding: 16px; }
       .table-card-header { flex-direction: column; align-items: flex-start; }
+      .blog-admin-card { flex-direction: column; }
+      .blog-admin-img { width: 100%; height: 140px; }
+      .settings-form { grid-template-columns: 1fr; }
     }
-    
     @media (max-width: 380px) {
       .quick-actions { grid-template-columns: 1fr; }
-      .header-right { gap: 8px; }
-      .header-icon-btn { width: 36px; height: 36px; font-size: 1rem; }
+      .header-right { gap: 6px; }
+      .header-icon-btn { width: 34px; height: 34px; font-size: 0.95rem; }
+      .menu-toggle { width: 36px; height: 36px; }
+      .header-logo img { height: 28px; }
     }
+
+    /* Section content panels */
+    .section-panel { display: none; }
+    .section-panel.active { display: block; }
+
+    /* Menu Items Grid */
+    .menu-admin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+    .menu-admin-card {
+      background: white; border-radius: var(--radius); overflow: hidden;
+      border: 2px solid var(--border); transition: var(--transition); cursor: pointer;
+    }
+    .menu-admin-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: var(--shadow); }
+    .menu-admin-img { width: 100%; height: 130px; object-fit: cover; }
+    .menu-admin-body { padding: 12px; }
+    .menu-admin-name { font-family: var(--font-heading); font-size: 0.9rem; color: var(--dark); }
+    .menu-admin-price { font-family: var(--font-display); font-size: 1.1rem; color: var(--primary); margin-top: 4px; }
+    .menu-admin-status {
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      font-size: 0.7rem; font-family: var(--font-heading); margin-top: 6px;
+    }
+    .menu-status-active { background: rgba(0,201,167,0.15); color: #00a884; }
+    .menu-status-inactive { background: rgba(255,68,68,0.1); color: #ff4444; }
+
+    /* Reviews Section */
+    .review-card {
+      background: var(--light); border-radius: var(--radius-sm); padding: 15px;
+      margin-bottom: 12px; border-left: 3px solid var(--primary);
+    }
+    .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .review-user { display: flex; align-items: center; gap: 10px; }
+    .review-stars { color: var(--secondary); font-size: 1rem; }
+    .review-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+    .review-date { font-size: 0.75rem; color: var(--text-light); margin-top: 6px; }
+
+    /* Blog Posts */
+    .blog-admin-card {
+      background: white; border-radius: var(--radius); overflow: hidden;
+      border: 2px solid var(--border); display: flex; gap: 15px; margin-bottom: 15px; transition: var(--transition);
+    }
+    .blog-admin-card:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+    .blog-admin-img { width: 120px; height: 90px; object-fit: cover; flex-shrink: 0; }
+    .blog-admin-body { padding: 12px; flex: 1; }
+    .blog-admin-title { font-family: var(--font-heading); font-size: 1rem; color: var(--dark); margin-bottom: 4px; }
+    .blog-admin-meta { font-size: 0.75rem; color: var(--text-light); }
+    .blog-admin-status {
+      display: inline-block; padding: 3px 10px; border-radius: 12px;
+      font-size: 0.7rem; font-family: var(--font-heading);
+    }
+
+    /* Promotions */
+    .promo-card {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: var(--radius); padding: 20px; color: white;
+      margin-bottom: 15px; position: relative; overflow: hidden;
+    }
+    .promo-card-dark { background: linear-gradient(135deg, var(--dark), var(--dark2)); }
+    .promo-title { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 6px; }
+    .promo-desc { font-size: 0.85rem; opacity: 0.9; margin-bottom: 10px; }
+    .promo-code {
+      background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px;
+      font-family: var(--font-heading); font-size: 0.8rem; display: inline-block;
+    }
+
+    /* Settings Form */
+    .settings-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .settings-group { margin-bottom: 16px; }
+    .settings-group label {
+      display: block; font-family: var(--font-heading); font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-light); margin-bottom: 6px;
+    }
+    .settings-input {
+      width: 100%; padding: 10px 14px; border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .settings-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(232,67,26,0.1); }
   </style>
 </head>
 <body>
 
-<!-- Sidebar Overlay (Mobile) -->
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
 <div class="dashboard-wrap">
-  
+
   <!-- ═══ SIDEBAR ═══ -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-brand">
-      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
-        <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
-      </a>
+    <div class="sidebar-welcome">
+      <p class="sidebar-welcome-label">Welcome, Admin</p>
+      <div class="sidebar-welcome-name" id="userName">Admin User</div>
+      <div class="sidebar-welcome-email" id="userEmail">admin@stackly.com</div>
     </div>
-    
+
     <nav class="sidebar-nav">
       <div class="sidebar-section">
         <div class="sidebar-section-title">Main</div>
-        <a href="dashboard-admin.html" class="sidebar-link active">
+        <a href="dashboard-admin.html" class="sidebar-link active" onclick="showSection('dashboardSection', 'Dashboard', event)">
           <span class="sidebar-link-icon">📊</span>
           <span class="sidebar-link-text">Dashboard</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#reservations" class="sidebar-link" onclick="showSection('reservationsSection', 'Reservations', event)">
           <span class="sidebar-link-icon">📅</span>
           <span class="sidebar-link-text">Reservations</span>
           <span class="sidebar-link-badge">12</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#orders" class="sidebar-link" onclick="showSection('ordersSection', 'Orders', event)">
           <span class="sidebar-link-icon">🍽️</span>
           <span class="sidebar-link-text">Orders</span>
           <span class="sidebar-link-badge">8</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#customers" class="sidebar-link" onclick="showSection('customersSection', 'Customers', event)">
           <span class="sidebar-link-icon">👥</span>
           <span class="sidebar-link-text">Customers</span>
         </a>
       </div>
-      
+
       <div class="sidebar-section">
         <div class="sidebar-section-title">Management</div>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#menu" class="sidebar-link" onclick="showSection('menuSection', 'Menu Items', event)">
           <span class="sidebar-link-icon">🍔</span>
           <span class="sidebar-link-text">Menu Items</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#reviews" class="sidebar-link" onclick="showSection('reviewsSection', 'Reviews', event)">
           <span class="sidebar-link-icon">⭐</span>
           <span class="sidebar-link-text">Reviews</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#blog" class="sidebar-link" onclick="showSection('blogSection', 'Blog Posts', event)">
           <span class="sidebar-link-icon">📰</span>
           <span class="sidebar-link-text">Blog Posts</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#promotions" class="sidebar-link" onclick="showSection('promotionsSection', 'Promotions', event)">
           <span class="sidebar-link-icon">🎁</span>
           <span class="sidebar-link-text">Promotions</span>
         </a>
       </div>
-      
+
       <div class="sidebar-section">
         <div class="sidebar-section-title">Settings</div>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#settings" class="sidebar-link" onclick="showSection('settingsSection', 'Settings', event)">
           <span class="sidebar-link-icon">⚙️</span>
           <span class="sidebar-link-text">Settings</span>
         </a>
-        <a href="404.html" class="sidebar-link">
+        <a href="dashboard-admin.html#notifications" class="sidebar-link" onclick="showSection('notificationsSection', 'Notifications', event)">
           <span class="sidebar-link-icon">🔔</span>
           <span class="sidebar-link-text">Notifications</span>
         </a>
@@ -825,35 +506,27 @@
         </a>
       </div>
     </nav>
-    
-    <div class="sidebar-footer">
-      <div class="sidebar-user">
-        <div class="sidebar-user-avatar" id="userAvatar">👑</div>
-        <div class="sidebar-user-info">
-          <div class="sidebar-user-name" id="userName">Admin User</div>
-          <div class="sidebar-user-role" id="userRole">Administrator</div>
-        </div>
-      </div>
-    </div>
   </aside>
-  
+
   <!-- ═══ MAIN CONTENT ═══ -->
   <main class="main-content">
-    
+
     <!-- Top Header -->
     <header class="top-header">
       <div class="header-left">
-        <button class="menu-toggle" id="menuToggle" onclick="toggleSidebar()">
-          <span class="menu-icon">☰</span>
-          <span class="close-icon">✕</span>
+        <button type="button" class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" onclick="toggleSidebar()">
+          <span class="menu-icon" aria-hidden="true">☰</span>
+          <span class="close-icon" aria-hidden="true">✕</span>
         </button>
-        <div>
-          <div class="header-title">Dashboard</div>
-          <div class="header-breadcrumb">Home / Admin / Dashboard</div>
-        </div>
+        <a href="dashboard-admin.html" class="header-logo">
+          <img src="assets/logo.webp" alt="Stackly" onerror="this.style.display='none'">
+        </a>
+      </div>
+      <div class="header-meta">
+        <div class="header-title" id="pageTitle">Dashboard</div>
+        <div class="header-breadcrumb" id="headerBreadcrumb">Admin / Dashboard</div>
       </div>
       <div class="header-right">
-        <a href="404.html" class="header-icon-btn" title="Search">🔍</a>
         <a href="404.html" class="header-icon-btn" title="Notifications">
           🔔
           <span class="header-notif-badge">5</span>
@@ -862,236 +535,793 @@
           💬
           <span class="header-notif-badge">3</span>
         </a>
-        <a href="index.html" class="header-icon-btn" title="View Site">🌐</a>
+        <a href="#" class="header-icon-btn" title="Logout" onclick="handleLogout()">🚪</a>
       </div>
     </header>
-    
+
     <!-- Dashboard Content -->
     <div class="dashboard-content">
-      
-      <!-- Quick Actions -->
-      <div class="quick-actions animate-in">
-        <a href="404.html" class="quick-action">
-          <div class="quick-action-icon">📅</div>
-          <div class="quick-action-title">New Reservation</div>
-          <div class="quick-action-desc">Book a table</div>
-        </a>
-        <a href="404.html" class="quick-action">
-          <div class="quick-action-icon">🍔</div>
-          <div class="quick-action-title">Add Menu Item</div>
-          <div class="quick-action-desc">Create new dish</div>
-        </a>
-        <a href="404.html" class="quick-action">
-          <div class="quick-action-icon">📰</div>
-          <div class="quick-action-title">New Blog Post</div>
-          <div class="quick-action-desc">Write article</div>
-        </a>
-        <a href="404.html" class="quick-action">
-          <div class="quick-action-icon">🎁</div>
-          <div class="quick-action-title">Add Offer</div>
-          <div class="quick-action-desc">Create promotion</div>
-        </a>
-      </div>
-      
-      <!-- Stats Row -->
-      <div class="stats-row">
-        <div class="stat-card animate-in delay-1">
-          <div class="stat-card-header">
-            <div class="stat-card-icon orange">📊</div>
-            <span class="stat-card-trend trend-up">↑ 12%</span>
-          </div>
-          <div class="stat-card-value" id="statRevenue">₹1,24,500</div>
-          <div class="stat-card-label">Total Revenue (This Month)</div>
+
+      <!-- ═══ DASHBOARD HOME SECTION ═══ -->
+      <div id="dashboardSection" class="section-panel active">
+
+        <!-- Quick Actions -->
+        <div class="quick-actions animate-in">
+          <a href="404.html" class="quick-action">
+            <div class="quick-action-icon">📅</div>
+            <div class="quick-action-title">New Reservation</div>
+            <div class="quick-action-desc">Book a table</div>
+          </a>
+          <a href="404.html" class="quick-action">
+            <div class="quick-action-icon">🍔</div>
+            <div class="quick-action-title">Add Menu Item</div>
+            <div class="quick-action-desc">Create new dish</div>
+          </a>
+          <a href="404.html" class="quick-action">
+            <div class="quick-action-icon">📰</div>
+            <div class="quick-action-title">New Blog Post</div>
+            <div class="quick-action-desc">Write article</div>
+          </a>
+          <a href="404.html" class="quick-action">
+            <div class="quick-action-icon">🎁</div>
+            <div class="quick-action-title">Add Offer</div>
+            <div class="quick-action-desc">Create promotion</div>
+          </a>
         </div>
-        <div class="stat-card animate-in delay-2">
-          <div class="stat-card-header">
-            <div class="stat-card-icon gold">🍽️</div>
-            <span class="stat-card-trend trend-up">↑ 8%</span>
+
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card animate-in delay-1">
+            <div class="stat-card-header">
+              <div class="stat-card-icon orange">📊</div>
+              <span class="stat-card-trend trend-up">↑ 12%</span>
+            </div>
+            <div class="stat-card-value" id="statRevenue">₹1,24,500</div>
+            <div class="stat-card-label">Total Revenue (This Month)</div>
           </div>
-          <div class="stat-card-value" id="statOrders">1,847</div>
-          <div class="stat-card-label">Total Orders</div>
-        </div>
-        <div class="stat-card animate-in delay-3">
-          <div class="stat-card-header">
-            <div class="stat-card-icon green">👥</div>
-            <span class="stat-card-trend trend-up">↑ 15%</span>
+          <div class="stat-card animate-in delay-2">
+            <div class="stat-card-header">
+              <div class="stat-card-icon gold">🍽️</div>
+              <span class="stat-card-trend trend-up">↑ 8%</span>
+            </div>
+            <div class="stat-card-value" id="statOrders">1,847</div>
+            <div class="stat-card-label">Total Orders</div>
           </div>
-          <div class="stat-card-value" id="statCustomers">5,234</div>
-          <div class="stat-card-label">Happy Customers</div>
-        </div>
-        <div class="stat-card animate-in delay-4">
-          <div class="stat-card-header">
-            <div class="stat-card-icon red">⭐</div>
-            <span class="stat-card-trend trend-up">↑ 5%</span>
+          <div class="stat-card animate-in delay-3">
+            <div class="stat-card-header">
+              <div class="stat-card-icon green">👥</div>
+              <span class="stat-card-trend trend-up">↑ 15%</span>
+            </div>
+            <div class="stat-card-value" id="statCustomers">5,234</div>
+            <div class="stat-card-label">Happy Customers</div>
           </div>
-          <div class="stat-card-value">4.8</div>
-          <div class="stat-card-label">Average Rating</div>
-        </div>
-      </div>
-      
-      <!-- Charts Row -->
-      <div class="charts-row">
-        <div class="chart-card animate-in">
-          <div class="chart-card-header">
-            <div class="chart-card-title">📈 Revenue Overview</div>
-            <div class="chart-card-filter">
-              <button class="chart-filter-btn">Week</button>
-              <button class="chart-filter-btn active">Month</button>
-              <button class="chart-filter-btn">Year</button>
+          <div class="stat-card animate-in delay-4">
+            <div class="stat-card-header">
+              <div class="stat-card-icon red">⭐</div>
+              <span class="stat-card-trend trend-up">↑ 5%</span>
             </div>
-          </div>
-          <div class="bar-chart">
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 60%;" data-value="₹85K"></div>
-              <span class="bar-label">Jan</span>
-            </div>
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 75%;" data-value="₹92K"></div>
-              <span class="bar-label">Feb</span>
-            </div>
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 55%;" data-value="₹78K"></div>
-              <span class="bar-label">Mar</span>
-            </div>
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 85%;" data-value="₹1.1L"></div>
-              <span class="bar-label">Apr</span>
-            </div>
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 70%;" data-value="₹98K"></div>
-              <span class="bar-label">May</span>
-            </div>
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 95%;" data-value="₹1.24L"></div>
-              <span class="bar-label">Jun</span>
-            </div>
-            <div class="bar-item">
-              <div class="bar-fill" style="height: 50%;" data-value="₹72K"></div>
-              <span class="bar-label">Jul</span>
-            </div>
+            <div class="stat-card-value">4.8</div>
+            <div class="stat-card-label">Average Rating</div>
           </div>
         </div>
-        
-        <div class="chart-card animate-in delay-1">
-          <div class="chart-card-header">
-            <div class="chart-card-title">🍽️ Order Categories</div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+          <div class="chart-card animate-in">
+            <div class="chart-card-header">
+              <div class="chart-card-title">📈 Revenue Overview</div>
+              <div class="chart-card-filter">
+                <button class="chart-filter-btn">Week</button>
+                <button class="chart-filter-btn active">Month</button>
+                <button class="chart-filter-btn">Year</button>
+              </div>
+            </div>
+            <div class="bar-chart">
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 60%;" data-value="₹85K"></div>
+                <span class="bar-label">Jan</span>
+              </div>
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 75%;" data-value="₹92K"></div>
+                <span class="bar-label">Feb</span>
+              </div>
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 55%;" data-value="₹78K"></div>
+                <span class="bar-label">Mar</span>
+              </div>
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 85%;" data-value="₹1.1L"></div>
+                <span class="bar-label">Apr</span>
+              </div>
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 70%;" data-value="₹98K"></div>
+                <span class="bar-label">May</span>
+              </div>
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 95%;" data-value="₹1.24L"></div>
+                <span class="bar-label">Jun</span>
+              </div>
+              <div class="bar-item">
+                <div class="bar-fill" style="height: 50%;" data-value="₹72K"></div>
+                <span class="bar-label">Jul</span>
+              </div>
+            </div>
           </div>
-          <div class="pie-chart"></div>
-          <div class="pie-legend">
-            <div class="pie-legend-item">
-              <span class="pie-legend-dot" style="background: var(--primary);"></span>
-              <span>Starters (35%)</span>
+
+          <div class="chart-card animate-in delay-1">
+            <div class="chart-card-header">
+              <div class="chart-card-title">🍽️ Order Categories</div>
             </div>
-            <div class="pie-legend-item">
-              <span class="pie-legend-dot" style="background: var(--secondary);"></span>
-              <span>Mains (25%)</span>
-            </div>
-            <div class="pie-legend-item">
-              <span class="pie-legend-dot" style="background: var(--accent2);"></span>
-              <span>Desserts (20%)</span>
-            </div>
-            <div class="pie-legend-item">
-              <span class="pie-legend-dot" style="background: var(--accent);"></span>
-              <span>Drinks (20%)</span>
+            <div class="pie-chart"></div>
+            <div class="pie-legend">
+              <div class="pie-legend-item">
+                <span class="pie-legend-dot" style="background: var(--primary);"></span>
+                <span>Starters (35%)</span>
+              </div>
+              <div class="pie-legend-item">
+                <span class="pie-legend-dot" style="background: var(--secondary);"></span>
+                <span>Mains (25%)</span>
+              </div>
+              <div class="pie-legend-item">
+                <span class="pie-legend-dot" style="background: var(--accent2);"></span>
+                <span>Desserts (20%)</span>
+              </div>
+              <div class="pie-legend-item">
+                <span class="pie-legend-dot" style="background: var(--accent);"></span>
+                <span>Drinks (20%)</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      
-      <!-- Two Column: Recent Orders + Activity -->
-      <div class="two-col">
-        <!-- Recent Orders -->
+
+        <!-- Two Column: Recent Orders + Activity -->
+        <div class="two-col">
+          <!-- Recent Orders -->
+          <div class="table-card animate-in">
+            <div class="table-card-header">
+              <div class="table-card-title">📝 Recent Orders</div>
+              <a href="404.html" class="btn btn-primary btn-sm table-card-action">View All</a>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>#ORD-2847</strong></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar-sm">R</div>
+                      <span>Rahul K.</span>
+                    </div>
+                  </td>
+                  <td>Spicy Burger, Cola</td>
+                  <td>₹498</td>
+                  <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#ORD-2846</strong></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar-sm">P</div>
+                      <span>Priya M.</span>
+                    </div>
+                  </td>
+                  <td>BBQ Platter x2</td>
+                  <td>₹1,058</td>
+                  <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#ORD-2845</strong></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar-sm">A</div>
+                      <span>Arjun S.</span>
+                    </div>
+                  </td>
+                  <td>Pizza, Lassi x2</td>
+                  <td>₹707</td>
+                  <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#ORD-2844</strong></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar-sm">S</div>
+                      <span>Sneha R.</span>
+                    </div>
+                  </td>
+                  <td>Pancakes, Coffee</td>
+                  <td>₹378</td>
+                  <td><span class="status-badge status-cancelled"><span class="status-dot"></span>Cancelled</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#ORD-2843</strong></td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="user-avatar-sm">V</div>
+                      <span>Vikram T.</span>
+                    </div>
+                  </td>
+                  <td>Biriyani, Salad</td>
+                  <td>₹498</td>
+                  <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="table-card animate-in delay-1">
+            <div class="table-card-header">
+              <div class="table-card-title">🔔 Recent Activity</div>
+              <a href="404.html" class="btn btn-primary btn-sm table-card-action">View All</a>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon order">🍔</div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>New order</strong> #ORD-2847 placed by <strong>Rahul K.</strong></div>
+                  <div class="activity-time">2 minutes ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon user">👤</div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>New user</strong> registered — <strong>Priya Sharma</strong></div>
+                  <div class="activity-time">15 minutes ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon reservation">📅</div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>Table booked</strong> for 8 guests on <strong>Friday 8PM</strong></div>
+                  <div class="activity-time">32 minutes ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon review">⭐</div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>5-star review</strong> left by <strong>Arjun S.</strong> for BBQ Platter</div>
+                  <div class="activity-time">1 hour ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon order">🍰</div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>Order delivered</strong> #ORD-2839 to <strong>Sneha R.</strong></div>
+                  <div class="activity-time">2 hours ago</div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon user">👤</div>
+                <div class="activity-content">
+                  <div class="activity-text"><strong>VIP upgrade</strong> — <strong>Vikram T.</strong> is now Gold member</div>
+                  <div class="activity-time">3 hours ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today's Reservations -->
         <div class="table-card animate-in">
           <div class="table-card-header">
-            <div class="table-card-title">📝 Recent Orders</div>
-            <a href="404.html" class="btn btn-primary btn-sm table-card-action">View All</a>
+            <div class="table-card-title">📅 Today's Reservations</div>
+            <a href="404.html" class="btn btn-primary btn-sm table-card-action">Manage All</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Guest Name</th>
+                <th>Guests</th>
+                <th>Table</th>
+                <th>Occasion</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>12:30 PM</strong></td>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar-sm">R</div>
+                    <span>Rajesh Family</span>
+                  </div>
+                </td>
+                <td>6 people</td>
+                <td>Table 4</td>
+                <td>🎂 Birthday</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+              <tr>
+                <td><strong>1:00 PM</strong></td>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar-sm">M</div>
+                    <span>Meera & Friends</span>
+                  </div>
+                </td>
+                <td>4 people</td>
+                <td>Table 2</td>
+                <td>😂 Casual</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+              <tr>
+                <td><strong>7:30 PM</strong></td>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar-sm">K</div>
+                    <span>Karthik & Anu</span>
+                  </div>
+                </td>
+                <td>2 people</td>
+                <td>Table 7 (Window)</td>
+                <td>💍 Anniversary</td>
+                <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
+              </tr>
+              <tr>
+                <td><strong>8:00 PM</strong></td>
+                <td>
+                  <div class="user-cell">
+                    <div class="user-avatar-sm">S</div>
+                    <span>Sharma Corp</span>
+                  </div>
+                </td>
+                <td>10 people</td>
+                <td>Private Room</td>
+                <td>💼 Business</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /dashboardSection -->
+
+      <!-- ═══ RESERVATIONS SECTION ═══ -->
+      <div id="reservationsSection" class="section-panel">
+        <div class="table-card animate-in">
+          <div class="table-card-header">
+            <div class="table-card-title">📅 All Reservations</div>
+            <a href="404.html" class="btn btn-primary btn-sm table-card-action">+ New Reservation</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Guest Name</th>
+                <th>Guests</th>
+                <th>Table</th>
+                <th>Occasion</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>15 Jun 2025</td>
+                <td><strong>8:00 PM</strong></td>
+                <td><div class="user-cell"><div class="user-avatar-sm">R</div><span>Rajesh Family</span></div></td>
+                <td>6</td>
+                <td>Table 4</td>
+                <td>🎂 Birthday</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+              <tr>
+                <td>15 Jun 2025</td>
+                <td><strong>1:00 PM</strong></td>
+                <td><div class="user-cell"><div class="user-avatar-sm">M</div><span>Meera & Friends</span></div></td>
+                <td>4</td>
+                <td>Table 2</td>
+                <td>😂 Casual</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+              <tr>
+                <td>15 Jun 2025</td>
+                <td><strong>7:30 PM</strong></td>
+                <td><div class="user-cell"><div class="user-avatar-sm">K</div><span>Karthik & Anu</span></div></td>
+                <td>2</td>
+                <td>Table 7</td>
+                <td>💍 Anniversary</td>
+                <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
+              </tr>
+              <tr>
+                <td>16 Jun 2025</td>
+                <td><strong>12:00 PM</strong></td>
+                <td><div class="user-cell"><div class="user-avatar-sm">S</div><span>Sharma Corp</span></div></td>
+                <td>10</td>
+                <td>Private Room</td>
+                <td>💼 Business</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+              <tr>
+                <td>16 Jun 2025</td>
+                <td><strong>7:00 PM</strong></td>
+                <td><div class="user-cell"><div class="user-avatar-sm">P</div><span>Patel Family</span></div></td>
+                <td>5</td>
+                <td>Table 5</td>
+                <td>🎉 Celebration</td>
+                <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
+              </tr>
+              <tr>
+                <td>17 Jun 2025</td>
+                <td><strong>8:30 PM</strong></td>
+                <td><div class="user-cell"><div class="user-avatar-sm">A</div><span>Arjun & Sneha</span></div></td>
+                <td>2</td>
+                <td>Table 8 (Window)</td>
+                <td>❤️ Date Night</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══ ORDERS SECTION ═══ -->
+      <div id="ordersSection" class="section-panel">
+        <div class="table-card animate-in">
+          <div class="table-card-header">
+            <div class="table-card-title">🍽️ All Orders</div>
+            <a href="404.html" class="btn btn-primary btn-sm table-card-action">+ New Order</a>
           </div>
           <table class="data-table">
             <thead>
               <tr>
                 <th>Order ID</th>
+                <th>Date</th>
                 <th>Customer</th>
                 <th>Items</th>
                 <th>Amount</th>
+                <th>Payment</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>#ORD-2847</strong></td>
-                <td>
-                  <div class="user-cell">
-                    <div class="user-avatar-sm">R</div>
-                    <span>Rahul K.</span>
-                  </div>
-                </td>
+                <td>01 Jun 2025</td>
+                <td><div class="user-cell"><div class="user-avatar-sm">R</div><span>Rahul K.</span></div></td>
                 <td>Spicy Burger, Cola</td>
                 <td>₹498</td>
+                <td>UPI</td>
                 <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
               </tr>
               <tr>
                 <td><strong>#ORD-2846</strong></td>
-                <td>
-                  <div class="user-cell">
-                    <div class="user-avatar-sm">P</div>
-                    <span>Priya M.</span>
-                  </div>
-                </td>
+                <td>01 Jun 2025</td>
+                <td><div class="user-cell"><div class="user-avatar-sm">P</div><span>Priya M.</span></div></td>
                 <td>BBQ Platter x2</td>
                 <td>₹1,058</td>
+                <td>Card</td>
                 <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
               </tr>
               <tr>
                 <td><strong>#ORD-2845</strong></td>
-                <td>
-                  <div class="user-cell">
-                    <div class="user-avatar-sm">A</div>
-                    <span>Arjun S.</span>
-                  </div>
-                </td>
+                <td>31 May 2025</td>
+                <td><div class="user-cell"><div class="user-avatar-sm">A</div><span>Arjun S.</span></div></td>
                 <td>Pizza, Lassi x2</td>
                 <td>₹707</td>
+                <td>Cash</td>
                 <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
               </tr>
               <tr>
                 <td><strong>#ORD-2844</strong></td>
-                <td>
-                  <div class="user-cell">
-                    <div class="user-avatar-sm">S</div>
-                    <span>Sneha R.</span>
-                  </div>
-                </td>
+                <td>31 May 2025</td>
+                <td><div class="user-cell"><div class="user-avatar-sm">S</div><span>Sneha R.</span></div></td>
                 <td>Pancakes, Coffee</td>
                 <td>₹378</td>
+                <td>UPI</td>
                 <td><span class="status-badge status-cancelled"><span class="status-dot"></span>Cancelled</span></td>
               </tr>
               <tr>
                 <td><strong>#ORD-2843</strong></td>
-                <td>
-                  <div class="user-cell">
-                    <div class="user-avatar-sm">V</div>
-                    <span>Vikram T.</span>
-                  </div>
-                </td>
+                <td>30 May 2025</td>
+                <td><div class="user-cell"><div class="user-avatar-sm">V</div><span>Vikram T.</span></div></td>
                 <td>Biriyani, Salad</td>
                 <td>₹498</td>
+                <td>Card</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
+              </tr>
+              <tr>
+                <td><strong>#ORD-2842</strong></td>
+                <td>30 May 2025</td>
+                <td><div class="user-cell"><div class="user-avatar-sm">M</div><span>Meera J.</span></div></td>
+                <td>Pasta, Garlic Bread</td>
+                <td>₹625</td>
+                <td>UPI</td>
                 <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
               </tr>
             </tbody>
           </table>
         </div>
-        
-        <!-- Recent Activity -->
-        <div class="table-card animate-in delay-1">
+      </div>
+
+      <!-- ═══ CUSTOMERS SECTION ═══ -->
+      <div id="customersSection" class="section-panel">
+        <div class="table-card animate-in">
           <div class="table-card-header">
-            <div class="table-card-title">🔔 Recent Activity</div>
-            <a href="404.html" class="btn btn-primary btn-sm table-card-action">View All</a>
+            <div class="table-card-title">👥 All Customers</div>
+            <a href="404.html" class="btn btn-primary btn-sm table-card-action">+ Add Customer</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Orders</th>
+                <th>Total Spent</th>
+                <th>Member Since</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar-sm">R</div><span>Rahul Kumar</span></div></td>
+                <td>rahul@email.com</td>
+                <td>+91 98765 43210</td>
+                <td>24</td>
+                <td>₹12,450</td>
+                <td>Jan 2024</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Active</span></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar-sm">P</div><span>Priya Mehta</span></div></td>
+                <td>priya@email.com</td>
+                <td>+91 98765 43211</td>
+                <td>18</td>
+                <td>₹9,870</td>
+                <td>Mar 2024</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Active</span></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar-sm">A</div><span>Arjun Sharma</span></div></td>
+                <td>arjun@email.com</td>
+                <td>+91 98765 43212</td>
+                <td>32</td>
+                <td>₹18,230</td>
+                <td>Oct 2023</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Gold</span></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar-sm">S</div><span>Sneha Reddy</span></div></td>
+                <td>sneha@email.com</td>
+                <td>+91 98765 43213</td>
+                <td>15</td>
+                <td>₹7,540</td>
+                <td>Jun 2024</td>
+                <td><span class="status-badge status-pending"><span class="status-dot"></span>Silver</span></td>
+              </tr>
+              <tr>
+                <td><div class="user-cell"><div class="user-avatar-sm">V</div><span>Vikram Tiwari</span></div></td>
+                <td>vikram@email.com</td>
+                <td>+91 98765 43214</td>
+                <td>28</td>
+                <td>₹15,600</td>
+                <td>Dec 2023</td>
+                <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Gold</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ═══ MENU ITEMS SECTION ═══ -->
+      <div id="menuSection" class="section-panel">
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">🍔 Menu Items</div>
+            <a href="404.html" class="btn btn-primary btn-sm">+ Add Item</a>
+          </div>
+          <div class="menu-admin-grid">
+            <div class="menu-admin-card">
+              <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80" alt="Burger" class="menu-admin-img">
+              <div class="menu-admin-body">
+                <div class="menu-admin-name">Stackly Spicy Burger</div>
+                <div class="menu-admin-price">₹349</div>
+                <span class="menu-admin-status menu-status-active">● Active</span>
+              </div>
+            </div>
+            <div class="menu-admin-card">
+              <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="Pizza" class="menu-admin-img">
+              <div class="menu-admin-body">
+                <div class="menu-admin-name">Chaos Pizza</div>
+                <div class="menu-admin-price">₹449</div>
+                <span class="menu-admin-status menu-status-active">● Active</span>
+              </div>
+            </div>
+            <div class="menu-admin-card">
+              <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80" alt="BBQ" class="menu-admin-img">
+              <div class="menu-admin-body">
+                <div class="menu-admin-name">BBQ Royale Platter</div>
+                <div class="menu-admin-price">₹1,058</div>
+                <span class="menu-admin-status menu-status-active">● Active</span>
+              </div>
+            </div>
+            <div class="menu-admin-card">
+              <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80" alt="Pancakes" class="menu-admin-img">
+              <div class="menu-admin-body">
+                <div class="menu-admin-name">Stack Pancakes</div>
+                <div class="menu-admin-price">₹249</div>
+                <span class="menu-admin-status menu-status-active">● Active</span>
+              </div>
+            </div>
+            <div class="menu-admin-card">
+              <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80" alt="Pasta" class="menu-admin-img">
+              <div class="menu-admin-body">
+                <div class="menu-admin-name">Creamy Alfredo Pasta</div>
+                <div class="menu-admin-price">₹399</div>
+                <span class="menu-admin-status menu-status-inactive">● Inactive</span>
+              </div>
+            </div>
+            <div class="menu-admin-card">
+              <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Salad" class="menu-admin-img">
+              <div class="menu-admin-body">
+                <div class="menu-admin-name">Caesar Salad</div>
+                <div class="menu-admin-price">₹299</div>
+                <span class="menu-admin-status menu-status-active">● Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ REVIEWS SECTION ═══ -->
+      <div id="reviewsSection" class="section-panel">
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">⭐ Customer Reviews</div>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-user">
+                <div class="user-avatar-sm">A</div>
+                <div>
+                  <div style="font-family:var(--font-heading);font-size:0.9rem;color:var(--dark);">Arjun Sharma</div>
+                  <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                </div>
+              </div>
+              <span class="status-badge status-confirmed">Verified</span>
+            </div>
+            <div class="review-text">Absolutely loved the BBQ Royale Platter! The flavors were amazing and the portion size was perfect for our family. Will definitely order again!</div>
+            <div class="review-date">Posted on 28 May 2025</div>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-user">
+                <div class="user-avatar-sm">P</div>
+                <div>
+                  <div style="font-family:var(--font-heading);font-size:0.9rem;color:var(--dark);">Priya Mehta</div>
+                  <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                </div>
+              </div>
+              <span class="status-badge status-confirmed">Verified</span>
+            </div>
+            <div class="review-text">Best pizza in town! The Chaos Pizza is our family favorite. Fast delivery and great packaging too.</div>
+            <div class="review-date">Posted on 25 May 2025</div>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-user">
+                <div class="user-avatar-sm">R</div>
+                <div>
+                  <div style="font-family:var(--font-heading);font-size:0.9rem;color:var(--dark);">Rahul Kumar</div>
+                  <div class="review-stars">⭐⭐⭐⭐</div>
+                </div>
+              </div>
+              <span class="status-badge status-confirmed">Verified</span>
+            </div>
+            <div class="review-text">Great burger but delivery was a bit late. Food was still hot and tasty though!</div>
+            <div class="review-date">Posted on 22 May 2025</div>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-user">
+                <div class="user-avatar-sm">S</div>
+                <div>
+                  <div style="font-family:var(--font-heading);font-size:0.9rem;color:var(--dark);">Sneha Reddy</div>
+                  <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                </div>
+              </div>
+              <span class="status-badge status-confirmed">Verified</span>
+            </div>
+            <div class="review-text">The pancakes were heavenly! Perfect Sunday breakfast. Love the new menu additions.</div>
+            <div class="review-date">Posted on 20 May 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ BLOG POSTS SECTION ═══ -->
+      <div id="blogSection" class="section-panel">
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">📰 Blog Posts</div>
+            <a href="404.html" class="btn btn-primary btn-sm">+ New Post</a>
+          </div>
+          <div class="blog-admin-card">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=80" alt="Food" class="blog-admin-img">
+            <div class="blog-admin-body">
+              <div class="blog-admin-title">Top 10 Must-Try Dishes at Stackly</div>
+              <div class="blog-admin-meta">Published: 28 May 2025 • Views: 1,234 • Author: Admin</div>
+              <span class="blog-admin-status menu-status-active" style="margin-top:8px;display:inline-block;">● Published</span>
+            </div>
+          </div>
+          <div class="blog-admin-card">
+            <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Restaurant" class="blog-admin-img">
+            <div class="blog-admin-body">
+              <div class="blog-admin-title">Behind the Scenes: Our Kitchen Secrets</div>
+              <div class="blog-admin-meta">Published: 20 May 2025 • Views: 892 • Author: Chef Raj</div>
+              <span class="blog-admin-status menu-status-active" style="margin-top:8px;display:inline-block;">● Published</span>
+            </div>
+          </div>
+          <div class="blog-admin-card">
+            <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&q=80" alt="Drinks" class="blog-admin-img">
+            <div class="blog-admin-body">
+              <div class="blog-admin-title">Summer Special: Refreshing Drinks Menu</div>
+              <div class="blog-admin-meta">Draft • Last edited: 15 May 2025 • Author: Admin</div>
+              <span class="blog-admin-status menu-status-inactive" style="margin-top:8px;display:inline-block;">● Draft</span>
+            </div>
+          </div>
+          <div class="blog-admin-card">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80" alt="Event" class="blog-admin-img">
+            <div class="blog-admin-body">
+              <div class="blog-admin-title">Anniversary Celebration Event Details</div>
+              <div class="blog-admin-meta">Published: 01 Jun 2025 • Views: 567 • Author: Admin</div>
+              <span class="blog-admin-status menu-status-active" style="margin-top:8px;display:inline-block;">● Published</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROMOTIONS SECTION ═══ -->
+      <div id="promotionsSection" class="section-panel">
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">🎁 Active Promotions</div>
+            <a href="404.html" class="btn btn-primary btn-sm">+ New Promotion</a>
+          </div>
+          <div class="promo-card">
+            <div class="promo-title">🔥 SUMMER SALE - 25% OFF</div>
+            <div class="promo-desc">Get 25% off on all orders above ₹800. Valid till 30 June 2025.</div>
+            <span class="promo-code">Code: SUMMER25</span>
+          </div>
+          <div class="promo-card promo-card-dark">
+            <div class="promo-title">🎂 BIRTHDAY BASH</div>
+            <div class="promo-desc">Free dessert on your birthday! Show valid ID at checkout.</div>
+            <span class="promo-code">Auto Applied</span>
+          </div>
+          <div class="promo-card">
+            <div class="promo-title">👨‍👩‍👧‍👦 FAMILY FEAST</div>
+            <div class="promo-desc">Order family pack and get 1 starter free. Limited time offer!</div>
+            <span class="promo-code">Code: FAMILY20</span>
+          </div>
+          <div class="promo-card promo-card-dark">
+            <div class="promo-title">🆕 FIRST ORDER</div>
+            <div class="promo-desc">New customers get 20% off on their first order. No minimum value!</div>
+            <span class="promo-code">Code: WELCOME20</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ NOTIFICATIONS SECTION ═══ -->
+      <div id="notificationsSection" class="section-panel">
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">🔔 All Notifications</div>
           </div>
           <div class="activity-list">
             <div class="activity-item">
               <div class="activity-icon order">🍔</div>
               <div class="activity-content">
-                <div class="activity-text"><strong>New order</strong> #ORD-2847 placed by <strong>Rahul K.</strong></div>
+                <div class="activity-text"><strong>New order</strong> #ORD-2847 placed by <strong>Rahul K.</strong> — ₹498</div>
                 <div class="activity-time">2 minutes ago</div>
               </div>
             </div>
@@ -1105,7 +1335,7 @@
             <div class="activity-item">
               <div class="activity-icon reservation">📅</div>
               <div class="activity-content">
-                <div class="activity-text"><strong>Table booked</strong> for 8 guests on <strong>Friday 8PM</strong></div>
+                <div class="activity-text"><strong>Table booked</strong> for 8 guests on <strong>Friday 8PM</strong> by Sharma Corp</div>
                 <div class="activity-time">32 minutes ago</div>
               </div>
             </div>
@@ -1130,84 +1360,79 @@
                 <div class="activity-time">3 hours ago</div>
               </div>
             </div>
+            <div class="activity-item">
+              <div class="activity-icon order">⚠️</div>
+              <div class="activity-content">
+                <div class="activity-text"><strong>Low stock alert</strong> — BBQ Sauce running low (5 units left)</div>
+                <div class="activity-time">4 hours ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon reservation">📅</div>
+              <div class="activity-content">
+                <div class="activity-text"><strong>Reservation cancelled</strong> — Table 3 for 4 guests on 15 Jun</div>
+                <div class="activity-time">5 hours ago</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      <!-- Today's Reservations -->
-      <div class="table-card animate-in">
-        <div class="table-card-header">
-          <div class="table-card-title">📅 Today's Reservations</div>
-          <a href="404.html" class="btn btn-primary btn-sm table-card-action">Manage All</a>
+
+      <!-- ═══ SETTINGS SECTION ═══ -->
+      <div id="settingsSection" class="section-panel">
+        <div class="section-card animate-in">
+          <div class="section-card-header">
+            <div class="section-card-title">⚙️ Admin Settings</div>
+          </div>
+          <div class="settings-form">
+            <div class="settings-group">
+              <label>Restaurant Name</label>
+              <input type="text" value="Stackly Restaurant" class="settings-input">
+            </div>
+            <div class="settings-group">
+              <label>Admin Email</label>
+              <input type="email" value="admin@stackly.com" class="settings-input">
+            </div>
+            <div class="settings-group">
+              <label>Contact Phone</label>
+              <input type="tel" value="+91 44 1234 5678" class="settings-input">
+            </div>
+            <div class="settings-group">
+              <label>GST Number</label>
+              <input type="text" value="33AABCU9603R1ZX" class="settings-input">
+            </div>
+            <div class="settings-group">
+              <label>Opening Time</label>
+              <input type="time" value="11:00" class="settings-input">
+            </div>
+            <div class="settings-group">
+              <label>Closing Time</label>
+              <input type="time" value="23:00" class="settings-input">
+            </div>
+            <div class="settings-group">
+              <label>Currency</label>
+              <select class="settings-input">
+                <option selected>₹ INR</option>
+                <option>$ USD</option>
+                <option>€ EUR</option>
+              </select>
+            </div>
+            <div class="settings-group">
+              <label>Tax Rate (%)</label>
+              <input type="number" value="5" class="settings-input">
+            </div>
+          </div>
+          <div class="settings-group" style="margin-top:16px;">
+            <label>Restaurant Address</label>
+            <textarea class="settings-input" style="resize:vertical;min-height:60px;">123, Anna Salai, T. Nagar, Chennai, Tamil Nadu - 600017</textarea>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:12px;">
+            <a href="404.html" class="btn btn-primary">💾 Save Settings</a>
+            <a href="404.html" class="btn btn-outline" style="color:var(--dark);border-color:var(--border);">❌ Cancel</a>
+          </div>
         </div>
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Guest Name</th>
-              <th>Guests</th>
-              <th>Table</th>
-              <th>Occasion</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>12:30 PM</strong></td>
-              <td>
-                <div class="user-cell">
-                  <div class="user-avatar-sm">R</div>
-                  <span>Rajesh Family</span>
-                </div>
-              </td>
-              <td>6 people</td>
-              <td>Table 4</td>
-              <td>🎂 Birthday</td>
-              <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
-            </tr>
-            <tr>
-              <td><strong>1:00 PM</strong></td>
-              <td>
-                <div class="user-cell">
-                  <div class="user-avatar-sm">M</div>
-                  <span>Meera & Friends</span>
-                </div>
-              </td>
-              <td>4 people</td>
-              <td>Table 2</td>
-              <td>😂 Casual</td>
-              <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
-            </tr>
-            <tr>
-              <td><strong>7:30 PM</strong></td>
-              <td>
-                <div class="user-cell">
-                  <div class="user-avatar-sm">K</div>
-                  <span>Karthik & Anu</span>
-                </div>
-              </td>
-              <td>2 people</td>
-              <td>Table 7 (Window)</td>
-              <td>💍 Anniversary</td>
-              <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
-            </tr>
-            <tr>
-              <td><strong>8:00 PM</strong></td>
-              <td>
-                <div class="user-cell">
-                  <div class="user-avatar-sm">S</div>
-                  <span>Sharma Corp</span>
-                </div>
-              </td>
-              <td>10 people</td>
-              <td>Private Room</td>
-              <td>💼 Business</td>
-              <td><span class="status-badge status-confirmed"><span class="status-dot"></span>Confirmed</span></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
-      
+
     </div>
   </main>
 </div>
@@ -1216,27 +1441,56 @@
 // ── Check Auth & Load User Data ──
 window.addEventListener('DOMContentLoaded', () => {
   const session = localStorage.getItem('stacklySession') || sessionStorage.getItem('stacklySession');
-  
+
   if (!session) {
     window.location.href = 'signin.html';
     return;
   }
-  
+
   const user = JSON.parse(session);
-  
+
   // Verify admin role
   if (user.role !== 'admin') {
     window.location.href = 'dashboard-guest.html';
     return;
   }
-  
+
   // Load user info
   document.getElementById('userName').textContent = user.name || 'Admin User';
-  document.getElementById('userRole').textContent = user.role === 'admin' ? 'Administrator' : 'Guest';
-  
+  document.getElementById('userEmail').textContent = user.email || 'admin@stackly.com';
+  document.getElementById('headerBreadcrumb').textContent = 'Admin / Dashboard';
+
   // Animate stats on load
   animateStats();
 });
+
+// ── Show Section ──
+function showSection(sectionId, title, ev) {
+  document.querySelectorAll('.section-panel').forEach(panel => panel.classList.remove('active'));
+
+  const target = document.getElementById(sectionId);
+  if (target) target.classList.add('active');
+
+  const pageTitle = document.getElementById('pageTitle');
+  if (pageTitle) pageTitle.textContent = title;
+
+  document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+  const activeLink = ev && ev.currentTarget ? ev.currentTarget : null;
+  if (activeLink) {
+    activeLink.classList.add('active');
+  } else {
+    document.querySelectorAll('.sidebar-link').forEach(link => {
+      const on = link.getAttribute('onclick') || '';
+      if (on.indexOf("'" + sectionId + "'") !== -1) link.classList.add('active');
+    });
+  }
+
+  const breadcrumb = document.getElementById('headerBreadcrumb');
+  if (breadcrumb) breadcrumb.textContent = 'Admin / ' + title;
+
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar && sidebar.classList.contains('open')) toggleSidebar();
+}
 
 // ── Animate Stats ──
 function animateStats() {
@@ -1245,7 +1499,7 @@ function animateStats() {
     { el: document.getElementById('statOrders'), target: 1847, prefix: '', suffix: '' },
     { el: document.getElementById('statCustomers'), target: 5234, prefix: '', suffix: '' }
   ];
-  
+
   stats.forEach(stat => {
     if (!stat.el) return;
     let current = 0;
@@ -1267,10 +1521,14 @@ function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const overlay = document.getElementById('sidebarOverlay');
   const toggle = document.getElementById('menuToggle');
-  
-  sidebar.classList.toggle('open');
+  if (!sidebar || !overlay || !toggle) return;
+
+  const isOpen = sidebar.classList.toggle('open');
   overlay.classList.toggle('show');
   toggle.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  document.body.classList.toggle('no-scroll', isOpen);
 }
 
 // ── Handle Logout ──
@@ -1280,25 +1538,25 @@ function handleLogout() {
   window.location.href = 'signin.html';
 }
 
-// ── Back Button Logout Prevention ──
-window.addEventListener('popstate', function() {
-  // Check if user is still logged in
-  const session = localStorage.getItem('stacklySession') || sessionStorage.getItem('stacklySession');
-  if (!session) {
-    window.location.href = 'signin.html';
+document.addEventListener('click', event => {
+  const link = event.target.closest('a[href]');
+  if (!link) return;
+  const href = link.getAttribute('href') || '';
+  if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
+  const targetUrl = new URL(href, window.location.href);
+  const isDashboard = targetUrl.pathname.endsWith('/dashboard-guest.html') || targetUrl.pathname.endsWith('/dashboard-admin.html');
+  const isSafeBackPage = targetUrl.pathname.endsWith('/404.html');
+  if (!isDashboard && !isSafeBackPage) {
+    localStorage.removeItem('stacklySession');
+    sessionStorage.removeItem('stacklySession');
   }
-});
-
-// Push initial state for back button detection
-history.pushState(null, null, location.href);
-window.addEventListener('popstate', function() {
-  handleLogout();
 });
 
 // ── Chart Filter Buttons ──
 document.querySelectorAll('.chart-filter-btn').forEach(btn => {
-  btn.addEventListener('click', function() {
-    this.parentElement.querySelectorAll('.chart-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.addEventListener('click', function () {
+    const group = this.parentElement;
+    if (group) group.querySelectorAll('.chart-filter-btn').forEach(b => b.classList.remove('active'));
     this.classList.add('active');
   });
 });

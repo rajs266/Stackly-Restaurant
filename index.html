@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="assets/top-logo.webp">
   <title>Stackly — Where Every Bite Slaps | Salem's #1 Restaurant</title>
   <meta name="description" content="Stackly Restaurant — Salem's most fun and flavorful dining experience. Fresh ingredients, bold flavors, zero boring bites. Book your table today!">
   <link rel="stylesheet" href="./style.css">
@@ -11,8 +13,12 @@
 
 <!-- Page Loader -->
 <div id="page-loader">
-  <div class="loader-logo">STACKLY</div>
-  <div class="loader-dots"><span></span><span></span><span></span></div>
+  <div class="loader-visual-wrap">
+    <div class="loader-circles">
+      <span></span><span></span><span></span>
+    </div>
+    <img src="assets/logo.webp" alt="Stackly" class="loader-logo-img">
+  </div>
   <div class="loader-text">Heating up the kitchen...</div>
 </div>
 
@@ -29,8 +35,11 @@
 </div>
 
 <!-- Back to Top -->
-<button id="back-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+<button id="back-top" type="button" title="Back to top" aria-label="Back to top">
+  <span class="backtop-bot" aria-hidden="true">
+    <video class="eat-boy-video" src="./assets/eat boy.webm" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
+    <img class="fly-boy-img" src="./assets/fly boy.webp" alt="">
+  </span>
 </button>
 
 <!-- ═══ NAVBAR ═══ -->
@@ -76,7 +85,7 @@
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
   <video autoplay muted loop playsinline class="hero-video">
-    <source src="./assets/315076.mp4" type="video/mp4">
+    <source src="./assets/hero video.mp4" type="video/mp4">
   </video>
   <div class="hero-content">
     <div class="hero-text-side reveal">
@@ -85,8 +94,7 @@
         Salem's #1 Fun Dining Spot
       </div>
       <h1 class="hero-title">
-        DINE<span class="line-accent">WILD</span>
-        <span class="line-gold">EAT BIG!</span>
+        SERVING HAPPINESS TO <span class="text-primary" id="typewriter">FAMILY</span><span class="typewriter-cursor"></span>
       </h1>
       <p class="hero-subtitle">
         Life's too short for boring food! At Stackly, every plate is a party, every bite is a celebration. Stack up the flavours, stack up the laughs!
@@ -94,31 +102,6 @@
       <div class="hero-btns">
         <a href="reservation.html" class="btn btn-primary btn-lg">Book A Table</a>
         <a href="menu.html" class="btn btn-outline btn-lg">See Our Menu</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="5000">0</div>
-          <div class="hero-stat-label">Happy Foodies</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="120">0</div>
-          <div class="hero-stat-label">Menu Items</div>
-        </div>
-        <div class="hero-stat">
-          <div class="hero-stat-num" data-count="12">0</div>
-          <div class="hero-stat-label">Years of Excellence</div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-visual reveal-scale delay-2">
-      <div class="hero-plate-ring">
-        <div class="hero-orbit">
-          <span class="hero-orbit-item">🍕</span>
-          <span class="hero-orbit-item">🥗</span>
-          <span class="hero-orbit-item">🍜</span>
-          <span class="hero-orbit-item">🧁</span>
-        </div>
-        <div class="hero-emoji-main">🍔</div>
       </div>
     </div>
   </div>
@@ -156,10 +139,10 @@
     <div class="about-grid">
       <div class="about-visual reveal-left">
         <div class="about-img-wrap">
-          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Stackly Restaurant Interior">
+          <img src="assets/images/photo-1414235077428-338989a2e8c0.webp" alt="Stackly Restaurant Interior">
         </div>
         <div class="about-inset">
-          <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&q=80" alt="Fresh ingredients">
+          <img src="assets/images/photo-1546833999-b9f581a1996d.webp" alt="Fresh ingredients">
         </div>
         <div class="about-badge-float">
           <svg viewBox="0 0 24 24" fill="white" width="22" height="22"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
@@ -230,7 +213,7 @@
     <div class="special-swiper reveal">
       <div class="special-card">
         <div class="special-badge-hot">HOT</div>
-        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80" alt="Spicy Chicken Stack" class="special-card-img">
+        <img src="assets/images/photo-1565299585323-38d6b0865b47.webp" alt="Spicy Chicken Stack" class="special-card-img">
         <div class="special-card-body">
           <span class="special-tag">Signature</span>
           <div class="special-name">SPICY STACK</div>
@@ -242,7 +225,7 @@
         </div>
       </div>
       <div class="special-card">
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80" alt="BBQ Platter" class="special-card-img">
+        <img src="./assets/images/BBQ.webp" alt="BBQ Platter" class="special-card-img">
         <div class="special-card-body">
           <span class="special-tag">BBQ Special</span>
           <div class="special-name">BBQ ROYALE</div>
@@ -255,7 +238,7 @@
       </div>
       <div class="special-card">
         <div class="special-badge-hot">FAVE</div>
-        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=600&q=80" alt="Pizza Stack" class="special-card-img">
+        <img src="assets/images/photo-1604908176997-125f25cc6f3d.webp" alt="Pizza Stack" class="special-card-img">
         <div class="special-card-body">
           <span class="special-tag">Chef's Pick</span>
           <div class="special-name">PIZZA CHAOS</div>
@@ -267,7 +250,7 @@
         </div>
       </div>
       <div class="special-card">
-        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80" alt="Pancakes" class="special-card-img">
+        <img src="assets/images/photo-1567620905732-2d1ec7ab7445.webp" alt="Pancakes" class="special-card-img">
         <div class="special-card-body">
           <span class="special-tag">Sweet Break</span>
           <div class="special-name">STACK CAKES</div>
@@ -279,7 +262,7 @@
         </div>
       </div>
       <div class="special-card">
-        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80" alt="Salad Bowl" class="special-card-img">
+        <img src="assets/images/photo-1512621776951-a57141f2eefd.webp" alt="Salad Bowl" class="special-card-img">
         <div class="special-card-body">
           <span class="special-tag">Healthy</span>
           <div class="special-name">POWER BOWL</div>
@@ -371,7 +354,7 @@
     <div class="team-grid">
       <div class="team-card reveal delay-1">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&q=80" alt="Chef Arjun">
+          <img src="./assets/images/chef arjun.webp" alt="Chef Arjun">
           <div class="team-overlay">
             <a href="404.html" class="team-social-icon" title="Facebook">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -392,7 +375,7 @@
       </div>
       <div class="team-card reveal delay-2">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1581349485608-9469926a8e5e?w=400&q=80" alt="Chef Priya">
+          <img src="./assets/images/chef priya.webp" alt="Chef Priya">
           <div class="team-overlay">
             <a href="404.html" class="team-social-icon" title="Facebook">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -413,7 +396,7 @@
       </div>
       <div class="team-card reveal delay-3">
         <div class="team-img-wrap">
-          <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=400&q=80" alt="Chef Ravi">
+          <img src="./assets/images/chef ravi.webp" alt="Chef Ravi">
           <div class="team-overlay">
             <a href="404.html" class="team-social-icon" title="Facebook">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
@@ -548,7 +531,7 @@
     <div class="blog-grid">
       <div class="blog-card reveal delay-1">
         <div class="blog-img-wrap">
-          <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=600&q=80" alt="Blog 1">
+          <img src="assets/images/photo-1484723091739-30a097e8f929.webp" alt="Blog 1">
           <span class="blog-category">Recipes</span>
         </div>
         <div class="blog-body">
@@ -564,7 +547,7 @@
       </div>
       <div class="blog-card reveal delay-2">
         <div class="blog-img-wrap">
-          <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80" alt="Blog 2">
+          <img src="assets/images/photo-1551782450-a2132b4ba21d.webp" alt="Blog 2">
           <span class="blog-category">Tips</span>
         </div>
         <div class="blog-body">
@@ -580,7 +563,7 @@
       </div>
       <div class="blog-card reveal delay-3">
         <div class="blog-img-wrap">
-          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Blog 3">
+          <img src="assets/images/photo-1504674900247-0877df9cc836.webp" alt="Blog 3">
           <span class="blog-category">Behind Scenes</span>
         </div>
         <div class="blog-body">
@@ -596,7 +579,7 @@
       </div>
       <div class="blog-card reveal delay-4">
         <div class="blog-img-wrap">
-          <img src="https://images.unsplash.com/photo-1498579150354-977475b7ea0b?w=600&q=80" alt="Blog 4">
+          <img src="assets/images/photo-1498579150354-977475b7ea0b.webp" alt="Blog 4">
           <span class="blog-category">News</span>
         </div>
         <div class="blog-body">
@@ -734,33 +717,33 @@
   </div>
 </footer>
 
-<script src="assets/script.js"></script>
+<script src="./script.js"></script>
 <script>
 /* ── Menu Data & Render ── */
 const menuData = {
   starters: [
-    { img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80', name: 'Masala Garlic Bread', desc: 'Toasted bread loaded with garlic butter & secret masala blend.', price: '₹149', badge: 'Fave' },
-    { img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80', name: 'BBQ Chicken Wings', desc: '6 crispy wings smothered in our legendary BBQ sauce.', price: '₹249', badge: 'Hot' },
-    { img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80', name: 'Power Mixed Salad', desc: 'Fresh veggies, seeds, feta, and a zesty lemon dressing.', price: '₹199', badge: 'Healthy' },
-    { img: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80', name: 'Crispy Calamari', desc: 'Golden fried squid rings with spiced mayo dip.', price: '₹299', badge: 'New' },
+    { img: 'assets/images/photo-1568901346375-23c9450c58cd.webp', name: 'Masala Garlic Bread', desc: 'Toasted bread loaded with garlic butter & secret masala blend.', price: '₹149', badge: 'Fave' },
+    { img: 'assets/images/photo-1599487488170-d11ec9c172f0.webp', name: 'BBQ Chicken Wings', desc: '6 crispy wings smothered in our legendary BBQ sauce.', price: '₹249', badge: 'Hot' },
+    { img: 'assets/images/photo-1512621776951-a57141f2eefd.webp', name: 'Power Mixed Salad', desc: 'Fresh veggies, seeds, feta, and a zesty lemon dressing.', price: '₹199', badge: 'Healthy' },
+    { img: 'assets/images/photo-1563245372-f21724e3856d.webp', name: 'Crispy Calamari', desc: 'Golden fried squid rings with spiced mayo dip.', price: '₹299', badge: 'New' },
   ],
   mains: [
-    { img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80', name: 'Stackly Spicy Burger', desc: 'Double patty, jalapeños, cheddar, and our secret sauce.', price: '₹349', badge: 'Spicy' },
-    { img: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80', name: 'Chaos Pizza', desc: '6-topping wood-fired pizza on a hand-stretched base.', price: '₹449', badge: 'Famous' },
-    { img: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80', name: 'BBQ Royale Platter', desc: 'Grilled meats, cornbread, coleslaw and smoky BBQ.', price: '₹529', badge: 'Best' },
-    { img: 'https://images.unsplash.com/photo-1503764654157-72d979d9af2f?w=400&q=80', name: "Chef's Biriyani", desc: 'Slow-cooked dum biriyani with raita and salan.', price: '₹299', badge: 'Chef' },
+    { img: 'assets/images/photo-1565299585323-38d6b0865b47.webp', name: 'Stackly Spicy Burger', desc: 'Double patty, jalapeños, cheddar, and our secret sauce.', price: '₹349', badge: 'Spicy' },
+    { img: 'assets/images/photo-1604908176997-125f25cc6f3d.webp', name: 'Chaos Pizza', desc: '6-topping wood-fired pizza on a hand-stretched base.', price: '₹449', badge: 'Famous' },
+    { img: 'assets/images/photo-1555396273-367ea4eb4db5.webp', name: 'BBQ Royale Platter', desc: 'Grilled meats, cornbread, coleslaw and smoky BBQ.', price: '₹529', badge: 'Best' },
+    { img: 'assets/images/photo-1503764654157-72d979d9af2f.webp', name: "Chef's Biriyani", desc: 'Slow-cooked dum biriyani with raita and salan.', price: '₹299', badge: 'Chef' },
   ],
   desserts: [
-    { img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80', name: 'Stack Pancakes', desc: 'Tower of fluffy pancakes with maple syrup and berries.', price: '₹249', badge: 'Sweet' },
-    { img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&q=80', name: 'Choco Lava Cake', desc: 'Warm chocolate cake with molten centre and ice cream.', price: '₹199', badge: 'Must Try' },
-    { img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80', name: 'Mango Sundae', desc: 'Alphonso mango sorbet with caramel crunch and cream.', price: '₹179', badge: 'Summer' },
-    { img: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=400&q=80', name: 'NY Cheesecake', desc: 'Classic New York style with mixed berry compote.', price: '₹229', badge: 'Classic' },
+    { img: 'assets/images/photo-1567620905732-2d1ec7ab7445.webp', name: 'Stack Pancakes', desc: 'Tower of fluffy pancakes with maple syrup and berries.', price: '₹249', badge: 'Sweet' },
+    { img: 'assets/images/photo-1551024601-bec78aea704b.webp', name: 'Choco Lava Cake', desc: 'Warm chocolate cake with molten centre and ice cream.', price: '₹199', badge: 'Must Try' },
+    { img: 'assets/images/photo-1488477181946-6428a0291777.webp', name: 'Mango Sundae', desc: 'Alphonso mango sorbet with caramel crunch and cream.', price: '₹179', badge: 'Summer' },
+    { img: 'assets/images/photo-1464305795204-6f5bbfc7fb81.webp', name: 'NY Cheesecake', desc: 'Classic New York style with mixed berry compote.', price: '₹229', badge: 'Classic' },
   ],
   drinks: [
-    { img: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80', name: 'Mango Lassi Supreme', desc: 'Thick Alphonso mango blended with chilled yoghurt.', price: '₹129', badge: 'Thick' },
-    { img: 'https://images.unsplash.com/photo-1543332164-6e82f355badc?w=400&q=80', name: 'Watermelon Slush', desc: 'Fresh watermelon slush with mint and a pinch of salt.', price: '₹99', badge: 'Refresh' },
-    { img: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80', name: 'Stackly Special Cola', desc: 'Our signature cola float with vanilla ice cream.', price: '₹149', badge: 'Signature' },
-    { img: 'https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&q=80', name: 'Iced Masala Chai', desc: 'Traditional chai brewed strong, poured over ice with cream.', price: '₹89', badge: 'Chai' },
+    { img: 'assets/images/photo-1513558161293-cdaf765ed2fd.webp', name: 'Mango Lassi Supreme', desc: 'Thick Alphonso mango blended with chilled yoghurt.', price: '₹129', badge: 'Thick' },
+    { img: 'assets/images/photo-1543332164-6e82f355badc.webp', name: 'Watermelon Slush', desc: 'Fresh watermelon slush with mint and a pinch of salt.', price: '₹99', badge: 'Refresh' },
+    { img: 'assets/images/photo-1571091718767-18b5b1457add.webp', name: 'Stackly Special Cola', desc: 'Our signature cola float with vanilla ice cream.', price: '₹149', badge: 'Signature' },
+    { img: 'assets/images/photo-1497534446932-c925b458314e.webp', name: 'Iced Masala Chai', desc: 'Traditional chai brewed strong, poured over ice with cream.', price: '₹89', badge: 'Chai' },
   ]
 };
 
@@ -790,6 +773,81 @@ document.querySelectorAll('.menu-tab').forEach(btn => {
     btn.classList.add('active');
     renderMenu(btn.dataset.tab);
   });
+});
+</script>
+
+<script>
+/* ── Typewriter Effect ── */
+const words = ["FAMILY", "OFFICEMATES", "FRIENDS", "EVERYONE"];
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typewriterElement = document.getElementById('typewriter');
+
+function type() {
+  const currentWord = words[wordIndex];
+  
+  if (isDeleting) {
+    // Remove character
+    typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+    charIndex--;
+  } else {
+    // Add character
+    typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+    charIndex++;
+  }
+
+  let typeSpeed = isDeleting ? 100 : 200;
+
+  if (!isDeleting && charIndex === currentWord.length) {
+    // Pause at end of word
+    typeSpeed = 2000;
+    isDeleting = true;
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    // Move to next word
+    wordIndex = (wordIndex + 1) % words.length;
+    typeSpeed = 500;
+  }
+
+  setTimeout(type, typeSpeed);
+}
+
+document.addEventListener('DOMContentLoaded', type);
+</script>
+
+<script>
+/* ── Specials Auto-slide (Continuous Smooth) ── */
+document.addEventListener('DOMContentLoaded', () => {
+  const swiper = document.querySelector('.special-swiper');
+  if (!swiper) return;
+
+  let isHovered = false;
+  swiper.addEventListener('mouseenter', () => isHovered = true);
+  swiper.addEventListener('mouseleave', () => isHovered = false);
+  swiper.addEventListener('touchstart', () => isHovered = true);
+  swiper.addEventListener('touchend', () => isHovered = false);
+
+  let scrollPos = swiper.scrollLeft;
+  const speed = 0.6; // வேகத்தை குறைக்க/அதிகரிக்க இந்த மதிப்பை மாற்றவும் (எ.கா: 0.4 மெதுவானது)
+
+  function animate() {
+    if (!isHovered) {
+      scrollPos += speed;
+      
+      // முடிவை எட்டினால் மீண்டும் ஆரம்பத்திற்கு செல்லும்
+      if (scrollPos >= swiper.scrollWidth - swiper.offsetWidth) {
+        scrollPos = 0;
+      }
+      swiper.scrollLeft = scrollPos;
+    } else {
+      // பயனர் கைமுறையாக நகர்த்தினால் பொசிஷனை சின்க் செய்யும்
+      scrollPos = swiper.scrollLeft;
+    }
+    requestAnimationFrame(animate);
+  }
+
+  requestAnimationFrame(animate);
 });
 </script>
 </body>

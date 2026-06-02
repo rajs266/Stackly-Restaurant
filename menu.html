@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-  <title>Our Menu — Stackly Restaurant</title>
+  <link rel="icon" href="assets/top-logo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="assets/top-logo.webp">
+  <title>Our Menu — Stackly — Where Every Bite Slaps | Salem's #1 Restaurant</title>
+  <meta name="description" content="Explore Stackly Restaurant's full menu of delicious starters, mains, desserts, and drinks. Handcrafted in Salem with the freshest ingredients.">
   <link rel="stylesheet" href="./style.css">
   <style>
     .menu-hero {
-      min-height: 45vh;
-      background: var(--dark);
+      min-height: 68vh;
+      background: var(--dark); /* This min-height will be inherited from style.css after removal */
       display: flex;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -21,7 +27,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, rgba(255,69,0,0.15) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(232,67,26,0.15) 0%, transparent 70%);
     }
     .menu-hero-title {
       font-family: var(--font-display);
@@ -29,7 +35,7 @@
       color: white;
       letter-spacing: 4px;
       position: relative;
-      text-shadow: 3px 3px 0 rgba(255,69,0,0.3);
+      text-shadow: 3px 3px 0 rgba(232,67,26,0.3);
     }
     .menu-hero-title span { color: var(--primary); }
     .menu-hero-sub {
@@ -70,7 +76,7 @@
       border-color: var(--primary);
       color: white;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255,69,0,0.3);
+      box-shadow: 0 6px 20px rgba(232,67,26,0.3);
     }
     
     .menu-full-grid {
@@ -219,9 +225,13 @@
 
 <!-- Page Loader -->
 <div id="page-loader">
-  <div class="loader-logo">STACKLY</div>
-  <div class="loader-dots"><span></span><span></span><span></span></div>
-  <div class="loader-text">Loading the feast... 🍽️</div>
+  <div class="loader-visual-wrap">
+    <div class="loader-circles">
+      <span></span><span></span><span></span>
+    </div>
+    <img src="assets/logo.webp" alt="Stackly" class="loader-logo-img">
+  </div>
+  <div class="loader-text">Loading the feast...</div>
 </div>
 
 <!-- Custom Cursor -->
@@ -230,12 +240,19 @@
 
 <!-- Food Toast -->
 <div class="food-toast" id="foodToast">
-  <span class="food-toast-emoji">🍔</span>
-  <span id="toastMsg">Yum! Great choice!</span>
+  <div class="food-toast-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+  </div>
+  <span id="toastMsg">Added to order!</span>
 </div>
 
 <!-- Back to Top -->
-<button id="back-top" onclick="scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+<button id="back-top" type="button" title="Back to top" aria-label="Back to top">
+  <span class="backtop-bot" aria-hidden="true">
+    <video class="eat-boy-video" src="./assets/eat boy.webm" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
+    <img class="fly-boy-img" src="./assets/fly boy.webp" alt="">
+  </span>
+</button>
 
 <!-- ═══ NAVBAR ═══ -->
 <nav id="navbar">
@@ -271,15 +288,15 @@
   </div>
   <div class="mobile-menu-btns">
     <a href="signin.html" class="btn btn-outline">Login</a>
-    <a href="signup.html" class="btn btn-primary">Get Started 🚀</a>
+    <a href="signup.html" class="btn btn-primary">Get Started</a>
   </div>
 </div>
 
 <!-- ═══ MENU HERO ═══ -->
-<section class="menu-hero" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1600&q=80');">
+<section class="menu-hero" style="background-image: url('assets/images/photo-1504674900247-0877df9cc836.webp');">
   <div>
     <h1 class="menu-hero-title reveal">Our <span>Menu</span></h1>
-    <p class="menu-hero-sub reveal delay-1">From crispy starters to decadent desserts — every bite is a flavour explosion! 🔥</p>
+    <p class="menu-hero-sub reveal delay-1">From crispy starters to decadent desserts — every bite is a flavour explosion!</p>
   </div>
 </section>
 
@@ -289,314 +306,314 @@
     
     <!-- Category Tabs -->
     <div class="menu-cat-tabs reveal">
-      <button class="menu-cat-tab active" onclick="scrollToCat('starters')">🥗 Starters</button>
-      <button class="menu-cat-tab" onclick="scrollToCat('mains')">🍛 Mains</button>
-      <button class="menu-cat-tab" onclick="scrollToCat('desserts')">🍰 Desserts</button>
-      <button class="menu-cat-tab" onclick="scrollToCat('drinks')">🥤 Drinks</button>
+      <button class="menu-cat-tab active" onclick="scrollToCat('starters')">Starters</button>
+      <button class="menu-cat-tab" onclick="scrollToCat('mains')">Mains</button>
+      <button class="menu-cat-tab" onclick="scrollToCat('desserts')">Desserts</button>
+      <button class="menu-cat-tab" onclick="scrollToCat('drinks')">Drinks</button>
     </div>
     
     <!-- Starters -->
-    <h2 class="menu-cat-title reveal" id="starters">🥗 <span>Starters</span></h2>
+    <h2 class="menu-cat-title reveal" id="starters"><span>Starters</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Masala Garlic Bread" loading="lazy">
-          <span class="menu-full-badge">😍 Fave</span>
+          <img src="assets/images/photo-1568901346375-23c9450c58cd.webp" alt="Masala Garlic Bread" loading="lazy">
+          <span class="menu-full-badge">Fave</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Masala Garlic Bread</div>
           <p class="menu-full-desc">Toasted bread loaded with garlic butter & secret masala blend.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹149</span>
-            <button class="menu-full-add" onclick="triggerToast('🍞','Garlic Bread added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Masala Garlic Bread added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-2">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&q=80" alt="BBQ Chicken Wings" loading="lazy">
-          <span class="menu-full-badge">🔥 Hot</span>
+          <img src="assets/images/photo-1599487488170-d11ec9c172f0.webp" alt="BBQ Chicken Wings" loading="lazy">
+          <span class="menu-full-badge">Hot</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">BBQ Chicken Wings</div>
           <p class="menu-full-desc">6 crispy wings smothered in legendary BBQ sauce.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹249</span>
-            <button class="menu-full-add" onclick="triggerToast('🍗','Wings added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','BBQ Chicken Wings added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-3">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&q=80" alt="Power Mixed Salad" loading="lazy">
-          <span class="menu-full-badge">🌿 Healthy</span>
+          <img src="assets/images/photo-1512621776951-a57141f2eefd.webp" alt="Power Mixed Salad" loading="lazy">
+          <span class="menu-full-badge">Healthy</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Power Mixed Salad</div>
           <p class="menu-full-desc">Fresh veggies, seeds, feta, and zesty lemon dressing.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹199</span>
-            <button class="menu-full-add" onclick="triggerToast('🥗','Salad added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Power Mixed Salad added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&q=80" alt="Crispy Calamari" loading="lazy">
-          <span class="menu-full-badge">🦑 New</span>
+          <img src="assets/images/photo-1563245372-f21724e3856d.webp" alt="Crispy Calamari" loading="lazy">
+          <span class="menu-full-badge">New</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Crispy Calamari</div>
           <p class="menu-full-desc">Golden fried squid rings with spiced mayo dip.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹299</span>
-            <button class="menu-full-add" onclick="triggerToast('🦑','Calamari added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Crispy Calamari added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-2">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1541529086526-db283c563270?w=400&q=80" alt="Loaded Nachos" loading="lazy">
-          <span class="menu-full-badge">🧀 Cheesy</span>
+          <img src="assets/images/photo-1541529086526-db283c563270.webp" alt="Loaded Nachos" loading="lazy">
+          <span class="menu-full-badge">Cheesy</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Loaded Nachos</div>
           <p class="menu-full-desc">Tortilla chips piled high with cheese, salsa & jalapeños.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹229</span>
-            <button class="menu-full-add" onclick="triggerToast('🧀','Nachos added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Loaded Nachos added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-3">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=400&q=80" alt="Paneer Tikka" loading="lazy">
-          <span class="menu-full-badge">🇮🇳 Desi</span>
+          <img src="assets/images/photo-1606491956689-2ea866880c84.webp" alt="Paneer Tikka" loading="lazy">
+          <span class="menu-full-badge">Desi</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Paneer Tikka</div>
           <p class="menu-full-desc">Tandoori paneer cubes with mint chutney.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹259</span>
-            <button class="menu-full-add" onclick="triggerToast('🧀','Paneer Tikka added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Paneer Tikka added!')">+</button>
           </div>
         </div>
       </div>
     </div>
     
     <!-- Mains -->
-    <h2 class="menu-cat-title reveal" id="mains">🍛 <span>Mains</span></h2>
+    <h2 class="menu-cat-title reveal" id="mains"><span>Mains</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80" alt="Stackly Spicy Burger" loading="lazy">
-          <span class="menu-full-badge">🌶️ Spicy</span>
+          <img src="assets/images/photo-1565299585323-38d6b0865b47.webp" alt="Stackly Spicy Burger" loading="lazy">
+          <span class="menu-full-badge">Spicy</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Stackly Spicy Burger</div>
           <p class="menu-full-desc">Double patty, jalapeños, cheddar, and secret sauce.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹349</span>
-            <button class="menu-full-add" onclick="triggerToast('🍔','Burger added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Stackly Spicy Burger added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-2">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&q=80" alt="Chaos Pizza" loading="lazy">
-          <span class="menu-full-badge">🍕 Famous</span>
+          <img src="assets/images/photo-1604908176997-125f25cc6f3d.webp" alt="Chaos Pizza" loading="lazy">
+          <span class="menu-full-badge">Famous</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Chaos Pizza</div>
           <p class="menu-full-desc">6-topping wood-fired pizza on hand-stretched base.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹449</span>
-            <button class="menu-full-add" onclick="triggerToast('🍕','Pizza added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Chaos Pizza added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-3">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&q=80" alt="BBQ Royale Platter" loading="lazy">
-          <span class="menu-full-badge">🏆 Best</span>
+          <img src="./assets/images/BBQ.webp" alt="BBQ Royale Platter" loading="lazy">
+          <span class="menu-full-badge">Best</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">BBQ Royale Platter</div>
           <p class="menu-full-desc">Grilled meats, cornbread, coleslaw and smoky BBQ.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹529</span>
-            <button class="menu-full-add" onclick="triggerToast('🍖','BBQ Platter added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','BBQ Royale Platter added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1503764654157-72d979d9af2f?w=400&q=80" alt="Chef's Biriyani" loading="lazy">
-          <span class="menu-full-badge">⭐ Chef</span>
+          <img src="assets/images/photo-1503764654157-72d979d9af2f.webp" alt="Chef's Biriyani" loading="lazy">
+          <span class="menu-full-badge">Chef</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Chef's Secret Biriyani</div>
           <p class="menu-full-desc">Slow-cooked dum biriyani with raita and salan.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹299</span>
-            <button class="menu-full-add" onclick="triggerToast('🍚','Biriyani added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Chef\'s Secret Biriyani added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-2">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&q=80" alt="Pasta Alfredo" loading="lazy">
-          <span class="menu-full-badge">🍝 Creamy</span>
+          <img src="assets/images/photo-1546069901-ba9599a7e63c.webp" alt="Pasta Alfredo" loading="lazy">
+          <span class="menu-full-badge">Creamy</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Creamy Alfredo Pasta</div>
           <p class="menu-full-desc">Rich white sauce pasta with grilled chicken.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹379</span>
-            <button class="menu-full-add" onclick="triggerToast('🍝','Pasta added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Creamy Alfredo Pasta added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-3">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&q=80" alt="Butter Chicken" loading="lazy">
-          <span class="menu-full-badge">🧈 Rich</span>
+          <img src="assets/images/photo-1585937421612-70a008356fbe.webp" alt="Butter Chicken" loading="lazy">
+          <span class="menu-full-badge">Rich</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Butter Chicken</div>
           <p class="menu-full-desc">Creamy tomato gravy with tender chicken pieces.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹389</span>
-            <button class="menu-full-add" onclick="triggerToast('🍗','Butter Chicken added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Butter Chicken added!')">+</button>
           </div>
         </div>
       </div>
     </div>
     
     <!-- Desserts -->
-    <h2 class="menu-cat-title reveal" id="desserts">🍰 <span>Desserts</span></h2>
+    <h2 class="menu-cat-title reveal" id="desserts"><span>Desserts</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=80" alt="Stack Pancakes" loading="lazy">
-          <span class="menu-full-badge">🥞 Sweet</span>
+          <img src="assets/images/photo-1567620905732-2d1ec7ab7445.webp" alt="Stack Pancakes" loading="lazy">
+          <span class="menu-full-badge">Sweet</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Stack Pancakes</div>
           <p class="menu-full-desc">Tower of fluffy pancakes with maple syrup and berries.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹249</span>
-            <button class="menu-full-add" onclick="triggerToast('🥞','Pancakes added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Stack Pancakes added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-2">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&q=80" alt="Choco Lava Cake" loading="lazy">
-          <span class="menu-full-badge">🍫 Must Try</span>
+          <img src="assets/images/photo-1551024506-0bccd828d307.webp" alt="Choco Lava Cake" loading="lazy">
+          <span class="menu-full-badge">Must Try</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Choco Lava Cake</div>
           <p class="menu-full-desc">Warm chocolate cake with molten centre and ice cream.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹199</span>
-            <button class="menu-full-add" onclick="triggerToast('🍫','Lava Cake added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Choco Lava Cake added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-3">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80" alt="Mango Sundae" loading="lazy">
-          <span class="menu-full-badge">🥭 Summer</span>
+          <img src="./assets/images/mango.webp" alt="Mango Sundae" loading="lazy">
+          <span class="menu-full-badge">Summer</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Mango Sundae</div>
           <p class="menu-full-desc">Alphonso mango sorbet with caramel crunch and cream.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹179</span>
-            <button class="menu-full-add" onclick="triggerToast('🥭','Sundae added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Mango Sundae added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=400&q=80" alt="NY Cheesecake" loading="lazy">
-          <span class="menu-full-badge">🍰 Classic</span>
+          <img src="assets/images/photo-1464305795204-6f5bbfc7fb81.webp" alt="NY Cheesecake" loading="lazy">
+          <span class="menu-full-badge">Classic</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">NY Cheesecake</div>
           <p class="menu-full-desc">Classic New York style with mixed berry compote.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹229</span>
-            <button class="menu-full-add" onclick="triggerToast('🍰','Cheesecake added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','NY Cheesecake added!')">+</button>
           </div>
         </div>
       </div>
     </div>
     
     <!-- Drinks -->
-    <h2 class="menu-cat-title reveal" id="drinks">🥤 <span>Drinks</span></h2>
+    <h2 class="menu-cat-title reveal" id="drinks"><span>Drinks</span></h2>
     <div class="menu-full-grid">
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&q=80" alt="Mango Lassi" loading="lazy">
-          <span class="menu-full-badge">🥭 Thick</span>
+          <img src="assets/images/photo-1513558161293-cdaf765ed2fd.webp" alt="Mango Lassi" loading="lazy">
+          <span class="menu-full-badge">Thick</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Mango Lassi Supreme</div>
           <p class="menu-full-desc">Thick Alphonso mango blended with chilled yoghurt.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹129</span>
-            <button class="menu-full-add" onclick="triggerToast('🥭','Lassi added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Mango Lassi Supreme added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-2">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1543332164-6e82f355badc?w=400&q=80" alt="Watermelon Slush" loading="lazy">
-          <span class="menu-full-badge">🍉 Refresh</span>
+          <img src="./assets/images/watermelon.webp" alt="Watermelon Slush" loading="lazy">
+          <span class="menu-full-badge">Refresh</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Watermelon Slush</div>
           <p class="menu-full-desc">Fresh watermelon slush with mint and a pinch of salt.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹99</span>
-            <button class="menu-full-add" onclick="triggerToast('🍉','Slush added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Watermelon Slush added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-3">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&q=80" alt="Special Cola" loading="lazy">
-          <span class="menu-full-badge">🥤 Signature</span>
+          <img src="./assets/images/cola.webp" alt="Special Cola" loading="lazy">
+          <span class="menu-full-badge">Signature</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Stackly Special Cola</div>
           <p class="menu-full-desc">Our signature cola float with vanilla ice cream.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹149</span>
-            <button class="menu-full-add" onclick="triggerToast('🥤','Cola added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Stackly Special Cola added!')">+</button>
           </div>
         </div>
       </div>
       <div class="menu-full-card reveal delay-1">
         <div class="menu-full-img-wrap">
-          <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&q=80" alt="Iced Chai" loading="lazy">
-          <span class="menu-full-badge">☕ Chai</span>
+          <img src="assets/images/photo-1497534446932-c925b458314e.webp" alt="Iced Chai" loading="lazy">
+          <span class="menu-full-badge">Chai</span>
         </div>
         <div class="menu-full-body">
           <div class="menu-full-name">Iced Masala Chai</div>
           <p class="menu-full-desc">Traditional chai brewed strong, poured over ice with cream.</p>
           <div class="menu-full-footer">
             <span class="menu-full-price">₹89</span>
-            <button class="menu-full-add" onclick="triggerToast('☕','Chai added!')">+</button>
+            <button class="menu-full-add" onclick="triggerToast('✓','Iced Masala Chai added!')">+</button>
           </div>
         </div>
       </div>
     </div>
     
     <div class="text-center mt-4 reveal">
-      <a href="reservation.html" class="btn btn-primary btn-lg">📅 Book A Table</a>
+      <a href="reservation.html" class="btn btn-primary btn-lg">Book A Table</a>
     </div>
   </div>
 </section>
@@ -604,11 +621,11 @@
 <!-- ═══ CTA BANNER ═══ -->
 <div class="cta-banner">
   <div class="section-inner">
-    <h2 class="cta-title reveal">Still Deciding? <br>Order Everything! 😂</h2>
+    <h2 class="cta-title reveal">Still Deciding? <br>Order Everything!</h2>
     <p class="cta-sub reveal delay-1">Life's too short for just one dish. Go wild, stack it up!</p>
     <div class="cta-btns reveal delay-2">
-      <a href="reservation.html" class="btn btn-dark btn-lg">📅 Reserve Now</a>
-      <a href="contact.html" class="btn btn-outline btn-lg">📞 Call Us</a>
+      <a href="reservation.html" class="btn btn-dark btn-lg">Reserve Now</a>
+      <a href="contact.html" class="btn btn-outline btn-lg">Call Us</a>
     </div>
   </div>
 </div>
@@ -623,11 +640,21 @@
         </a>
         <p>Salem's most fun restaurant since 2012. We don't just serve food — we serve memories, laughter, and seriously good vibes.</p>
         <div class="footer-socials">
-          <a href="404.html" class="footer-social">📘</a>
-          <a href="404.html" class="footer-social">📸</a>
-          <a href="404.html" class="footer-social">🐦</a>
-          <a href="404.html" class="footer-social">▶️</a>
-          <a href="404.html" class="footer-social">💬</a>
+          <a href="404.html" class="footer-social" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="Twitter/X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+          </a>
+          <a href="404.html" class="footer-social" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.5 2C6.253 2 2 6.253 2 11.5c0 1.891.549 3.658 1.5 5.158L2 22l5.5-1.5A9.455 9.455 0 0011.5 21C16.747 21 21 16.747 21 11.5S16.747 2 11.5 2z"/></svg>
+          </a>
         </div>
       </div>
       <div>
@@ -655,18 +682,24 @@
       <div>
         <h4 class="footer-col-title">Find Us</h4>
         <div class="footer-contact-item">
-          <span class="footer-contact-icon">📍</span>
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
           <div class="footer-contact-text">
             <strong>Address</strong>
             MMR Complex, Chinna Thirupathi, near Chinna Muniyappan Kovil, Salem, Tamil Nadu 636008
           </div>
         </div>
         <div class="footer-contact-item">
-          <span class="footer-contact-icon">📞</span>
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .98h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 8.9A16 16 0 0015.1 17.09l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
           <div class="footer-contact-text"><strong>Call Us</strong>+91 98765 43210</div>
         </div>
         <div class="footer-contact-item">
-          <span class="footer-contact-icon">✉️</span>
+          <div class="footer-contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
           <div class="footer-contact-text"><strong>Email</strong>hello@stackly.in</div>
         </div>
         <div class="footer-hours mt-2">
@@ -677,7 +710,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 <span>Stackly Restaurant</span>. Made with ❤️ in Salem, Tamil Nadu.</p>
+      <p>&copy; 2025 <span>Stackly Restaurant</span>. Made with ♥ in Salem, Tamil Nadu.</p>
       <div class="footer-bottom-links">
         <a href="404.html">Privacy Policy</a>
         <a href="404.html">Terms</a>
@@ -687,77 +720,23 @@
   </div>
 </footer>
 
+<script src="./script.js"></script>
 <script>
-// ── Page Loader ──
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('page-loader').classList.add('loaded'), 2000);
-});
-
-// ── Custom Cursor ──
-const cursor = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursorRing');
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  cursor.style.left = mouseX - 6 + 'px';
-  cursor.style.top = mouseY - 6 + 'px';
-});
-function animRing() {
-  ringX += (mouseX - ringX - 18) * 0.12;
-  ringY += (mouseY - ringY - 18) * 0.12;
-  cursorRing.style.left = ringX + 'px';
-  cursorRing.style.top = ringY + 'px';
-  requestAnimationFrame(animRing);
-}
-animRing();
-document.querySelectorAll('a,button,.menu-full-card').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); cursorRing.classList.add('hovered'); });
-  el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); cursorRing.classList.remove('hovered'); });
-});
-
-// ── Hamburger ──
-const ham = document.getElementById('hamburger');
-const mob = document.getElementById('mobileMenu');
-ham.addEventListener('click', () => {
-  ham.classList.toggle('open');
-  mob.classList.toggle('open');
-  document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
-});
-mob.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    ham.classList.remove('open');
-    mob.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-});
-
-// ── Navbar Scroll ──
-window.addEventListener('scroll', () => {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-  document.getElementById('back-top').classList.toggle('show', window.scrollY > 400);
-});
-
-// ── Reveal on Scroll ──
-const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-}, { threshold: 0.1 });
-revealEls.forEach(el => io.observe(el));
-
 // ── Scroll to Category ──
 function scrollToCat(id) {
   document.querySelectorAll('.menu-cat-tab').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
-  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
+  const targetEl = document.getElementById(id);
+  const offset = 140; // Accounting for sticky tabs + navbar
+  const bodyRect = document.body.getBoundingClientRect().top;
+  const elementRect = targetEl.getBoundingClientRect().top;
+  const elementPosition = elementRect - bodyRect;
+  const offsetPosition = elementPosition - offset;
 
-// ── Toast ──
-function triggerToast(emoji, msg) {
-  const toast = document.getElementById('foodToast');
-  document.getElementById('toastMsg').textContent = msg;
-  toast.querySelector('.food-toast-emoji').textContent = emoji;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2500);
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth'
+  });
 }
 </script>
 </body>
