@@ -181,6 +181,25 @@
     .auth-error-msg.show {
       display: block;
     }
+    .password-wrapper {
+      position: relative;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      font-size: 1.1rem;
+      z-index: 10;
+      line-height: 1;
+    }
+    .password-wrapper .auth-input {
+      padding-right: 45px;
+    }
     
     
     .role-select {
@@ -191,6 +210,7 @@
     .role-option {
       flex: 1;
       position: relative;
+      display: flex;
     }
     .role-option input {
       position: absolute;
@@ -198,9 +218,11 @@
       cursor: pointer;
     }
     .role-option label {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       padding: 15px 10px;
       background: rgba(255,255,255,0.05);
@@ -238,6 +260,10 @@
       letter-spacing: 2px;
       margin-bottom: 20px;
       margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
     }
     
     .auth-divider {
@@ -455,7 +481,10 @@
         
         <div class="auth-form-group">
           <label>Password <span class="req">*</span></label>
-          <input type="password" class="auth-input" id="signupPassword" placeholder="Create a strong password" required oninput="checkPasswordStrength(this)">
+          <div class="password-wrapper">
+            <input type="password" class="auth-input" id="signupPassword" placeholder="Create a strong password" required oninput="checkPasswordStrength(this)">
+            <button type="button" class="password-toggle" onclick="togglePassword('signupPassword', this)">👁️</button>
+          </div>
           <div class="password-strength">
             <div class="password-strength-bar" id="strengthBar"></div>
           </div>
@@ -464,7 +493,10 @@
         
         <div class="auth-form-group">
           <label>Confirm Password <span class="req">*</span></label>
-          <input type="password" class="auth-input" id="signupConfirm" placeholder="Confirm your password" required oninput="checkMatch(this)">
+          <div class="password-wrapper">
+            <input type="password" class="auth-input" id="signupConfirm" placeholder="Confirm your password" required oninput="checkMatch(this)">
+            <button type="button" class="password-toggle" onclick="togglePassword('signupConfirm', this)">👁️</button>
+          </div>
           <span class="auth-error-msg" id="matchError">Passwords do not match!</span>
         </div>
         
@@ -599,6 +631,16 @@ function checkMatch(input) {
   }
 }
 
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁️';
+  }
+}
 
 function handleSignup(e) {
   e.preventDefault();
